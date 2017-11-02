@@ -289,3 +289,5 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+DGM/lib/dgm.lib
+DGM/lib/dgm.lib

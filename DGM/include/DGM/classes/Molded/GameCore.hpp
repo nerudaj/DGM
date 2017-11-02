@@ -60,13 +60,18 @@ namespace dgm {
 			/**
 			 *  \brief Initialize sf::RenderWindow
 			 *  
-			 *  \param [in] APP_WIDTH Parameter_Description
-			 *  \param [in] APP_HEIGHT Parameter_Description
-			 *  \param [in] APP_NAME Parameter_Description
-			 *  \param [in] Default Parameter_Description
-			 *  \param [in] APP_FPS Parameter_Description
+			 *  \param [in] videoMode Display setttings
+			 *  \param [in] name Window label
+			 *  \param [in] style Window style (sf::Style)
+			 *  \param [in] fps Frames per Second. Value <= 0 enables vsync
+			 *  \param [in] multithreaded Whether app will use multiple threads that might affect this class
+			 *
+			 *  \details Positive non-zero fps will set framerate limit on window, other values will cause
+			 *  vsync to be turned on. If there will be multiple threads that might affect stack of AppStates,
+			 *  turn multithreaded to true. If there is no way that other than a main threads will affect stack
+			 *  of states, leave it on false.
 			 */
-			void init(const int APP_WIDTH, const int APP_HEIGHT, const std::string &APP_NAME, const int APP_STYLE = sf::Style::Default, const int APP_FPS = 40);
+			void init(const sf::VideoMode &videoMode, const std::string &name, const int style = sf::Style::Default, const int fps = 40, const bool multithreaded = false);
 
 			void deinit();
 
@@ -76,14 +81,33 @@ namespace dgm {
 
 		class AppState {
 		protected:
-			App *game;
+			App *app;
 
 		public:
+			void setApp(App *app);
+
+			virtual bool init() = 0;
+
 			virtual void draw() = 0;
 
 			virtual void update() = 0;
 
 			virtual void input() = 0;
+		};
+
+		class DefaultState : public AppState {
+		public:
+			// Inherited via AppState
+			virtual bool init() override;
+
+			virtual void draw() override;
+
+			virtual void update() override;
+
+			virtual void input() override;
+
+			DefaultState() {}
+			~DefaultState() {}
 		};
 	};
 };

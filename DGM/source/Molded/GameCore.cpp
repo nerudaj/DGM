@@ -5,6 +5,11 @@ using dgm::Molded::AppState;
 
 void App::pushState(AppState *state) {
 	states.push(state);
+	states.top->setApp(this);
+
+	if (not states.top()->init()) {
+		popState();
+	}
 }
 
 void App::popState() {
@@ -41,10 +46,20 @@ void App::loop() {
 	}
 }
 
-void App::init(const int APP_WIDTH, const int APP_HEIGHT, const std::string &APP_NAME, const int APP_STYLE, const int APP_FPS) {
-	window.create(sf::VideoMode(APP_WIDTH, APP_HEIGHT), APP_NAME, APP_STYLE);
-	window.setVerticalSyncEnabled(false);
-	window.setFramerateLimit(APP_FPS);
+void App::init(const sf::VideoMode &videoMode, const std::string &name, const int style, const int fps, const bool multithreaded) {
+	window.create(videoMode, name, style);
+
+	if (fps > 0) {
+		window.setVerticalSyncEnabled(false);
+		window.setFramerateLimit(fps);
+	}
+	else {
+		window.setVerticalSyncEnabled(true);
+	}
+
+	if (not multithreaded) {
+		pushState(new DefaultState());
+	}
 }
 
 void App::deinit() {
@@ -56,4 +71,27 @@ void App::deinit() {
 App::App() {}
 App::~App() {
 	deinit();
+}
+
+bool dgm::Molded::DefaultState::init() {
+	return true;
+}
+
+// *** DEFAULT STATE IMPLEMENTATION ***
+void dgm::Molded::DefaultState::draw() {
+}
+
+void dgm::Molded::DefaultState::update() {
+	app->window.close();
+}
+
+void dgm::Molded::DefaultState::input() {
+}
+
+dgm::Molded::DefaultState::DefaultState(App * app) {
+	AppState::app = app;
+}
+
+void dgm::Molded::AppState::setApp(App * app) {
+	AppState::app = app;
 }
