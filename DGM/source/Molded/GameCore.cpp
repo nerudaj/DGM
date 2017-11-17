@@ -5,7 +5,7 @@ using dgm::Molded::AppState;
 
 void App::pushState(AppState *state) {
 	states.push(state);
-	states.top->setApp(this);
+	states.top()->setApp(this);
 
 	if (not states.top()->init()) {
 		popState();
@@ -86,10 +86,6 @@ void dgm::Molded::DefaultState::update() {
 }
 
 void dgm::Molded::DefaultState::input() {
-}
-
-dgm::Molded::DefaultState::DefaultState(App * app) {
-	AppState::app = app;
 }
 
 void dgm::Molded::AppState::setApp(App * app) {
