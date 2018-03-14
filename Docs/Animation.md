@@ -1,7 +1,10 @@
 # Animation Class
 
 ## Table of Contents
-
+1. [Introduction](#introduction)
+2. [Prerequisities](#prerequsities)
+3. [State Database](#state-database)
+4. [Writing State Database](#writing-state-database)
 
 ## Introduction
 
@@ -49,7 +52,7 @@ database.AddState("RollingRed", clip);
 animation.LoadFromMemory(&database);
 ```
 
-## Using
+## Usage
 
 At this point we can easily set speed of animation and start it:
 ```c++
@@ -60,7 +63,7 @@ animation.SetState("RollingRed");
 Now you can use the `dgm::Time` class for updating the animation object and after
 some time (250ms in this case), sprite will change its appearance.
 
-## Writing Database
+## Writing State Database
 
 Database of animation states can be written outside of your program, in a text
 file and then load into the animation object. The syntax of the file is following:
