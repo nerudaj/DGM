@@ -13,138 +13,102 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Sprites">
-      <UniqueIdentifier>{d1fd68d7-1cf8-457f-9c7a-97c8db1caa1c}</UniqueIdentifier>
+    <Filter Include="Header Files\Aux">
+      <UniqueIdentifier>{d9f8bdfe-13d5-4d01-8860-ba3ca3be755e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Timers">
-      <UniqueIdentifier>{6b0b3a78-8b66-4f27-8b1c-2b2b2e3a7113}</UniqueIdentifier>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{7fb76d6d-4914-4845-bb2e-da5213ccb9e4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Music">
-      <UniqueIdentifier>{69b9962e-7b23-4929-a3c6-ba4b660d621e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Auxiliary">
-      <UniqueIdentifier>{71466628-a43b-443b-a473-6c3ac9024ed6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\classes">
-      <UniqueIdentifier>{2598d9d9-4b56-4c16-8ace-1356f891465c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\classes\Molded">
-      <UniqueIdentifier>{bca70ffb-8b3d-4c8a-bb4b-7f15fd79d3e8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Molded">
-      <UniqueIdentifier>{706ee929-1a0a-436c-b6cd-79c45b15f2d8}</UniqueIdentifier>
+    <Filter Include="Docs">
+      <UniqueIdentifier>{c615975a-dd25-47af-b88b-8c546df92c19}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Objects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Animation.cpp">
-      <Filter>Source Files\Sprites</Filter>
-    </ClCompile>
-    <ClCompile Include="source\AnimationData.cpp">
-      <Filter>Source Files\Sprites</Filter>
-    </ClCompile>
-    <ClCompile Include="source\AnimationState.cpp">
-      <Filter>Source Files\Sprites</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Clip.cpp">
-      <Filter>Source Files\Sprites</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Countdown.cpp">
-      <Filter>Source Files\Timers</Filter>
-    </ClCompile>
-    <ClCompile Include="source\TimeCountdown.cpp">
-      <Filter>Source Files\Timers</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Counter.cpp">
-      <Filter>Source Files\Timers</Filter>
-    </ClCompile>
     <ClCompile Include="source\Strings.cpp">
-      <Filter>Source Files\Auxiliary</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Collision.cpp">
-      <Filter>Source Files\Auxiliary</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Conversion.cpp">
-      <Filter>Source Files\Auxiliary</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\TileRenderer.cpp">
-      <Filter>Source Files\Sprites</Filter>
+    <ClCompile Include="source\App.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\ParticleEffect.cpp">
-      <Filter>Source Files\Sprites</Filter>
+    <ClCompile Include="source\Window.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Dice.cpp">
-      <Filter>Source Files\Auxiliary</Filter>
+    <ClCompile Include="source\Conversion.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Molded\Flaggable.cpp">
-      <Filter>Source Files\Molded</Filter>
+    <ClCompile Include="source\Clip.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Molded\GameCore.cpp">
-      <Filter>Source Files\Molded</Filter>
+    <ClCompile Include="source\Animation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ConfigItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ResourceManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\DGM\dgm.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\DGM\classes\Animation.hpp">
-      <Filter>Header Files\classes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DGM\classes\AnimationData.hpp">
-      <Filter>Header Files\classes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DGM\classes\AnimationState.hpp">
-      <Filter>Header Files\classes</Filter>
-    </ClInclude>
     <ClInclude Include="include\DGM\classes\Buffer.hpp">
-      <Filter>Header Files\classes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DGM\classes\Clip.hpp">
-      <Filter>Header Files\classes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DGM\classes\Collision.hpp">
-      <Filter>Header Files\classes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DGM\classes\Controller.hpp">
-      <Filter>Header Files\classes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DGM\classes\Conversion.hpp">
-      <Filter>Header Files\classes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DGM\classes\Countdown.hpp">
-      <Filter>Header Files\classes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DGM\classes\Counter.hpp">
-      <Filter>Header Files\classes</Filter>
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="include\DGM\classes\Objects.hpp">
-      <Filter>Header Files\classes</Filter>
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="include\DGM\classes\Strings.hpp">
-      <Filter>Header Files\classes</Filter>
+      <Filter>Header Files\Aux</Filter>
     </ClInclude>
-    <ClInclude Include="include\DGM\classes\TimeCountdown.hpp">
-      <Filter>Header Files\classes</Filter>
+    <ClInclude Include="include\DGM\classes\Window.hpp">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\DGM\classes\TileRenderer.hpp">
-      <Filter>Header Files\classes</Filter>
+    <ClInclude Include="include\DGM\classes\App.hpp">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\DGM\classes\ParticleEffect.hpp">
-      <Filter>Header Files\classes</Filter>
+    <ClInclude Include="include\DGM\classes\AppState.hpp">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\DGM\classes\Dice.hpp">
-      <Filter>Header Files\classes</Filter>
+    <ClInclude Include="include\DGM\classes\Time.hpp">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\DGM\classes\Molded\Flaggable.hpp">
-      <Filter>Header Files\classes\Molded</Filter>
+    <ClInclude Include="include\DGM\classes\Conversion.hpp">
+      <Filter>Header Files\Aux</Filter>
     </ClInclude>
-    <ClInclude Include="include\DGM\classes\Molded\GameCore.hpp">
-      <Filter>Header Files\classes\Molded</Filter>
+    <ClInclude Include="include\DGM\classes\Collision.hpp">
+      <Filter>Header Files\Aux</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DGM\classes\Controller.hpp">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DGM\classes\Clip.hpp">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DGM\classes\Animation.hpp">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DGM\classes\Config.hpp">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DGM\classes\ConfigItem.hpp">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DGM\classes\ResourceManager.hpp">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

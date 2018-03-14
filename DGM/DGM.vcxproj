@@ -18,6 +18,38 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\Animation.cpp" />
+    <ClCompile Include="source\App.cpp" />
+    <ClCompile Include="source\Clip.cpp" />
+    <ClCompile Include="source\Collision.cpp" />
+    <ClCompile Include="source\Config.cpp" />
+    <ClCompile Include="source\ConfigItem.cpp" />
+    <ClCompile Include="source\Controller.cpp" />
+    <ClCompile Include="source\Conversion.cpp" />
+    <ClCompile Include="source\Objects.cpp" />
+    <ClCompile Include="source\ResourceManager.cpp" />
+    <ClCompile Include="source\Strings.cpp" />
+    <ClCompile Include="source\Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\DGM\classes\Animation.hpp" />
+    <ClInclude Include="include\DGM\classes\App.hpp" />
+    <ClInclude Include="include\DGM\classes\AppState.hpp" />
+    <ClInclude Include="include\DGM\classes\Buffer.hpp" />
+    <ClInclude Include="include\DGM\classes\Clip.hpp" />
+    <ClInclude Include="include\DGM\classes\Collision.hpp" />
+    <ClInclude Include="include\DGM\classes\Config.hpp" />
+    <ClInclude Include="include\DGM\classes\ConfigItem.hpp" />
+    <ClInclude Include="include\DGM\classes\Controller.hpp" />
+    <ClInclude Include="include\DGM\classes\Conversion.hpp" />
+    <ClInclude Include="include\DGM\classes\Objects.hpp" />
+    <ClInclude Include="include\DGM\classes\ResourceManager.hpp" />
+    <ClInclude Include="include\DGM\classes\Strings.hpp" />
+    <ClInclude Include="include\DGM\classes\Time.hpp" />
+    <ClInclude Include="include\DGM\classes\Window.hpp" />
+    <ClInclude Include="include\DGM\dgm.hpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{345A4A83-A03F-49DF-ADD8-CDFB1B9FF344}</ProjectGuid>
     <RootNamespace>DGM</RootNamespace>
@@ -138,46 +170,6 @@ move DGM.lib dgm.lib</Command>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="source\Animation.cpp" />
-    <ClCompile Include="source\AnimationData.cpp" />
-    <ClCompile Include="source\AnimationState.cpp" />
-    <ClCompile Include="source\Clip.cpp" />
-    <ClCompile Include="source\Collision.cpp" />
-    <ClCompile Include="source\Controller.cpp" />
-    <ClCompile Include="source\Conversion.cpp" />
-    <ClCompile Include="source\Countdown.cpp" />
-    <ClCompile Include="source\Counter.cpp" />
-    <ClCompile Include="source\Dice.cpp" />
-    <ClCompile Include="source\Molded\Flaggable.cpp" />
-    <ClCompile Include="source\Molded\GameCore.cpp" />
-    <ClCompile Include="source\Objects.cpp" />
-    <ClCompile Include="source\ParticleEffect.cpp" />
-    <ClCompile Include="source\Strings.cpp" />
-    <ClCompile Include="source\TileRenderer.cpp" />
-    <ClCompile Include="source\TimeCountdown.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\DGM\classes\Animation.hpp" />
-    <ClInclude Include="include\DGM\classes\AnimationData.hpp" />
-    <ClInclude Include="include\DGM\classes\AnimationState.hpp" />
-    <ClInclude Include="include\DGM\classes\Buffer.hpp" />
-    <ClInclude Include="include\DGM\classes\Clip.hpp" />
-    <ClInclude Include="include\DGM\classes\Collision.hpp" />
-    <ClInclude Include="include\DGM\classes\Controller.hpp" />
-    <ClInclude Include="include\DGM\classes\Conversion.hpp" />
-    <ClInclude Include="include\DGM\classes\Countdown.hpp" />
-    <ClInclude Include="include\DGM\classes\Counter.hpp" />
-    <ClInclude Include="include\DGM\classes\Dice.hpp" />
-    <ClInclude Include="include\DGM\classes\Molded\Flaggable.hpp" />
-    <ClInclude Include="include\DGM\classes\Molded\GameCore.hpp" />
-    <ClInclude Include="include\DGM\classes\Objects.hpp" />
-    <ClInclude Include="include\DGM\classes\ParticleEffect.hpp" />
-    <ClInclude Include="include\DGM\classes\Strings.hpp" />
-    <ClInclude Include="include\DGM\classes\TileRenderer.hpp" />
-    <ClInclude Include="include\DGM\classes\TimeCountdown.hpp" />
-    <ClInclude Include="include\DGM\dgm.hpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
