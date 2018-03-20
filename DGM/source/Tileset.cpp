@@ -71,6 +71,11 @@ bool dgm::Tileset::LoadFromFile(const std::string & filename) {
 	return false;
 }
 
+bool dgm::Tileset::SaveToFile(const std::string & filename) {
+	std::cerr << "Tileset::SaveToFile(...) - TODO Implement\n";
+	return false;
+}
+
 void dgm::Tileset::SetTexture(sf::Texture * texture) {
 	texturePtr = texture;
 }

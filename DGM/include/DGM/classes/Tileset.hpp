@@ -23,6 +23,8 @@ namespace dgm {
 
 		bool LoadFromFile(const std::string &filename);
 
+		bool SaveToFile(const std::string &filename);
+
 		void SetTexture(sf::Texture *texture);
 
 		const dgm::Mesh &GetMesh() const { return mesh; }
