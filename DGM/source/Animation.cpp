@@ -1,8 +1,105 @@
 #include <DGM\dgm.hpp>
 #include <cassert>
+#include <fstream>
 
 bool dgm::AnimationData::LoadFromFile(const std::string &name) {
-	return false;
+	std::ifstream load(name);
+	std::string buffer;
+	std::vector<std::string> split;
+	int state = 0;
+
+	sf::Vector2i globalFrameSize = sf::Vector2i(0, 0), localFrameSize, globalFrameOffset = sf::Vector2i(0, 0), localFrameOffset;
+	unsigned int globalFrameCount = 0, localFrameCount;
+	sf::IntRect boundaries;
+	std::string stateName;
+	dgm::Clip clip;
+
+	try {
+		while (load >> buffer) {
+			if (buffer == "begin") {
+				localFrameSize = globalFrameSize;
+				localFrameOffset = globalFrameOffset;
+				localFrameCount = globalFrameCount;
+				boundaries = sf::IntRect(0, 0, 0, 0);
+				stateName = "";
+				state = 1;
+			}
+			else if (buffer == "end") {
+				if (stateName.empty()) {
+					std::cerr << "AnimationData::LoadFromFile(...) - Undefined state name\n";
+					throw 1;
+				}
+				else if (boundaries == sf::IntRect(0, 0, 0, 0)) {
+					std::cerr << "AnimationData::LoadFromFile(...) - Undefined boundaries\n";
+					throw 1;
+				}
+
+				clip.Init(localFrameSize, boundaries, localFrameCount, globalFrameOffset);
+				(*this)[stateName] = clip;
+				state = 0;
+			}
+			else {
+				dgm::Strings::Split('=', buffer, split);
+
+				if (split.size() != 2) {
+					std::cerr << "AnimationData::LoadFromFile(...) - Expected key=value, got " << buffer << "\n";
+					throw 1;
+				}
+
+				if (split[0] == "frameSize") {
+					if (state == 1 && !dgm::Conversion::StringToVector2i(':', split[1], localFrameSize)) {
+						std::cerr << "AnimationData::LoadFromFile(...) - Failed to parse frameSize (" << split[1] << ")\n";
+						throw 1;
+					}
+					else if (state == 0 && !dgm::Conversion::StringToVector2i(':', split[1], globalFrameSize)) {
+						std::cerr << "AnimationData::LoadFromFile(...) - Failed to parse frameSize (" << split[1] << ")\n";
+						throw 1;
+					}
+				}
+				else if (split[0] == "frameOffset") {
+					if (state == 1 && !dgm::Conversion::StringToVector2i(':', split[1], localFrameOffset)) {
+						std::cerr << "AnimationData::LoadFromFile(...) - Failed to parse frameOffset (" << split[1] << ")\n";
+						throw 1;
+					}
+					else if (state == 0 && !dgm::Conversion::StringToVector2i(':', split[1], globalFrameOffset)) {
+						std::cerr << "AnimationData::LoadFromFile(...) - Failed to parse frameOffset (" << split[1] << ")\n";
+						throw 1;
+					}
+				}
+				else if (split[0] == "frames") {
+					if (state == 0) {
+						globalFrameCount = std::stoi(split[1]);
+					}
+					else if (state == 1) {
+						localFrameCount = std::stoi(split[1]);
+					}
+				}
+				else if (split[0] == "boundaries" && state == 1) {
+					if (!dgm::Conversion::StringToIntRect(':', split[1], boundaries)) {
+						std::cerr << "AnimationData::LoadFromFile(...) - Failed to parse boundaries (" << split[1] << ")\n";
+						throw 1;
+					}
+				}
+				else if (split[0] == "state" && state == 1) {
+					stateName = split[1];
+				}
+				else {
+					std::cerr << "AnimationData::LoadFromFile(...) - Unknown key " << split[1] << "\n";
+					throw 1;
+				}
+			}
+		}
+	}
+	catch (...) {
+		load.close();
+		load.clear();
+		return false;
+	}
+
+	load.close();
+	load.clear();
+
+	return true;
 }
 
 bool dgm::AnimationData::AddState(const std::string &stateName, const dgm::Clip &clip) {
