@@ -52,7 +52,12 @@
 #include "classes/Time.hpp"
 #include "classes/Clip.hpp"
 #include "classes/ResourceManager.hpp"
+#include "classes/Tileset.hpp"
 #include "classes/Window.hpp"
 #include "classes/App.hpp"
 #include "classes/AppState.hpp"
 #include "classes/Animation.hpp"
+
+#ifdef INCLUDE_AI
+#include "classes/Pathfinder.hpp"
+#endif

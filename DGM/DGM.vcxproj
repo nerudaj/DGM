@@ -30,6 +30,7 @@
     <ClCompile Include="source\Objects.cpp" />
     <ClCompile Include="source\ResourceManager.cpp" />
     <ClCompile Include="source\Strings.cpp" />
+    <ClCompile Include="source\Tileset.cpp" />
     <ClCompile Include="source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -46,6 +47,7 @@
     <ClInclude Include="include\DGM\classes\Objects.hpp" />
     <ClInclude Include="include\DGM\classes\ResourceManager.hpp" />
     <ClInclude Include="include\DGM\classes\Strings.hpp" />
+    <ClInclude Include="include\DGM\classes\Tileset.hpp" />
     <ClInclude Include="include\DGM\classes\Time.hpp" />
     <ClInclude Include="include\DGM\classes\Window.hpp" />
     <ClInclude Include="include\DGM\dgm.hpp" />

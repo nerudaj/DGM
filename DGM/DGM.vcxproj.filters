@@ -60,6 +60,9 @@
     <ClCompile Include="source\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Tileset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\DGM\dgm.hpp">
@@ -108,6 +111,9 @@
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="include\DGM\classes\ResourceManager.hpp">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DGM\classes\Tileset.hpp">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
