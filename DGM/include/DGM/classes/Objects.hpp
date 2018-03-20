@@ -1,7 +1,7 @@
 /**
  *  \file 			Objects.hpp
  *  \author			doomista
- *  \description	Declarations of Basic dmg logic objects
+ *  \description	Declarations of basic dmg logic objects
  */
 
 #pragma once
@@ -13,15 +13,15 @@ namespace dgm {
 	 */
 	class Object {
 	public:
-		virtual const sf::Vector2f &GetPosition() const =0;
+		virtual const sf::Vector2f &getPosition() const =0;
 		
-		virtual void SetPosition(const float x, const float y) =0;
+		virtual void setPosition(const float x, const float y) =0;
 		
-		virtual void SetPosition(const sf::Vector2f &position) =0;
+		virtual void setPosition(const sf::Vector2f &position) =0;
 		
-		virtual void Move(const float x, const float y) =0;
+		virtual void move(const float x, const float y) =0;
 		
-		virtual void Move(const sf::Vector2f &position) =0;
+		virtual void move(const sf::Vector2f &position) =0;
 	};
 	
 	/**
@@ -41,37 +41,37 @@ namespace dgm {
 		/**
 		 *  \brief Returns position of circle
 		 */
-		const sf::Vector2f &GetPosition() const;
+		const sf::Vector2f &getPosition() const;
 		
 		/**
 		 *  \brief Returns radius of circle
 		 */
-		const float GetRadius() const;
+		const float getRadius() const;
 		
 		/**
 		 *  \brief Sets position of circle by setting new XY coordinates
 		 */
-		void SetPosition(const float x, const float y);
+		void setPosition(const float x, const float y);
 		
 		/**
 		 *  \brief Sets new position of circle with SFML vector
 		 */
-		void SetPosition(const sf::Vector2f &position);
+		void setPosition(const sf::Vector2f &position);
 		
 		/**
 		 *  \brief Sets radius
 		 */
-		void SetRadius(const float radius);
+		void setRadius(const float radius);
 		
 		/**
 		 *  \brief Moves object
 		 */
-		void Move(const float x, const float y);
+		void move(const float x, const float y);
 		
 		/**
 		 *  \brief Moves object
 		 */
-		void Move(const sf::Vector2f &forward);
+		void move(const sf::Vector2f &forward);
 		
 		Circle();
 		Circle(const float x, const float y);
@@ -94,42 +94,42 @@ namespace dgm {
 		/**
 		 *  \brief Returns position of topleft vertex of rectangle
 		 */
-		const sf::Vector2f &GetPosition() const;
+		const sf::Vector2f &getPosition() const;
 		
 		/**
 		 *  \brief Returns dimensions of rectangle
 		 */
-		const sf::Vector2f &GetSize() const;
+		const sf::Vector2f &getSize() const;
 		
 		/**
 		 *  \brief Set position of top-left corner
 		 */
-		void SetPosition(const float x, const float y);
+		void setPosition(const float x, const float y);
 		
 		/**
 		 *  \brief Set position of top-left corner
 		 */
-		void SetPosition(const sf::Vector2f &position);
+		void setPosition(const sf::Vector2f &position);
 		
 		/**
 		 *  \brief Moves object
 		 */
-		void Move(const float x, const float y);
+		void move(const float x, const float y);
 		
 		/**
 		 *  \brief Moves object
 		 */
-		void Move(const sf::Vector2f &forward);
+		void move(const sf::Vector2f &forward);
 		
 		/**
 		 *  \brief Set dimensions of rectangle
 		 */
-		void SetSize(const float width, const float height);
+		void setSize(const float width, const float height);
 		
 		/**
 		 *  \brief Set dimensions of rectangle
 		 */
-		void SetSize(const sf::Vector2f &size);
+		void setSize(const sf::Vector2f &size);
 		
 		Rect();
 		Rect(const float x, const float y, const float width, const float height);
@@ -182,39 +182,39 @@ namespace dgm {
 		const int &operator[] (std::size_t index) const;
 	
 		/**
-		 *  \brief Get position of top-left corner
+		 *  \brief get position of top-left corner
 		 */
-		const sf::Vector2f &GetPosition() const;
+		const sf::Vector2f &getPosition() const;
 		
 		/**
-		 *  \brief Get dimensions of *data array
+		 *  \brief get dimensions of *data array
 		 */
-		const sf::Vector2i &GetDataSize() const;
+		const sf::Vector2i &getDataSize() const;
 		
 		/**
-		 *  \brief Get dimensions of single voxel
+		 *  \brief get dimensions of single voxel
 		 */
-		const sf::Vector2i &GetVoxelSize() const;
+		const sf::Vector2i &getVoxelSize() const;
 	
 		/**
 		 *  \brief Set position of top-left corner
 		 */
-		void SetPosition(const float x, const float y);
+		void setPosition(const float x, const float y);
 		
 		/**
 		 *  \brief Set position of top-left corner
 		 */
-		void SetPosition(const sf::Vector2f &position);
+		void setPosition(const sf::Vector2f &position);
 		
 		/**
 		 *  \brief Set dimensions of single voxel
 		 */
-		void SetVoxelSize(const int width, const int height);
+		void setVoxelSize(const int width, const int height);
 		
 		/**
 		 *  \brief Set dimensions of single voxel
 		 */
-		void SetVoxelSize(const sf::Vector2i &size);
+		void setVoxelSize(const sf::Vector2i &size);
 		
 		/**
 		 *  \brief Set dimensions of data array
@@ -224,7 +224,7 @@ namespace dgm {
 		 *  
 		 *  \returns TRUE on success, FALSE on malloc failure
 		 */
-		bool SetDataSize(const int width, const int height);
+		bool setDataSize(const int width, const int height);
 		
 		/**
 		 *  \brief Set dimensions of data array
@@ -234,17 +234,17 @@ namespace dgm {
 		 *  
 		 *  \returns TRUE on success, FALSE on malloc failure
 		 */
-		bool SetDataSize(const sf::Vector2i &size);
+		bool setDataSize(const sf::Vector2i &size);
 		
 		/**
 		 *  \brief Moves object
 		 */
-		void Move(const float x, const float y);
+		void move(const float x, const float y);
 		
 		/**
 		 *  \brief Moves object
 		 */
-		void Move(const sf::Vector2f &forward);
+		void move(const sf::Vector2f &forward);
 		
 		Mesh();
 		~Mesh();

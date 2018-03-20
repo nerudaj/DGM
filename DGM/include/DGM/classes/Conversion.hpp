@@ -9,7 +9,7 @@ namespace dgm {
 		 * \brief Takes a string with hex representation of a color (#XXXXXX)
 		 * and converts it to output sf::Color
 		 */
-		static void StringToColor(const std::string &str, sf::Color &color);
+		static void stringToColor(const std::string &str, sf::Color &color);
 
 		/**
 		 * \brief Takes a string of integer numbers separated with delimiter
@@ -20,7 +20,7 @@ namespace dgm {
 		 *
 		 * \returns NULL on failure, valid pointer to int array otherwise
 		 */
-		static const int *StringToIntArray(const char delimiter, const std::string &str, std::size_t &size);
+		static const int *stringToIntArray(const char delimiter, const std::string &str, std::size_t &size);
 
 		/**
 		 * \brief Takes a string of integer numbers separated with delimiter
@@ -30,7 +30,7 @@ namespace dgm {
 		 *
 		 * \returns TRUE if str contains only precisely int number. FALSE otherwise
 		 */
-		static bool StringToVector2i(const char delimiter, const std::string &str, sf::Vector2i &dst);
+		static bool stringToVector2i(const char delimiter, const std::string &str, sf::Vector2i &dst);
 
 		/**
 		* \brief Takes a string of integer numbers separated with delimiter
@@ -40,11 +40,11 @@ namespace dgm {
 		*
 		* \returns TRUE if str contains precisely four int number. FALSE otherwise
 		*/
-		static bool StringToIntRect(const char delimiter, const std::string &str, sf::IntRect &dst);
+		static bool stringToIntRect(const char delimiter, const std::string &str, sf::IntRect &dst);
 
 		/**
 		 * \brief Creates a bounding box of a circle, storing result to dst
 		 */
-		static void CircleToIntRect(const dgm::Circle &circ, sf::IntRect &dst);
+		static void circleToIntRect(const dgm::Circle &circ, sf::IntRect &dst);
 	};
 }

@@ -8,12 +8,12 @@ namespace dgm {
 		App *app;
 
 	public:
-		virtual void Input() = 0;
-		virtual void Update() = 0;
-		virtual void Draw() = 0;
-		virtual bool Init() = 0;
+		virtual void input() = 0;
+		virtual void update() = 0;
+		virtual void draw() = 0;
+		virtual bool init() = 0;
 
-		void SetAppPointer(App *app) {
+		void setAppPointer(App *app) {
 			AppState::app = app;
 		}
 	};

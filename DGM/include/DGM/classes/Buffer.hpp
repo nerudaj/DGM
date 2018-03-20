@@ -112,7 +112,7 @@ namespace dgm {
 		}
 		
 		/**
-		 *  \brief Get index of first object
+		 *  \brief get index of first object
 		 *  
 		 *  \return 0
 		 *  
@@ -124,7 +124,7 @@ namespace dgm {
 		std::size_t Begin() const { return 0; }
 		
 		/**
-		 *  \brief Get index of last object + 1
+		 *  \brief get index of last object + 1
 		 *  
 		 *  \return size()
 		 *  
@@ -162,7 +162,7 @@ namespace dgm {
 		 *  
 		 *  \return TRUE on success, FALSE otherwise.
 		 */
-		bool Init (std::size_t size) {
+		bool init (std::size_t size) {
 			std::string ErrHeader ("dgm::Buffer::init(...) - ");
 			
 			if (arr != NULL) return error(ErrHeader + "Memory is already allocated. Free it with deinit() before attemting to reallocate.");
@@ -179,7 +179,7 @@ namespace dgm {
 		 *  
 		 *  \details Is automatically called from destructor.
 		 */
-		void Deinit() {
+		void deinit() {
 			if (arr != NULL) {
 				for (unsigned int i = 0; i < c; i++) delete arr[i];
 

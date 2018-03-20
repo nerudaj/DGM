@@ -11,17 +11,17 @@ void dgm::Tileset::draw(sf::RenderTarget & target, sf::RenderStates states) cons
 	target.draw(vertices, states);
 }
 
-void dgm::Tileset::ChangeTile_(float x, float y, uint32_t tileIndex, uint32_t tileValue) {
-	assert(tileValue < clip.GetFrameCount());
+void dgm::Tileset::changeTile_(float x, float y, uint32_t tileIndex, uint32_t tileValue) {
+	assert(tileValue < clip.getFrameCount());
 	assert(tileIndex < tileIndices.size());
 
 	tileIndices[tileIndex] = tileValue;
 
 	// Find textureRect for this tile
-	const sf::IntRect &frame = clip.GetFrame(tileValue);
-	sf::Vector2i voxSize = mesh.GetVoxelSize();
+	const sf::IntRect &frame = clip.getFrame(tileValue);
+	sf::Vector2i voxSize = mesh.getVoxelSize();
 
-	// Get a pointer to the current tile's quad
+	// get a pointer to the current tile's quad
 	sf::Vertex *quad = &vertices[tileIndex * 4];
 
 	// Define corners
@@ -37,45 +37,45 @@ void dgm::Tileset::ChangeTile_(float x, float y, uint32_t tileIndex, uint32_t ti
 	quad[3].texCoords = sf::Vector2f(float(frame.left), float(frame.top + frame.height));
 }
 
-bool dgm::Tileset::LoadFromParameters(const dgm::Clip & clip, const std::vector<int>& imageData, const std::vector<int>& collisionData, const sf::Vector2i &size) {
+bool dgm::Tileset::loadFromParameters(const dgm::Clip & clip, const std::vector<int>& imageData, const std::vector<int>& collisionData, const sf::Vector2i &size) {
 	assert(collisionData.size() == imageData.size());
 	assert(collisionData.size() == size.x * size.y);
 
 	Tileset::clip = clip;
-	mesh.SetVoxelSize(clip.GetFrameSize());
-	mesh.SetDataSize(size);
+	mesh.setVoxelSize(clip.getFrameSize());
+	mesh.setDataSize(size);
 
 	for (int i = 0; i < size.x * size.y; i++) {
 		mesh[i] = collisionData[i];
 	}
 	tileIndices.resize(imageData.size());
 
-	// Initialize vertex array
+	// initialize vertex array
 	vertices.clear();
 	vertices.setPrimitiveType(sf::Quads);
 	vertices.resize(size.x * size.y * 4);
 
 	// Loop over all tiles
-	for (int y = 0; y < mesh.GetDataSize().y; y++) {
-		for (int x = 0; x < mesh.GetDataSize().x; x++) {
-			ChangeTile(x, y, imageData[y * size.x + x]);
+	for (int y = 0; y < mesh.getDataSize().y; y++) {
+		for (int x = 0; x < mesh.getDataSize().x; x++) {
+			changeTile(x, y, imageData[y * size.x + x]);
 		}
 	}
 
 	return true;
 }
 
-bool dgm::Tileset::LoadFromFile(const std::string & filename) {
-	std::cerr << "Tileset::LoadFromFile(...) - TODO Implement\n";
+bool dgm::Tileset::loadFromFile(const std::string & filename) {
+	std::cerr << "Tileset::loadFromFile(...) - TODO Implement\n";
 	return false;
 }
 
-bool dgm::Tileset::SaveToFile(const std::string & filename, bool compressed = false) {
-	std::cerr << "Tileset::SaveToFile(...) - TODO Implement\n";
+bool dgm::Tileset::saveToFile(const std::string & filename, bool compressed) {
+	std::cerr << "Tileset::saveToFile(...) - TODO Implement\n";
 	return false;
 }
 
-void dgm::Tileset::SetTexture(sf::Texture * texture) {
+void dgm::Tileset::setTexture(sf::Texture * texture) {
 	assert(texture != NULL);
 	texturePtr = texture;
 }

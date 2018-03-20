@@ -6,17 +6,17 @@ namespace dgm {
 	class Time {
 	protected:
 		sf::Clock clock;
-		sf::Time elapsed;
-		float deltaTime;
+		sf::Time elapsedp;
+		float deltaTimep;
 
 	public:
-		float DeltaTime() const { return deltaTime; }
+		float deltaTime() const { return deltaTimep; }
 
-		const sf::Time &Elapsed() const { return elapsed; }
+		const sf::Time &elapsed() const { return elapsedp; }
 
-		void Reset() {
-			elapsed = clock.restart();
-			deltaTime = elapsed.asSeconds();
+		void reset() {
+			elapsedp = clock.restart();
+			deltaTimep = elapsedp.asSeconds();
 		}
 	};
 }

@@ -2,25 +2,25 @@
 #include <fstream>
 #include <regex>
 
-bool dgm::Config::IsSectionHeader(const std::string &line) {
+bool dgm::Config::isSectionHeader(const std::string &line) {
 	return std::regex_match (line, std::regex("\\[.+\\]"));
 }
 
-bool dgm::Config::IsKeyValuePair(const std::string &line) {
+bool dgm::Config::isKeyValuePair(const std::string &line) {
 	return std::regex_match (line, std::regex(".+=.+"));
 }
 
-void dgm::Config::GetSectionIdentifier(const std::string &line, std::string &dst) {
+void dgm::Config::getSectionIdentifier(const std::string &line, std::string &dst) {
 	dst = line.substr(1, line.length() - 2);
 }
 
-void dgm::Config::GetKeyValue(const std::string &line, std::string &dstKey, std::string &dstValue) {
+void dgm::Config::getKeyValue(const std::string &line, std::string &dstKey, std::string &dstValue) {
 	auto delimiterPosition = line.find('=');
 	dstKey = line.substr(0, delimiterPosition);
 	dstValue = line.substr(delimiterPosition + 1, line.length() - delimiterPosition - 1);
 }
 
-bool dgm::Config::Load(const std::string &filename) {
+bool dgm::Config::loadFromFile(const std::string &filename) {
 	config.clear();
 	std::ifstream load(filename);
 	
@@ -30,11 +30,11 @@ bool dgm::Config::Load(const std::string &filename) {
 	std::string section = "root";
 	std::string key, value;
 	while (std::getline(load, line)) {
-		if (IsSectionHeader(line)) {
-			GetSectionIdentifier(line, section);
+		if (isSectionHeader(line)) {
+			getSectionIdentifier(line, section);
 		}
-		else if (IsKeyValuePair(line)) {
-			GetKeyValue(line, key, value);
+		else if (isKeyValuePair(line)) {
+			getKeyValue(line, key, value);
 			config[section][key] = value;
 		}
 	}
@@ -45,7 +45,7 @@ bool dgm::Config::Load(const std::string &filename) {
 	return true;
 }
 
-bool dgm::Config::Save(const std::string &filename) {
+bool dgm::Config::saveToFile(const std::string &filename) {
 	std::ofstream save (filename);
 	
 	if (!save.good()) return false;
@@ -54,7 +54,7 @@ bool dgm::Config::Save(const std::string &filename) {
 		save << "[" << section.first << "]\n";
 		
 		for (auto item : section.second) {
-			save << item.first << "=" << item.second.AsString() << "\n";
+			save << item.first << "=" << item.second.asString() << "\n";
 		}
 		
 		save << "\n";

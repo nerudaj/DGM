@@ -6,17 +6,17 @@
 namespace dgm {
 	class ConfigSection : public std::map<std::string, ConfigItem> {
 	public:
-		bool HasKey(const std::string &key) { return find(key) != end(); }
+		bool hasKey(const std::string &key) { return find(key) != end(); }
 	};
 
 	class Config {
 	protected:
 		std::map<std::string, ConfigSection> config;
 
-		static bool IsSectionHeader(const std::string &line);
-		static bool IsKeyValuePair(const std::string &line);
-		static void GetSectionIdentifier(const std::string &line, std::string &dst);
-		static void GetKeyValue(const std::string &line, std::string &dstKey, std::string &dstValue);
+		static bool isSectionHeader(const std::string &line);
+		static bool isKeyValuePair(const std::string &line);
+		static void getSectionIdentifier(const std::string &line, std::string &dst);
+		static void getKeyValue(const std::string &line, std::string &dstKey, std::string &dstValue);
 
 	public:
 		const ConfigSection &operator[](const std::string &section) const {
@@ -28,10 +28,10 @@ namespace dgm {
 			return tmp;
 		}
 
-		bool HasSection(const std::string &section) const { return (config.find(section) != config.end()); }
+		bool hasSection(const std::string &section) const { return (config.find(section) != config.end()); }
 
-		bool Load(const std::string &filename);
-		bool Save(const std::string &filename);
+		bool loadFromFile(const std::string &filename);
+		bool saveToFile(const std::string &filename);
 	};
 
 }

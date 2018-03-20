@@ -5,7 +5,7 @@ inline bool isJoystickAxis(dgm::X360 joy) {
 	return value >= 100; // 100 is where axii start
 }
 
-float dgm::Controller::GetJoystickAxis(const dgm::X360 joy) const {
+float dgm::Controller::getJoystickAxis(const dgm::X360 joy) const {
 	float rtn;
 
 	switch (joy) {
@@ -63,11 +63,11 @@ float dgm::Controller::GetJoystickAxis(const dgm::X360 joy) const {
 	return rtn;
 }
 
-bool dgm::Controller::KeyPressed(const int code) {
+bool dgm::Controller::keyPressed(const int code) {
 	if (sf::Keyboard::isKeyPressed(bindings[code].key))
 		return (not bindings[code].released);
 	else if (sf::Joystick::isConnected(index) and bindings[code].joy != dgm::X360::Empty) {
-		if (isJoystickAxis(bindings[code].joy) and (GetJoystickAxis(bindings[code].joy) > 0.f))
+		if (isJoystickAxis(bindings[code].joy) and (getJoystickAxis(bindings[code].joy) > 0.f))
 			return (not bindings[code].released);
 		else if (sf::Joystick::isButtonPressed(index, int(bindings[code].joy)))
 			return (not bindings[code].released);
@@ -76,13 +76,13 @@ bool dgm::Controller::KeyPressed(const int code) {
 	return (bindings[code].released = false);
 }
 
-bool dgm::Controller::KeyPressed(const int code, float & intensity) const {
+bool dgm::Controller::keyPressed(const int code, float & intensity) const {
 	intensity = 0.f;
 	if (sf::Keyboard::isKeyPressed(bindings[code].key))
 		intensity = 100.f;
 	else if (sf::Joystick::isConnected(index) and bindings[code].joy != dgm::X360::Empty) {
 		if (isJoystickAxis(bindings[code].joy))
-			intensity = GetJoystickAxis(bindings[code].joy);
+			intensity = getJoystickAxis(bindings[code].joy);
 		else if (sf::Joystick::isButtonPressed(index, int(bindings[code].joy)))
 			intensity = 100.f;
 	}
@@ -90,11 +90,11 @@ bool dgm::Controller::KeyPressed(const int code, float & intensity) const {
 	return (intensity > 0.f);
 }
 
-void dgm::Controller::ReleaseKey(const int code) {
+void dgm::Controller::releaseKey(const int code) {
 	bindings[code].released = true;
 }
 
-void dgm::Controller::SetBinding(const int code, sf::Keyboard::Key key, dgm::X360 joy) {
+void dgm::Controller::setBinding(const int code, sf::Keyboard::Key key, dgm::X360 joy) {
 	if (bindings.size() <= size_t(code)) {
 		bindings.resize(code + 1);
 	}
@@ -104,11 +104,11 @@ void dgm::Controller::SetBinding(const int code, sf::Keyboard::Key key, dgm::X36
 	bindings[code].joy = joy;
 }
 
-void dgm::Controller::SetDeadzone(const float threshold) {
+void dgm::Controller::setDeadzone(const float threshold) {
 	deadzone = threshold;
 }
 
-void dgm::Controller::SetIndex(const int index) {
+void dgm::Controller::setIndex(const int index) {
 	Controller::index = index;
 }
 

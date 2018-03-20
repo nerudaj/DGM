@@ -1,41 +1,41 @@
 #include <DGM\dgm.hpp>
 
-void dgm::App::PushState(dgm::AppState * state) {
+void dgm::App::pushState(dgm::AppState * state) {
 	states.push(state);
 
-	if (not TopState()->Init()) {
+	if (not topState()->init()) {
 		std::cerr << "ERROR:App: State was not initialized properly.\n";
-		PopState();
+		popState();
 	}
-	TopState()->SetAppPointer(this);
+	topState()->setAppPointer(this);
 }
 
-void dgm::App::PopState() {
+void dgm::App::popState() {
 	states.pop();
 }
 
-dgm::AppState * dgm::App::TopState() {
+dgm::AppState * dgm::App::topState() {
 	if (states.empty()) return nullptr;
 
 	return states.top();
 }
 
-void dgm::App::Init() {
+void dgm::App::init() {
 }
 
-void dgm::App::Deinit() {
+void dgm::App::deinit() {
 	while (not states.empty()) {
-		PopState();
+		popState();
 	}
 }
 
-void dgm::App::Run() {
-	while (window.IsOpen() && not states.empty()) {
-		AppState *top = TopState();
+void dgm::App::run() {
+	while (window.isOpen() && not states.empty()) {
+		AppState *top = topState();
 
-		top->Input();
-		top->Update();
-		top->Draw();
-		time.Reset();
+		top->input();
+		top->update();
+		top->draw();
+		time.reset();
 	}
 }

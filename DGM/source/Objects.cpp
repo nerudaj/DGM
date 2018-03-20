@@ -8,82 +8,82 @@
 // **************
 // *** CIRCLE ***
 // **************
-const sf::Vector2f &dgm::Circle::GetPosition() const { return position; }
+const sf::Vector2f &dgm::Circle::getPosition() const { return position; }
 
-const float dgm::Circle::GetRadius() const { return radius; }
+const float dgm::Circle::getRadius() const { return radius; }
 		
-void dgm::Circle::SetPosition(const float x, const float y) {
+void dgm::Circle::setPosition(const float x, const float y) {
 	position.x = x;
 	position.y = y;
 }
 
-void dgm::Circle::SetPosition(const sf::Vector2f &position) { Circle::position = position; }
+void dgm::Circle::setPosition(const sf::Vector2f &position) { Circle::position = position; }
 
-void dgm::Circle::SetRadius(const float radius) { Circle::radius = radius; }
+void dgm::Circle::setRadius(const float radius) { Circle::radius = radius; }
 
-void dgm::Circle::Move(const float x, const float y) {
+void dgm::Circle::move(const float x, const float y) {
 	position.x += x;
 	position.y += y;
 }
 
-void dgm::Circle::Move(const sf::Vector2f &forward) {
+void dgm::Circle::move(const sf::Vector2f &forward) {
 	position.x += forward.x;
 	position.y += forward.y;
 }
 
 dgm::Circle::Circle() {
-	SetPosition(0.f, 0.f);
+	setPosition(0.f, 0.f);
 	radius = 0.f;
 }
 
-dgm::Circle::Circle(const float x, const float y) { SetPosition(x, y); }
-dgm::Circle::Circle(const sf::Vector2f &position) { SetPosition(position); }
+dgm::Circle::Circle(const float x, const float y) { setPosition(x, y); }
+dgm::Circle::Circle(const sf::Vector2f &position) { setPosition(position); }
 dgm::Circle::~Circle() {}
 
 // ************
 // *** RECT ***
 // ************
-const sf::Vector2f &dgm::Rect::GetPosition() const { return position; }
+const sf::Vector2f &dgm::Rect::getPosition() const { return position; }
 
-const sf::Vector2f &dgm::Rect::GetSize() const { return size; }
+const sf::Vector2f &dgm::Rect::getSize() const { return size; }
 
-void dgm::Rect::SetPosition(const float x, const float y) {
+void dgm::Rect::setPosition(const float x, const float y) {
 	position.x = x;
 	position.y = y;
 }
 
-void dgm::Rect::SetPosition(const sf::Vector2f &position) { Rect::position = position; }
+void dgm::Rect::setPosition(const sf::Vector2f &position) { Rect::position = position; }
 
-void dgm::Rect::Move(const float x, const float y) {
+void dgm::Rect::move(const float x, const float y) {
 	position.x += x;
 	position.y += y;
 }
 
-void dgm::Rect::Move(const sf::Vector2f &forward) {
+void dgm::Rect::move(const sf::Vector2f &forward) {
 	position.x += forward.x;
 	position.y += forward.y;
 }
 
-void dgm::Rect::SetSize(const float width, const float height) {
+void dgm::Rect::setSize(const float width, const float height) {
 	size.x = width;
 	size.y = height;
 }
 
-void dgm::Rect::SetSize(const sf::Vector2f &size) { Rect::size = size; }
+void dgm::Rect::setSize(const sf::Vector2f &size) { Rect::size = size; }
 
 dgm::Rect::Rect() {
-	SetPosition(0.f, 0.f);
-	SetSize(0.f, 0.f);
+	setPosition(0.f, 0.f);
+	setSize(0.f, 0.f);
 }
 
 dgm::Rect::Rect(const float x, const float y, const float width, const float height) {
-	SetPosition(x, y);
-	SetSize(width, height);
+	setPosition(x, y);
+	setSize(width, height);
 }
 
 dgm::Rect::Rect(const sf::Vector2f &position, const sf::Vector2f &size) {
-	SetPosition(position);
-	SetSize(size);
+	setPosition(position);
+	setSize(size);
 }
 
 dgm::Rect::~Rect() {
@@ -111,40 +111,40 @@ int &dgm::Mesh::operator[] (std::size_t index) { return data[index]; }
 
 const int &dgm::Mesh::operator[] (std::size_t index) const { return data[index]; }
 
-const sf::Vector2f &dgm::Mesh::GetPosition() const { return position; }
+const sf::Vector2f &dgm::Mesh::getPosition() const { return position; }
 
-void dgm::Mesh::SetPosition(const float x, const float y) {
+void dgm::Mesh::setPosition(const float x, const float y) {
 	position.x = x;
 	position.y = y;
 }
 
-const sf::Vector2i &dgm::Mesh::GetDataSize() const { return dataSize; }
+const sf::Vector2i &dgm::Mesh::getDataSize() const { return dataSize; }
 
-const sf::Vector2i &dgm::Mesh::GetVoxelSize() const { return voxelSize; }
+const sf::Vector2i &dgm::Mesh::getVoxelSize() const { return voxelSize; }
 
-void dgm::Mesh::SetPosition(const sf::Vector2f &position) { Mesh::position = position; }
+void dgm::Mesh::setPosition(const sf::Vector2f &position) { Mesh::position = position; }
 
-void dgm::Mesh::SetVoxelSize(const int width, const int height) {
+void dgm::Mesh::setVoxelSize(const int width, const int height) {
 	voxelSize.x = width;
 	voxelSize.y = height;
 }
 
-void dgm::Mesh::SetVoxelSize(const sf::Vector2i &size) { voxelSize = size; }
+void dgm::Mesh::setVoxelSize(const sf::Vector2i &size) { voxelSize = size; }
 
-bool dgm::Mesh::SetDataSize(const int width, const int height) { return SetDataSize(sf::Vector2i(width, height)); }
+bool dgm::Mesh::setDataSize(const int width, const int height) { return setDataSize(sf::Vector2i(width, height)); }
 
-bool dgm::Mesh::SetDataSize(const sf::Vector2i &size) {
+bool dgm::Mesh::setDataSize(const sf::Vector2i &size) {
 	Free(); // Frees *data if necessary
 	dataSize = size;
 	return Alloc();// Allocates new memory
 }
 
-void dgm::Mesh::Move(const float x, const float y) {
+void dgm::Mesh::move(const float x, const float y) {
 	position.x += x;
 	position.y += y;
 }
 
-void dgm::Mesh::Move(const sf::Vector2f &forward) {
+void dgm::Mesh::move(const sf::Vector2f &forward) {
 	position.x += forward.x;
 	position.y += forward.y;
 }

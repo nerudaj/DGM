@@ -10,11 +10,11 @@ namespace dgm {
 		sf::Vector2i size;
 
 	public:
-		const sf::IntRect &GetFrame(const std::size_t index) const { return frames[index]; }
-		std::size_t GetFrameCount() const { return frames.size(); }
-		const sf::Vector2i &GetFrameSize() const { return size; }
+		const sf::IntRect &getFrame(const std::size_t index) const { return frames[index]; }
+		std::size_t getFrameCount() const { return frames.size(); }
+		const sf::Vector2i &getFrameSize() const { return size; }
 
-		bool Init(const sf::Vector2i &frameSize, const sf::IntRect &boundaries, unsigned int frameCount = 0, const sf::Vector2i &frameOffset = sf::Vector2i(0, 0));
+		bool init(const sf::Vector2i &frameSize, const sf::IntRect &boundaries, unsigned int frameCount = 0, const sf::Vector2i &frameOffset = sf::Vector2i(0, 0));
 
 		Clip();
 		Clip(const sf::Vector2i &frameSize, const sf::IntRect &boundaries, unsigned int frameCount = 0, const sf::Vector2i &frameOffset = sf::Vector2i(0, 0));

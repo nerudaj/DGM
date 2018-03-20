@@ -2,19 +2,19 @@
 #include <ciso646>
 #include <cstdlib>
 
-long dgm::ConfigItem::AsInt() const {
+long dgm::ConfigItem::asInt() const {
 	return strtol(value.c_str(), NULL, 10);
 }
 
-float dgm::ConfigItem::AsFloat() const {
+float dgm::ConfigItem::asFloat() const {
 	return strtof(value.c_str(), NULL);
 }
 
-const std::string &dgm::ConfigItem::AsString() const {
+const std::string &dgm::ConfigItem::asString() const {
 	return value;
 }
 
-bool dgm::ConfigItem::AsBool() const {
+bool dgm::ConfigItem::asBool() const {
 	if (value == "false" or value == "0") return false;
 	
 	return true;

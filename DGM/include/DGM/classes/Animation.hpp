@@ -14,7 +14,7 @@ namespace dgm {
 		 *  
 		 *  \details TODO: Syntax
 		 */
-		bool LoadFromFile(const std::string &name);
+		bool loadFromFile(const std::string &name);
 		
 		/**
 		 *  \brief Add state to database
@@ -23,7 +23,7 @@ namespace dgm {
 		 *  \param [in] clip Clip object describing the frames
 		 *  \return TRUE on success, FALSE if state with stateName already exists
 		 */
-		bool AddState(const std::string &stateName, const dgm::Clip &clip);
+		bool addState(const std::string &stateName, const dgm::Clip &clip);
 	};
 	
 	/**
@@ -40,7 +40,7 @@ namespace dgm {
 		AnimationData *animations; ///< Database of animation state
 		AnimationData::iterator currentState; ///< Iterator to selected animation state
 		
-		void Reset();
+		void reset();
 		void UpdateSprite();
 		
 	public:
@@ -50,7 +50,7 @@ namespace dgm {
 		};
 	
 		/**
-		 *  \brief Update animation counters
+		 *  \brief update animation counters
 		 *  
 		 *  \param [in] time Time elapsed since last call to this method
 		 *  \return TRUE if animation continues, FALSE if animation ended
@@ -58,21 +58,21 @@ namespace dgm {
 		 *  \details Animation can only end when the current state was set as not
 		 *  looping.
 		 */
-		bool Update(const dgm::Time &time);
+		bool update(const dgm::Time &time);
 		
 		/**
 		 *  \brief Bind sprite to animation object
 		 *  
 		 *  \param [in] sprite Pointer to valid sprite object
 		 */
-		void SetSprite(sf::Sprite *sprite);
+		void setSprite(sf::Sprite *sprite);
 		
 		/**
 		 *  \brief Set speed of animation
 		 *  
 		 *  \param [in] fps How many frames per sec should happen
 		 */
-		void SetSpeed(int fps);
+		void setSpeed(int fps);
 		
 		/**
 		 *  \brief Change animation state
@@ -83,20 +83,20 @@ namespace dgm {
 		 *  
 		 *  \details If state was not found, previous state is still running.
 		 *  If flags are set to RunOnce, animation will end after passing last
-		 *  frame and Update will return FALSE. With Looping, animation will start
-		 *  over by itself and Update always returns TRUE.
+		 *  frame and update will return FALSE. With Looping, animation will start
+		 *  over by itself and update always returns TRUE.
 		 */
-		bool SetState(const std::string &state, int flags = dgm::Animation::Flags::Looping);
+		bool setState(const std::string &state, int flags = dgm::Animation::Flags::Looping);
 		
 		/**
-		 *  \brief Get number of frames per second
+		 *  \brief get number of frames per second
 		 */
-		int GetSpeed() const { return 1000 / timePerFrame.asMilliseconds(); }
+		int getSpeed() const { return 1000 / timePerFrame.asMilliseconds(); }
 		
 		/**
-		 *  \brief Get name of selected state
+		 *  \brief get name of selected state
 		 */
-		const std::string &GetState() const { return currentState->first; }
+		const std::string &getState() const { return currentState->first; }
 		
 		/**
 		 *  \brief Load animation database from file
@@ -104,10 +104,10 @@ namespace dgm {
 		 *  \param [in] filename File with data to load
 		 *  \return TRUE on success, FALSE otherwise
 		 */
-		bool LoadFromFile(const std::string &filename);
+		bool loadFromFile(const std::string &filename);
 		
 		/**
-		 *  \brief Initialize object from existing database
+		 *  \brief initialize object from existing database
 		 *  
 		 *  \param [in] data Initialized animation database
 		 *  \return TRUE on success, FALSE otherwise
@@ -117,14 +117,14 @@ namespace dgm {
 		 *  ResourceManager and/or want to initialize a lot of animation objects
 		 *  with the same data, saving on memory.
 		 */
-		bool LoadFromMemory(dgm::AnimationData *data);
+		bool loadFromMemory(dgm::AnimationData *data);
 		
 		/**
 		 *  \brief Clear the memory
 		 *  
 		 *  \details This is called automatically by destructor
 		 */
-		void Deinit();
+		void deinit();
 		
 		Animation();
 		~Animation();

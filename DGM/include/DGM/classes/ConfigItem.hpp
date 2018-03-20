@@ -9,10 +9,10 @@ namespace dgm {
 		std::string value;
 
 	public:
-		long AsInt() const;
-		float AsFloat() const;
-		const std::string &AsString() const;
-		bool AsBool() const;
+		long asInt() const;
+		float asFloat() const;
+		const std::string &asString() const;
+		bool asBool() const;
 
 		ConfigItem &operator=(const char *value);
 		ConfigItem &operator=(const std::string &value);

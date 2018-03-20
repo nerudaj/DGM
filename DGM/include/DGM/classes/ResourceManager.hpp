@@ -20,7 +20,7 @@ namespace dgm {
 		 *  \details Resource identifier is basically its filename without extension.
 		 *  This method also removes prepending slashes of folder path.
 		 */
-		void ResourceName(const std::string &filename, std::string &name);
+		void resourceName(const std::string &filename, std::string &name);
 		
 		/**
 		 *  \brief Load resource into manager
@@ -29,7 +29,7 @@ namespace dgm {
 		 *  \return TRUE on success, FALSE otherwise
 		 */
 		template<typename T>
-		bool LoadResource(const std::string &filename) {
+		bool loadResource(const std::string &filename) {
 			T* res = new T;
 			if (res == nullptr) return false;
 
@@ -39,20 +39,20 @@ namespace dgm {
 			}
 			
 			std::string name;
-			ResourceName(filename, name);
+			resourceName(filename, name);
 			database[name] = res;
 			
 			return true;
 		}
 		
 		/**
-		 *  \brief Get resource pointer
+		 *  \brief get resource pointer
 		 *  
 		 *  \param [in] name Identifier of the resource
 		 *  \return nullptr if name was not found, pointer to resource otherwise
 		 */
 		template<typename T>
-		T *Get(const std::string &name) {
+		T *get(const std::string &name) {
 			if (database.find(name) == database.end()) return nullptr;
 
 			return (T*)(database.at(name));
@@ -65,10 +65,10 @@ namespace dgm {
 		 *  \param [in] type Type of resource
 		 *  \return TRUE on success, FALSE otherwise
 		 */
-		bool LoadFromDir(const std::string &foldername, dgm::ResourceManager::Type type);
+		bool loadFromDir(const std::string &foldername, dgm::ResourceManager::Type type);
 		
 		/**
-		 *  \brief Initialize ResourceManager from Config
+		 *  \brief initialize ResourceManager from Config
 		 *  
 		 *  \param [in] config Valid loaded config
 		 *  \return TRUE on success, FALSE otherwise
@@ -77,7 +77,7 @@ namespace dgm {
 		 *  key autoloadDirectories which has as a value list of folder paths
 		 *  separated by a colon
 		 */
-		bool Initialize(const dgm::Config &config);
+		bool init(const dgm::Config &config);
 		
 		ResourceManager();
 		~ResourceManager();

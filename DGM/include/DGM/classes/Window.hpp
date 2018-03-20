@@ -6,27 +6,27 @@ namespace dgm {
 	class Window {
 	protected:
 		sf::RenderWindow window;
-		bool isFullscreen;
+		bool isFullscreen_;
 		sf::Vector2u size;
 		std::string title;
 		int style;
 
 	public:
-		void Open(const dgm::Config &config);
-		void Open(const sf::Vector2u &resolution, const std::string &title, const bool fullscreen);
-		void Close();
-		void Close(dgm::Config &config);
-		bool PollEvent(sf::Event &event) { return window.pollEvent(event); }
-		void ToggleFullscreen();
+		void open(const dgm::Config &config);
+		void open(const sf::Vector2u &resolution, const std::string &title, const bool fullscreen);
+		void close();
+		void close(dgm::Config &config);
+		bool pollEvent(sf::Event &event) { return window.pollEvent(event); }
+		void toggleFullscreen();
 		
-		bool IsOpen() const { return window.isOpen(); }
-		bool IsFullscreen() const { return isFullscreen; }
-		const sf::Vector2u &GetSize() const { return size; }
-		const sf::RenderWindow &GetWindowContext() { return window; }
+		bool isOpen() const { return window.isOpen(); }
+		bool isFullscreen() const { return isFullscreen_; }
+		const sf::Vector2u &getSize() const { return size; }
+		const sf::RenderWindow &getWindowContext() { return window; }
 
-		void BeginDraw(const sf::Color &color = sf::Color::Black);
-		void Draw(sf::Drawable &drawable);
-		void EndDraw();
+		void beginDraw(const sf::Color &color = sf::Color::Black);
+		void draw(sf::Drawable &drawable);
+		void endDraw();
 
 		Window() {}
 		~Window() {}

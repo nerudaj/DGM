@@ -8,7 +8,7 @@
 using namespace dgm;
 using std::size_t;
 
-void Strings::Split(const char delimiter, const std::string &src, std::vector<std::string> &dst) {
+void Strings::split(const char delimiter, const std::string &src, std::vector<std::string> &dst) {
 	if (not dst.empty()) dst.clear(); // Make sure destination vector is empty
 	
 	std::size_t pos = 0; // Index of start of each substring
@@ -37,7 +37,7 @@ void Strings::Split(const char delimiter, const std::string &src, std::vector<st
 
 /*
 LEGACY CODE (slow):
-void Strings::Split(const char delimiter, const std::string &src, std::vector<std::string> &dst) {
+void Strings::split(const char delimiter, const std::string &src, std::vector<std::string> &dst) {
 	if (not dst.empty())
 		dst.clear();
 	
@@ -66,7 +66,7 @@ void Strings::Split(const char delimiter, const std::string &src, std::vector<st
 		dst.push_back(buffer);
 }*/
 
-void Strings::ReplaceAll(std::string &str, const std::string &from, const std::string &to) {
+void Strings::replaceAll(std::string &str, const std::string &from, const std::string &to) {
 	if(from.empty()) return;
 	
 	size_t start_pos = 0;

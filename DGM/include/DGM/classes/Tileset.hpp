@@ -15,7 +15,7 @@ namespace dgm {
 		dgm::Mesh mesh;
 		dgm::Clip clip;
 
-		void ChangeTile_(float x, float y, uint32_t tileIndex, uint32_t tileValue);
+		void changeTile_(float x, float y, uint32_t tileIndex, uint32_t tileValue);
 
 	public:
 		/**
@@ -30,11 +30,11 @@ namespace dgm {
 		 *  must index valid clip frame. New value is stored and will be exported by
 		 *  SaveToFile() method.
 		 *  
-		 *  \pre LoadFromFile or LoadFromParameters was successfully called.
+		 *  \pre loadFromFile or LoadFromParameters was successfully called.
 		 */
-		void ChangeTile(uint32_t tileX, uint32_t tileY, uint32_t tileValue) {
-			assert(tileX < mesh.GetDataSize().x && tileY < mesh.GetDataSize().y);
-			ChangeTile_(float(tileX), float(tileY), tileY * mesh.GetDataSize().x + tileX, tileValue);
+		void changeTile(uint32_t tileX, uint32_t tileY, uint32_t tileValue) {
+			assert(tileX < uint32_t(mesh.getDataSize().x) && tileY < uint32_t(mesh.getDataSize().y));
+			changeTile_(float(tileX), float(tileY), tileY * mesh.getDataSize().x + tileX, tileValue);
 		}
 
 		/**
@@ -48,15 +48,15 @@ namespace dgm {
 		 *  must index valid clip frame. New value is stored and will be exported by
 		 *  SaveToFile() method.
 		 *  
-		 *  \pre LoadFromFile or LoadFromParameters was successfully called.
+		 *  \pre loadFromFile or LoadFromParameters was successfully called.
 		 */
-		void ChangeTile(const sf::Vector2u &tilePosition, uint32_t tileValue) {
-			assert(tilePosition.x < mesh.GetDataSize().x && tilePosition.y < mesh.GetDataSize().y);
-			ChangeTile_(float(tilePosition.x), float(tilePosition.y), tilePosition.y * mesh.GetDataSize().x + tilePosition.x, tileValue);
+		void changeTile(const sf::Vector2u &tilePosition, uint32_t tileValue) {
+			assert(tilePosition.x < uint32_t(mesh.getDataSize().x) && tilePosition.y < uint32_t(mesh.getDataSize().y));
+			changeTile_(float(tilePosition.x), float(tilePosition.y), tilePosition.y * mesh.getDataSize().x + tilePosition.x, tileValue);
 		}
 
 		/**
-		 *  \brief Initialize object from parameters
+		 *  \brief initialize object from parameters
 		 *  
 		 *  \param [in] clip Initialized clip object
 		 *  \param [in] imageData Array of tile frame indices
@@ -67,7 +67,7 @@ namespace dgm {
 		 *  \details Every object will be copied, so parameters can seize to exist
 		 *  after this call.
 		 */
-		bool LoadFromParameters(const dgm::Clip &clip, const std::vector<int> &imageData, const std::vector<int> &collisionData, const sf::Vector2i &size);
+		bool loadFromParameters(const dgm::Clip &clip, const std::vector<int> &imageData, const std::vector<int> &collisionData, const sf::Vector2i &size);
 
 		/**
 		 *  \brief Load tileset data from the file 
@@ -78,7 +78,7 @@ namespace dgm {
 		 *  \details This will load clip, mesh and size settings as well as the
 		 *  data values for tile indices and collision data.
 		 */
-		bool LoadFromFile(const std::string &filename);
+		bool loadFromFile(const std::string &filename);
 
 		/**
 		 *  \brief Export data to file
@@ -88,9 +88,9 @@ namespace dgm {
 		 *  \return TRUE on success, FALSE otherwise
 		 *  
 		 *  \details This will export all internal data to a file. Data exported
-		 *  this way can be loaded with LoadFromFile
+		 *  this way can be loaded with loadFromFile
 		 */
-		bool SaveToFile(const std::string &filename, bool compressed = false);
+		bool saveToFile(const std::string &filename, bool compressed = false);
 
 		/**
 		 *  \brief Set tileset texture
@@ -101,11 +101,11 @@ namespace dgm {
 		 *  Pointers retrieved from ResourceManager can be directly passed to
 		 *  this function.
 		 */
-		void SetTexture(sf::Texture *texture);
+		void setTexture(sf::Texture *texture);
 
-		const dgm::Mesh &GetMesh() const { return mesh; }
+		const dgm::Mesh &getMesh() const { return mesh; }
 
-		dgm::Mesh &GetMesh() { return mesh; }
+		dgm::Mesh &getMesh() { return mesh; }
 
 		Tileset();
 		~Tileset();

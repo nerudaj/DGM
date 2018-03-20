@@ -2,7 +2,7 @@
 #include <cassert>
 #include <fstream>
 
-bool dgm::AnimationData::LoadFromFile(const std::string &name) {
+bool dgm::AnimationData::loadFromFile(const std::string &name) {
 	std::ifstream load(name);
 	std::string buffer;
 	std::vector<std::string> split;
@@ -26,43 +26,43 @@ bool dgm::AnimationData::LoadFromFile(const std::string &name) {
 			}
 			else if (buffer == "end") {
 				if (stateName.empty()) {
-					std::cerr << "AnimationData::LoadFromFile(...) - Undefined state name\n";
+					std::cerr << "AnimationData::loadFromFile(...) - Undefined state name\n";
 					throw 1;
 				}
 				else if (boundaries == sf::IntRect(0, 0, 0, 0)) {
-					std::cerr << "AnimationData::LoadFromFile(...) - Undefined boundaries\n";
+					std::cerr << "AnimationData::loadFromFile(...) - Undefined boundaries\n";
 					throw 1;
 				}
 
-				clip.Init(localFrameSize, boundaries, localFrameCount, globalFrameOffset);
+				clip.init(localFrameSize, boundaries, localFrameCount, globalFrameOffset);
 				(*this)[stateName] = clip;
 				state = 0;
 			}
 			else {
-				dgm::Strings::Split('=', buffer, split);
+				dgm::Strings::split('=', buffer, split);
 
 				if (split.size() != 2) {
-					std::cerr << "AnimationData::LoadFromFile(...) - Expected key=value, got " << buffer << "\n";
+					std::cerr << "AnimationData::loadFromFile(...) - Expected key=value, got " << buffer << "\n";
 					throw 1;
 				}
 
 				if (split[0] == "frameSize") {
-					if (state == 1 && !dgm::Conversion::StringToVector2i(':', split[1], localFrameSize)) {
-						std::cerr << "AnimationData::LoadFromFile(...) - Failed to parse frameSize (" << split[1] << ")\n";
+					if (state == 1 && !dgm::Conversion::stringToVector2i(':', split[1], localFrameSize)) {
+						std::cerr << "AnimationData::loadFromFile(...) - Failed to parse frameSize (" << split[1] << ")\n";
 						throw 1;
 					}
-					else if (state == 0 && !dgm::Conversion::StringToVector2i(':', split[1], globalFrameSize)) {
-						std::cerr << "AnimationData::LoadFromFile(...) - Failed to parse frameSize (" << split[1] << ")\n";
+					else if (state == 0 && !dgm::Conversion::stringToVector2i(':', split[1], globalFrameSize)) {
+						std::cerr << "AnimationData::loadFromFile(...) - Failed to parse frameSize (" << split[1] << ")\n";
 						throw 1;
 					}
 				}
 				else if (split[0] == "frameOffset") {
-					if (state == 1 && !dgm::Conversion::StringToVector2i(':', split[1], localFrameOffset)) {
-						std::cerr << "AnimationData::LoadFromFile(...) - Failed to parse frameOffset (" << split[1] << ")\n";
+					if (state == 1 && !dgm::Conversion::stringToVector2i(':', split[1], localFrameOffset)) {
+						std::cerr << "AnimationData::loadFromFile(...) - Failed to parse frameOffset (" << split[1] << ")\n";
 						throw 1;
 					}
-					else if (state == 0 && !dgm::Conversion::StringToVector2i(':', split[1], globalFrameOffset)) {
-						std::cerr << "AnimationData::LoadFromFile(...) - Failed to parse frameOffset (" << split[1] << ")\n";
+					else if (state == 0 && !dgm::Conversion::stringToVector2i(':', split[1], globalFrameOffset)) {
+						std::cerr << "AnimationData::loadFromFile(...) - Failed to parse frameOffset (" << split[1] << ")\n";
 						throw 1;
 					}
 				}
@@ -75,8 +75,8 @@ bool dgm::AnimationData::LoadFromFile(const std::string &name) {
 					}
 				}
 				else if (split[0] == "boundaries" && state == 1) {
-					if (!dgm::Conversion::StringToIntRect(':', split[1], boundaries)) {
-						std::cerr << "AnimationData::LoadFromFile(...) - Failed to parse boundaries (" << split[1] << ")\n";
+					if (!dgm::Conversion::stringToIntRect(':', split[1], boundaries)) {
+						std::cerr << "AnimationData::loadFromFile(...) - Failed to parse boundaries (" << split[1] << ")\n";
 						throw 1;
 					}
 				}
@@ -84,7 +84,7 @@ bool dgm::AnimationData::LoadFromFile(const std::string &name) {
 					stateName = split[1];
 				}
 				else {
-					std::cerr << "AnimationData::LoadFromFile(...) - Unknown key " << split[1] << "\n";
+					std::cerr << "AnimationData::loadFromFile(...) - Unknown key " << split[1] << "\n";
 					throw 1;
 				}
 			}
@@ -102,9 +102,9 @@ bool dgm::AnimationData::LoadFromFile(const std::string &name) {
 	return true;
 }
 
-bool dgm::AnimationData::AddState(const std::string &stateName, const dgm::Clip &clip) {
+bool dgm::AnimationData::addState(const std::string &stateName, const dgm::Clip &clip) {
 	if (this->find(stateName) == this->end()) {
-		std::cerr << "Animation::AddState - State named " << stateName << " already exists\n";
+		std::cerr << "Animation::addState - State named " << stateName << " already exists\n";
 		return false;
 	}
 	
@@ -112,22 +112,22 @@ bool dgm::AnimationData::AddState(const std::string &stateName, const dgm::Clip 
 	return true;
 }
 
-void dgm::Animation::Reset() {
+void dgm::Animation::reset() {
 	elapsed = sf::Time::Zero;
 	frameIndex = 0;
 }
 
 void dgm::Animation::UpdateSprite() {
-	boundSprite->setTextureRect(currentState->second.GetFrame(frameIndex));
+	boundSprite->setTextureRect(currentState->second.getFrame(frameIndex));
 }
 
-bool dgm::Animation::Update(const dgm::Time &time) {
-	elapsed += time.Elapsed();
+bool dgm::Animation::update(const dgm::Time &time) {
+	elapsed += time.elapsed();
 	if (elapsed > timePerFrame) {
 		elapsed -= timePerFrame;
 		
 		frameIndex++;
-		if (frameIndex == currentState->second.GetFrameCount()) {
+		if (frameIndex == currentState->second.getFrameCount()) {
 			frameIndex = 0;
 			if (not (flags & Flags::Looping)) {
 				return false;
@@ -140,32 +140,32 @@ bool dgm::Animation::Update(const dgm::Time &time) {
 	return true;
 }
 
-void dgm::Animation::SetSprite(sf::Sprite *sprite) {
+void dgm::Animation::setSprite(sf::Sprite *sprite) {
 	boundSprite = sprite;
 }
 
-void dgm::Animation::SetSpeed(int fps) {
+void dgm::Animation::setSpeed(int fps) {
 	timePerFrame = sf::milliseconds(1000 / fps);
 }
 
-bool dgm::Animation::SetState(const std::string &state, int flags) {
+bool dgm::Animation::setState(const std::string &state, int flags) {
 	currentState = animations->find(state);
 	if (currentState == animations->end()) return false;
 	
-	Reset();
+	reset();
 	Animation::flags = flags;
 	UpdateSprite();
 	
 	return true;
 }
 
-bool dgm::Animation::LoadFromFile(const std::string &filename) {
+bool dgm::Animation::loadFromFile(const std::string &filename) {
 	animations = new AnimationData;
 	if (animations == NULL) {
 		return false;
 	}
 	
-	if (not animations->LoadFromFile(filename)) {
+	if (not animations->loadFromFile(filename)) {
 		delete animations;
 		return false;
 	}
@@ -174,18 +174,18 @@ bool dgm::Animation::LoadFromFile(const std::string &filename) {
 	return true;
 }
 
-bool dgm::Animation::LoadFromMemory(dgm::AnimationData *data) {
+bool dgm::Animation::loadFromMemory(dgm::AnimationData *data) {
 	assert(data != NULL);
 	
 	if (mallocked) {
-		std::cerr << "Animation::LoadFromMemory - Memory already occupied\n";
+		std::cerr << "Animation::loadFromMemory - Memory already occupied\n";
 	}
 	
 	animations = data;
 	return true;
 }
 
-void dgm::Animation::Deinit() {
+void dgm::Animation::deinit() {
 	if (mallocked) {
 		delete animations;
 		animations = nullptr;
@@ -201,5 +201,5 @@ dgm::Animation::Animation() {
 }
 
 dgm::Animation::~Animation() {
-	Deinit();
+	deinit();
 }

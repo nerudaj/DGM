@@ -18,11 +18,11 @@ namespace dgm {
 		 *  \details dst is always cleared at the start of the function. Multiple delimiters one
 		 *  after each other are treated as one.
 		 */
-		static void Split(const char delimiter, const std::string &src, std::vector<std::string> &dst);
+		static void split(const char delimiter, const std::string &src, std::vector<std::string> &dst);
 		
 		/**
 		 *  \brief Replaces all occurences of from with to in str
 		 */
-		static void ReplaceAll(std::string &str, const std::string &from, const std::string &in);
+		static void replaceAll(std::string &str, const std::string &from, const std::string &in);
 	};
 }

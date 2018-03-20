@@ -15,11 +15,11 @@ namespace dgm {
 		Window window;
 		Time time;
 
-		void PushState(dgm::AppState *state);
-		void PopState();
-		dgm::AppState *TopState();
-		void Init();
-		void Deinit();
-		void Run();
+		void pushState(dgm::AppState *state);
+		void popState();
+		dgm::AppState *topState();
+		void init();
+		void deinit();
+		void run();
 	};
 };
