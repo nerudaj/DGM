@@ -70,7 +70,7 @@ bool dgm::Tileset::LoadFromFile(const std::string & filename) {
 	return false;
 }
 
-bool dgm::Tileset::SaveToFile(const std::string & filename) {
+bool dgm::Tileset::SaveToFile(const std::string & filename, bool compressed = false) {
 	std::cerr << "Tileset::SaveToFile(...) - TODO Implement\n";
 	return false;
 }
