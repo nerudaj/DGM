@@ -1,5 +1,4 @@
 #include <DGM\dgm.hpp>
-#include <cassert>
 
 void dgm::Tileset::draw(sf::RenderTarget & target, sf::RenderStates states) const {
 	// apply the transform
@@ -77,6 +76,7 @@ bool dgm::Tileset::SaveToFile(const std::string & filename) {
 }
 
 void dgm::Tileset::SetTexture(sf::Texture * texture) {
+	assert(texture != NULL);
 	texturePtr = texture;
 }
 

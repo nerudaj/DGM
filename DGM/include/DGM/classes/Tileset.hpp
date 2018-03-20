@@ -1,6 +1,7 @@
 #pragma once
 
 #include <DGM\dgm.hpp>
+#include <cassert>
 
 namespace dgm {
 	class Tileset : public sf::Drawable, public sf::Transformable {
@@ -17,8 +18,15 @@ namespace dgm {
 		void ChangeTile_(float x, float y, uint32_t tileIndex, uint32_t tileValue);
 
 	public:
-		void ChangeTile(uint32_t tileX, uint32_t tileY, uint32_t tileValue) { ChangeTile_(float(tileX), float(tileY), tileY * mesh.GetDataSize().x + tileX, tileValue); }
+		void ChangeTile(uint32_t tileX, uint32_t tileY, uint32_t tileValue) {
+			assert(tileX < mesh.GetDataSize().x && tileY < mesh.GetDataSize().y);
+			ChangeTile_(float(tileX), float(tileY), tileY * mesh.GetDataSize().x + tileX, tileValue);
+		}
 
+		void ChangeTile(const sf::Vector2u &tilePosition, uint32_t tileValue) {
+			assert(tilePosition.x < mesh.GetDataSize().x && tilePosition.y < mesh.GetDataSize().y);
+			ChangeTile_(float(tilePosition.x), float(tilePosition.y), tilePosition.y * mesh.GetDataSize().x + tilePosition.x, tileValue);
+		}
 		bool LoadFromParameters(const dgm::Clip &clip, const std::vector<int> &imageData, const std::vector<int> &collisionData, const sf::Vector2i &size);
 
 		bool LoadFromFile(const std::string &filename);
