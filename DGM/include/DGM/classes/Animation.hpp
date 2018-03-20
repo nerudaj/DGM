@@ -41,6 +41,7 @@ namespace dgm {
 		AnimationData::iterator currentState; ///< Iterator to selected animation state
 		
 		void Reset();
+		void UpdateSprite();
 		
 	public:
 		class Flags {

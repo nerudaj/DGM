@@ -117,6 +117,10 @@ void dgm::Animation::Reset() {
 	frameIndex = 0;
 }
 
+void dgm::Animation::UpdateSprite() {
+	boundSprite->setTextureRect(currentState->second.GetFrame(frameIndex));
+}
+
 bool dgm::Animation::Update(const dgm::Time &time) {
 	elapsed += time.Elapsed();
 	if (elapsed > timePerFrame) {
@@ -130,7 +134,7 @@ bool dgm::Animation::Update(const dgm::Time &time) {
 			}
 		}
 		
-		boundSprite->setTextureRect(currentState->second.GetFrame(frameIndex));
+		UpdateSprite();
 	}
 	
 	return true;
@@ -150,6 +154,7 @@ bool dgm::Animation::SetState(const std::string &state, int flags) {
 	
 	Reset();
 	Animation::flags = flags;
+	UpdateSprite();
 	
 	return true;
 }
