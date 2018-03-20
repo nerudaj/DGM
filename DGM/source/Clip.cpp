@@ -22,6 +22,8 @@ bool dgm::Clip::Init(const sf::Vector2i & frameSize, const sf::IntRect & boundar
 		return false;
 	}
 
+	Clip::size = frameSize;
+
 	unsigned int i = 0;
 	for (unsigned long y = boundaries.top; y < unsigned long(boundaries.top + boundaries.height); y += (frameSize.y + frameOffset.y)) {
 		for (unsigned long x = boundaries.left; x < unsigned long(boundaries.left + boundaries.width); x += (frameSize.x + frameOffset.x)) {
