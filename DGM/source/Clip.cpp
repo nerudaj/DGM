@@ -5,7 +5,7 @@
 
 bool dgm::Clip::Init(const sf::Vector2i & frameSize, const sf::IntRect & boundaries, unsigned int frameCount, const sf::Vector2i & frameOffset) {
 	assert(frameSize.x > 0 and frameSize.y > 0);
-	assert(boundaries.left > 0 and boundaries.top > 0);
+	assert(boundaries.width > 0 and boundaries.height > 0);
 
 
 	if (frameCount == 0) {
