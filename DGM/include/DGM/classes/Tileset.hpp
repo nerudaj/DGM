@@ -14,8 +14,10 @@ namespace dgm {
 		dgm::Mesh mesh;
 		dgm::Clip clip;
 
+		void ChangeTile_(float x, float y, uint32_t tileIndex, uint32_t tileValue);
+
 	public:
-		void ChangeTile(uint32_t x, uint32_t y, uint32_t tile);
+		void ChangeTile(uint32_t tileX, uint32_t tileY, uint32_t tileValue) { ChangeTile_(float(tileX), float(tileY), tileY * mesh.GetDataSize().x + tileX, tileValue); }
 
 		bool LoadFromParameters(const dgm::Clip &clip, const std::vector<int> &imageData, const std::vector<int> &collisionData, const sf::Vector2i &size);
 
