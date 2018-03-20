@@ -103,12 +103,12 @@ bool dgm::AnimationData::LoadFromFile(const std::string &name) {
 }
 
 bool dgm::AnimationData::AddState(const std::string &stateName, const dgm::Clip &clip) {
-	if (animations->find(stateName) == animations->end()) {
+	if (this->find(stateName) == this->end()) {
 		std::cerr << "Animation::AddState - State named " << stateName << " already exists\n";
 		return false;
 	}
 	
-	(*animations)[stateName] = clip;
+	(*this)[stateName] = clip;
 	return true;
 }
 
