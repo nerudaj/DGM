@@ -24,7 +24,10 @@ bool dgm::Config::loadFromFile(const std::string &filename) {
 	config.clear();
 	std::ifstream load(filename);
 	
-	if (!load.good()) return false;
+	if (!load.good()) {
+		std::cerr << "Config::loadFromFile(...) - Could not open file " << filename << ".\n";
+		return false;
+	}
 	
 	std::string line;
 	std::string section = "root";
@@ -48,7 +51,10 @@ bool dgm::Config::loadFromFile(const std::string &filename) {
 bool dgm::Config::saveToFile(const std::string &filename) {
 	std::ofstream save (filename);
 	
-	if (!save.good()) return false;
+	if (!save.good()) {
+		std::cerr << "Config::saveToFile(...) - Could not open file " << filename << ".\n";
+		return false;
+	}
 	
 	for (auto section : config) {
 		save << "[" << section.first << "]\n";
