@@ -1,6 +1,7 @@
 #pragma once
 
 #include <DGM\dgm.hpp>
+#include <fstream>
 
 namespace dgm {
 	class Level {
@@ -8,6 +9,15 @@ namespace dgm {
 		dgm::TilesetRenderer renderer;
 		dgm::Mesh mesh;
 		std::vector<int> imageData;
+
+		sf::IntRect findClipBoundaries();
+		sf::Vector2i findClipFrameOffset(const sf::IntRect &bounds);
+
+		void loadCompressed(std::ifstream &load);
+		void loadUncompressed(std::ifstream &load);
+
+		void saveCompressed(std::ofstream &save);
+		void saveUncompressed(std::ofstream &save);
 
 	public:
 		void draw(dgm::Window &window) { window.draw(renderer); }
