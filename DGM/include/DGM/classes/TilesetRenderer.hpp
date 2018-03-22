@@ -66,6 +66,8 @@ namespace dgm {
 		 */
 		void setTexture(sf::Texture *texture);
 
+		const dgm::Clip &getClip() const { return clip; }
+
 		TilesetRenderer();
 		~TilesetRenderer();
 	};
