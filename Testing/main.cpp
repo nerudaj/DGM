@@ -21,13 +21,26 @@ int main(int argc, char *argv[]) {
 		1, 2, 3, 2, 1,
 		0, 1, 2, 1, 0
 	};
+	std::vector<int> collisionData = {
+		1, 0, 0, 0, 1,
+		0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0,
+		1, 0, 0, 0, 1
+	};
 	dgm::Clip clip({ 64,64 }, { 0,0,256,64 });
-	sf::Texture texture;
-	if (not texture.loadFromFile("../Graphics/tileset.png")) return 2;
+	
+	dgm::ResourceManager resmgr;
+	std::vector<std::string> names;
+	if (not resmgr.loadFromDir("../Graphics", dgm::ResourceManager::Type::Graphic, &names)) {
+		return 2;
+	}
 
 	dgm::Level level;
-	level.getRenderer().build(clip, { 64,64 }, imageData, {5, 5});
-	level.getRenderer().setTexture(&texture);
+	if (not level.loadFromFile("../Data/level.txt")) {
+		level.build(clip, { 64,64 }, imageData, collisionData, { 5,5 });
+	}
+	level.getRenderer().setTexture(resmgr.get<sf::Texture>("tileset"));
 
 	sf::Event event;
 	while (window.isOpen()) {
@@ -47,6 +60,7 @@ int main(int argc, char *argv[]) {
 		window.endDraw();
 	}
 
+	level.saveToFile("../Data/level.txt");
 	config.saveToFile("../Data/config.ini");
 
 	return 0;
