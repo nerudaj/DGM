@@ -160,7 +160,7 @@ copy dgm-d.lib ..\DGM\lib\</Command>
       <AdditionalLibraryDirectories>$(SolutionDir)\3rdParty\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>cd $(SolutionDir)Debug
+      <Command>cd $(SolutionDir)Release
 copy dgm.lib ..\DGM\lib\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
