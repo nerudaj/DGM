@@ -3,6 +3,12 @@
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem::v1;
 
+void dgm::ResourceManager::deinit() {
+	for (auto item : database) {
+		freeResource(item.first);
+	}
+}
+
 void dgm::ResourceManager::resourceName(const std::string &filename, std::string &name) {
 	std::regex exprPrefix(".*\\/.*\\/");
 	name = std::regex_replace(filename, exprPrefix, "");
@@ -12,7 +18,7 @@ void dgm::ResourceManager::resourceName(const std::string &filename, std::string
 	name = std::regex_replace(name, exprSuffix, "");
 }
 
-bool dgm::ResourceManager::loadFromDir(const std::string &foldername, dgm::ResourceManager::Type type) {
+bool dgm::ResourceManager::loadFromDir(const std::string &foldername, dgm::ResourceManager::Type type, std::vector<std::string> *names) {
 	fs::path path(foldername);
 	if (not fs::is_directory(path)) {
 		std::cerr << "ResourceManager::loadFromDir - " << foldername << " is not a directory!\n";
@@ -33,25 +39,27 @@ bool dgm::ResourceManager::loadFromDir(const std::string &foldername, dgm::Resou
 		case Type::Sound:
 			if (not loadResource<sf::SoundBuffer>(itemPath.string())) return false;
 			break;
+		case Type::AnimationData:
+			if (not loadResource<dgm::AnimationData>(itemPath.string())) return false;
+			break;
+		}
+
+		if (names != nullptr) {
+			std::string name;
+			resourceName(itemPath.string(), name);
+			(*names).push_back(name);
 		}
 	}
 
 	return true;
 }
 
-bool dgm::ResourceManager::init(const dgm::Config &config) {
-	if (config.hasSection("ResourceManager")) {
-		auto itr = config["ResourceManager"];
-		std::string dirs = itr.find("autoloadDirs") == itr.end() ? "" : itr.at("autoloadDirs").asString();
-		std::vector<std::string> dirNames;
-		dgm::Strings::split(';', dirs, dirNames);
+void dgm::ResourceManager::freeResource(const std::string &name) {
+	if (database.find(name) == database.end()) return;
 
-		for (auto dirName : dirNames) {
-			if (not loadFromDir(dirName, Type::Graphic)) return false;
-		}
-	}
-
-	return true;
+	auto itr = database.find(name);
+	delete itr->second;
+	database.erase(itr);
 }
 
 dgm::ResourceManager::ResourceManager() {
@@ -59,5 +67,5 @@ dgm::ResourceManager::ResourceManager() {
 }
 
 dgm::ResourceManager::~ResourceManager() {
-	
+	deinit();
 }
