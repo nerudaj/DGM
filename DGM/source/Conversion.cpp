@@ -1,5 +1,7 @@
 #include <DGM\dgm.hpp>
 
+const float PIOVER180 = 0.01745329252f;
+
 using std::vector;
 using std::string;
 
@@ -57,5 +59,14 @@ void dgm::Conversion::circleToIntRect(const dgm::Circle & circ, sf::IntRect & ds
 	dst.top = int(circ.getPosition().y - circ.getRadius());
 	dst.width = int(circ.getRadius()) * 2;
 	dst.height = int(circ.getRadius()) * 2;
+}
+
+sf::Vector2f dgm::Conversion::cartesianToPolar(const float x, const float y) {
+	std::cerr << "Conversion::cartesianToPolar(...) - TODO this\n";
+	float size = dgm::Math::vectorSize(x, y);
+
+	float angle = asin(x / size);
+
+	return sf::Vector2f();
 }
 

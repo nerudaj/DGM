@@ -46,5 +46,20 @@ namespace dgm {
 		 * \brief Creates a bounding box of a circle, storing result to dst
 		 */
 		static void circleToIntRect(const dgm::Circle &circ, sf::IntRect &dst);
+
+		static sf::Vector2f polarToCartesian(const float angle, const float size) {
+			const float PIOVER180 = 0.01745329252f;
+			return sf::Vector2f(sin(angle * PIOVER180) * size, -cos(angle * PIOVER180) * size);
+		}
+
+		static sf::Vector2f polarToCartesian(const sf::Vector2f &angleSize) {
+			polarToCartesian(angleSize.x, angleSize.y);
+		}
+
+		static sf::Vector2f cartesianToPolar(const float x, const float y);
+
+		static sf::Vector2f cartesianToPolar(const sf::Vector2f &coordinates) {
+			return cartesianToPolar(coordinates.x, coordinates.y);
+		}
 	};
 }
