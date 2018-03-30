@@ -110,11 +110,12 @@ void normalizeBoundaries(sf::IntRect &dst, const sf::IntRect *src, const dgm::Me
 	if (dst.height >= meshSize.y)	dst.height	= meshSize.y - 1;
 }
 
-bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Circle &B) {
+bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Circle &B, int *meshHitPosition) {
 	sf::IntRect outBody;
 	sf::IntRect bounds;
 	sf::Vector2i tileSize = A.getVoxelSize();
 	sf::Vector2i meshSize = A.getDataSize();
+	sf::Vector2f meshPos = A.getPosition();
 	
 	dgm::Conversion::circleToIntRect(B, outBody);
 	normalizeBoundaries(bounds, &outBody, A);
@@ -125,9 +126,12 @@ bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Circle &B) {
 	for (int y = bounds.top; y <= bounds.height; y++) {
 		for (int x = bounds.left; x <= bounds.width; x++) {
 			if (A[y * meshSize.x + x] > 0) {
-				box.setPosition(float(x * tileSize.x), float(y * tileSize.y));
+				box.setPosition(float(x * tileSize.x) + meshPos.x, float(y * tileSize.y) + meshPos.y);
 				
-				if (dgm::Collision::basic(box, B)) return true;
+				if (dgm::Collision::basic(box, B)) {
+					if (meshHitPosition != nullptr) *meshHitPosition = y * meshSize.x + x;
+					return true;
+				}
 			}
 		}
 	}
@@ -135,8 +139,8 @@ bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Circle &B) {
 	return false;
 }
 
-bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Rect &B) {
-	sf::IntRect outBody(sf::FloatRect(B.getPosition(), B.getSize()));
+bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Rect &B, int *meshHitPosition) {
+	sf::IntRect outBody(sf::FloatRect(B.getPosition() - A.getPosition(), B.getSize()));
 	sf::IntRect bounds;
 	sf::Vector2i meshSize = A.getDataSize();
 
@@ -144,7 +148,10 @@ bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Rect &B) {
 
 	for (int y = bounds.top; y <= bounds.height; y++) {
 		for (int x = bounds.left; x <= bounds.width; x++) {
-			if (A[y * meshSize.x + x] > 0) return true;
+			if (A[y * meshSize.x + x] > 0) {
+				if (meshHitPosition != nullptr) *meshHitPosition = y * meshSize.x + x;
+				return true;
+			}
 		}
 	}
 
