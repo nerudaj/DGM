@@ -47,6 +47,7 @@
 #include "classes/ConfigItem.hpp"
 #include "classes/Config.hpp"
 #include "classes/Collision.hpp"
+#include "classes/Math.hpp"
 #include "classes/Conversion.hpp"
 #include "classes/Controller.hpp"
 #include "classes/Time.hpp"
@@ -61,4 +62,5 @@
 
 #ifdef INCLUDE_AI
 #include "classes/Pathfinder.hpp"
-#endif
+// AI
+#include "classes/Pathfinder.hpp"
