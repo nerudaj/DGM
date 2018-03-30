@@ -46,6 +46,7 @@
     <ClInclude Include="include\DGM\classes\Controller.hpp" />
     <ClInclude Include="include\DGM\classes\Conversion.hpp" />
     <ClInclude Include="include\DGM\classes\Level.hpp" />
+    <ClInclude Include="include\DGM\classes\Math.hpp" />
     <ClInclude Include="include\DGM\classes\Objects.hpp" />
     <ClInclude Include="include\DGM\classes\ResourceManager.hpp" />
     <ClInclude Include="include\DGM\classes\Strings.hpp" />

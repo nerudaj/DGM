@@ -122,5 +122,8 @@
     <ClInclude Include="include\DGM\classes\TilesetRenderer.hpp">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
+    <ClInclude Include="include\DGM\classes\Math.hpp">
+      <Filter>Header Files\Aux</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
