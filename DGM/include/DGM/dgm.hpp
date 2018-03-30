@@ -18,11 +18,11 @@
 	#pragma comment(lib, "sfml-graphics.lib")
 	#pragma comment(lib, "sfml-window.lib")
 #ifndef NO_AUDIO
-	#pragma comment(lib, "sfml-audio-d.lib")
+	#pragma comment(lib, "sfml-audio.lib")
 #endif
 
 #ifndef NO_NETWORK
-	#pragma comment(lib, "sfml-network-d.lib")
+	#pragma comment(lib, "sfml-network.lib")
 #endif
 #else
 	#pragma comment(lib, "sfml-main-d.lib")
