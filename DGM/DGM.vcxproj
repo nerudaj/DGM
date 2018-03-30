@@ -29,6 +29,7 @@
     <ClCompile Include="source\Conversion.cpp" />
     <ClCompile Include="source\Level.cpp" />
     <ClCompile Include="source\Objects.cpp" />
+    <ClCompile Include="source\Pathfinder.cpp" />
     <ClCompile Include="source\ResourceManager.cpp" />
     <ClCompile Include="source\Strings.cpp" />
     <ClCompile Include="source\TilesetRenderer.cpp" />
@@ -48,6 +49,7 @@
     <ClInclude Include="include\DGM\classes\Level.hpp" />
     <ClInclude Include="include\DGM\classes\Math.hpp" />
     <ClInclude Include="include\DGM\classes\Objects.hpp" />
+    <ClInclude Include="include\DGM\classes\Pathfinder.hpp" />
     <ClInclude Include="include\DGM\classes\ResourceManager.hpp" />
     <ClInclude Include="include\DGM\classes\Strings.hpp" />
     <ClInclude Include="include\DGM\classes\TilesetRenderer.hpp" />

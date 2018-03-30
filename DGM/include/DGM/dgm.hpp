@@ -60,7 +60,5 @@
 #include "classes/TilesetRenderer.hpp"
 #include "classes/Level.hpp"
 
-#ifdef INCLUDE_AI
-#include "classes/Pathfinder.hpp"
 // AI
 #include "classes/Pathfinder.hpp"

@@ -66,6 +66,9 @@
     <ClCompile Include="source\TilesetRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Pathfinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\DGM\dgm.hpp">
@@ -124,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="include\DGM\classes\Math.hpp">
       <Filter>Header Files\Aux</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DGM\classes\Pathfinder.hpp">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
