@@ -22,7 +22,8 @@ namespace dgm {
 		bool isOpen() const { return window.isOpen(); }
 		bool isFullscreen() const { return isFullscreen_; }
 		const sf::Vector2u &getSize() const { return size; }
-		const sf::RenderWindow &getWindowContext() { return window; }
+		sf::RenderWindow &getWindowContext() { return window; }
+		const sf::RenderWindow &getWindowContext() const { return window; }
 
 		void beginDraw(const sf::Color &color = sf::Color::Black);
 		void draw(sf::Drawable &drawable);
