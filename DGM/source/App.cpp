@@ -3,11 +3,11 @@
 void dgm::App::pushState(dgm::AppState * state) {
 	states.push(state);
 
+	topState()->setAppPointer(this);
 	if (not topState()->init()) {
 		std::cerr << "ERROR:App: State was not initialized properly.\n";
 		popState();
 	}
-	topState()->setAppPointer(this);
 }
 
 void dgm::App::popState() {
