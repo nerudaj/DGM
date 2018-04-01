@@ -185,8 +185,8 @@ bool Pathfinder::init(const dgm::Mesh &mesh) {
 		return false;
 	}
 	
-	for (int i = 0; i < dataSize; i++) {
-		for (int l = 0; l < lookupArrays.size(); l++) {
+	for (std::size_t i = 0; i < dataSize; i++) {
+		for (std::size_t l = 0; l < lookupArrays.size(); l++) {
 			lookupArrays[l][i].setSolid(mesh[i] > 0);
 		}
 	}
