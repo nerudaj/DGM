@@ -20,9 +20,27 @@ namespace dgm {
 		 *  \param [out] name Output resource identifier
 		 *  
 		 *  \details Resource identifier is basically its filename without extension.
-		 *  This method also removes prepending slashes of folder path.
+		 *  This method also removes prepending slashes of folder path. After that,
+		 *  a special prefix is added, namespacing each class name.
 		 */
-		void resourceName(const std::string &filename, std::string &name);
+		template<typename T>
+		std::string resourceName(const std::string &filename) {
+			std::string name;
+			
+			std::regex exprPrefix(".*\\/.*\\/");
+			name = std::regex_replace(filename, exprPrefix, "");
+			std::regex exprPrefixAlt(".*\\\\.*\\\\");
+			name = std::regex_replace(name, exprPrefixAlt, "");
+			std::regex exprSuffix("\\....$");
+			name = std::regex_replace(name, exprSuffix, "");
+
+			if (std::is_same<sf::Texture, T>::value) name = "t-" + name;
+			else if (std::is_same<sf::Font, T>::value) name = "f-" + name;
+			else if (std::is_same<sf::SoundBuffer, T>::value) name = "s-" + name;
+			else if (std::is_same<dgm::AnimationData, T>::value) name = "a-" + name;
+
+			return name;
+		}
 
 		/**
 		 *  \brief get resource pointer
@@ -47,6 +65,12 @@ namespace dgm {
 		bool loadResource(const std::string &filename) {
 			std::string name;
 			resourceName(filename, name);
+
+			if (std::is_same<sf::Texture, T>::value) name = "t-" + name;
+			else if (std::is_same<sf::Font, T>::value) name = "f-" + name;
+			else if (std::is_same<sf::SoundBuffer, T>::value) name = "s-" + name;
+			else if (std::is_same<dgm::AnimationData, T>::value) name = "a-" + name;
+
 			if (database.find(name) != database.end()) {
 				std::cerr << "ResourceManager::loadResource(...) - Resource with name " << name << " already exists\n";
 				return false;

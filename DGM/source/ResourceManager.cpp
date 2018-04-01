@@ -9,15 +9,6 @@ void dgm::ResourceManager::deinit() {
 	}
 }
 
-void dgm::ResourceManager::resourceName(const std::string &filename, std::string &name) {
-	std::regex exprPrefix(".*\\/.*\\/");
-	name = std::regex_replace(filename, exprPrefix, "");
-	std::regex exprPrefixAlt(".*\\\\.*\\\\");
-	name = std::regex_replace(name, exprPrefixAlt, "");
-	std::regex exprSuffix("\\....$");
-	name = std::regex_replace(name, exprSuffix, "");
-}
-
 bool dgm::ResourceManager::loadFromDir(const std::string &foldername, dgm::ResourceManager::Type type, std::vector<std::string> *names) {
 	fs::path path(foldername);
 	if (not fs::is_directory(path)) {
