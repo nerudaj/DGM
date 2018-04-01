@@ -17,7 +17,7 @@ namespace dgm {
 		 *  \return Size of vect
 		 */
 		static float vectorSize(const sf::Vector2f &vect) {
-			sqrt(vect.x * vect.x + vect.y * vect.y);
+			return sqrt(vect.x * vect.x + vect.y * vect.y);
 		}
 
 		static float vectorSize(const float x, const float y) {
