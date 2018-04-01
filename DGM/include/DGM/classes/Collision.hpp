@@ -92,7 +92,7 @@ namespace dgm {
 		 * 
 		 *  \return TRUE if collision was detected. FALSE otherwise
 		 */
-		static bool advanced(const dgm::Mesh &mesh, const dgm::Circle &body, sf::Vector2f &forward);
+		static bool advanced(const dgm::Mesh &mesh, const dgm::Circle &body, sf::Vector2f &forward, int *meshHitPosition = nullptr);
 		
 		/**
 		 *  \brief Elaborates movement of a rect within a mesh
@@ -108,6 +108,6 @@ namespace dgm {
 		 * 
 		 *  \return TRUE if collision was detected. FALSE otherwise
 		 */
-		static bool advanced(const dgm::Mesh &mesh, const dgm::Rect &body, sf::Vector2f &forward);
+		static bool advanced(const dgm::Mesh &mesh, const dgm::Rect &body, sf::Vector2f &forward, int *meshHitPosition = nullptr);
 	};
 }

@@ -129,7 +129,9 @@ bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Circle &B, int *meshHi
 				box.setPosition(float(x * tileSize.x) + meshPos.x, float(y * tileSize.y) + meshPos.y);
 				
 				if (dgm::Collision::basic(box, B)) {
-					if (meshHitPosition != nullptr) *meshHitPosition = y * meshSize.x + x;
+					if (meshHitPosition != nullptr) {
+						(*meshHitPosition) = (y * meshSize.x + x);
+					}
 					return true;
 				}
 			}
@@ -149,7 +151,9 @@ bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Rect &B, int *meshHitP
 	for (int y = bounds.top; y <= bounds.height; y++) {
 		for (int x = bounds.left; x <= bounds.width; x++) {
 			if (A[y * meshSize.x + x] > 0) {
-				if (meshHitPosition != nullptr) *meshHitPosition = y * meshSize.x + x;
+				if (meshHitPosition != nullptr) {
+					(*meshHitPosition) = (y * meshSize.x + x);
+				}
 				return true;
 			}
 		}
@@ -158,7 +162,7 @@ bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Rect &B, int *meshHitP
 	return false;
 }
 
-bool dgm::Collision::advanced(const dgm::Mesh &mesh, const dgm::Circle &body, sf::Vector2f &forward) {
+bool dgm::Collision::advanced(const dgm::Mesh &mesh, const dgm::Circle &body, sf::Vector2f &forward, int *meshHitPosition) {
 	dgm::Circle aux = body;
 	aux.move(forward);
 	
@@ -168,14 +172,14 @@ bool dgm::Collision::advanced(const dgm::Mesh &mesh, const dgm::Circle &body, sf
 	
 	aux = body;
 	aux.move(forward.x, 0.f);
-	if (!dgm::Collision::basic(mesh, aux)) {
+	if (!dgm::Collision::basic(mesh, aux, meshHitPosition)) {
 		forward.y = 0.f;
 		return true;
 	}
 	
 	aux = body;
 	aux.move(0.f, forward.y);
-	if (!dgm::Collision::basic(mesh, aux)) {
+	if (!dgm::Collision::basic(mesh, aux, meshHitPosition)) {
 		forward.x = 0.f;
 		return true;
 	}
@@ -184,17 +188,17 @@ bool dgm::Collision::advanced(const dgm::Mesh &mesh, const dgm::Circle &body, sf
 	return true;
 }
 
-bool dgm::Collision::advanced(const dgm::Mesh &mesh, const dgm::Rect &body, sf::Vector2f &forward) {
+bool dgm::Collision::advanced(const dgm::Mesh &mesh, const dgm::Rect &body, sf::Vector2f &forward, int *meshHitPosition) {
 	dgm::Rect aux = body;
 	aux.move(forward);
 	
-	if (!dgm::Collision::basic(mesh, aux)) {
+	if (!dgm::Collision::basic(mesh, aux, meshHitPosition)) {
 		return false;
 	}
 	
 	aux = body;
 	aux.move(forward.x, 0.f);
-	if (!dgm::Collision::basic(mesh, aux)) {
+	if (!dgm::Collision::basic(mesh, aux, meshHitPosition)) {
 		forward.y = 0.f;
 		return true;
 	}
