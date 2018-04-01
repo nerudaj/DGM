@@ -9,7 +9,7 @@ namespace dgm {
 		 * \brief Takes a string with hex representation of a color (#XXXXXX)
 		 * and converts it to output sf::Color
 		 */
-		static void stringToColor(const std::string &str, sf::Color &color);
+		static sf::Color stringToColor(const std::string &str);
 
 		/**
 		 * \brief Takes a string of integer numbers separated with delimiter
