@@ -19,25 +19,28 @@ bool dgm::ResourceManager::loadFromDir(const std::string &foldername, dgm::Resou
 	fs::recursive_directory_iterator dirIter(path);
 	for (auto item : dirIter) {
 		fs::path itemPath(item);
+		std::string name;
 
 		switch (type) {
 		case Type::Font:
 			if (not loadResource<sf::Font>(itemPath.string())) return false;
+			name = resourceName<sf::Font>(itemPath.string());
 			break;
 		case Type::Graphic:
 			if (not loadResource<sf::Texture>(itemPath.string())) return false;
+			name = resourceName<sf::Texture>(itemPath.string());
 			break;
 		case Type::Sound:
 			if (not loadResource<sf::SoundBuffer>(itemPath.string())) return false;
+			name = resourceName<sf::SoundBuffer>(itemPath.string());
 			break;
 		case Type::AnimationData:
 			if (not loadResource<dgm::AnimationData>(itemPath.string())) return false;
+			name = resourceName<dgm::AnimationData>(itemPath.string());
 			break;
 		}
 
 		if (names != nullptr) {
-			std::string name;
-			resourceName(itemPath.string(), name);
 			(*names).push_back(name);
 		}
 	}

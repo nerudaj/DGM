@@ -63,8 +63,7 @@ namespace dgm {
 		 */
 		template<typename T>
 		bool loadResource(const std::string &filename) {
-			std::string name;
-			resourceName(filename, name);
+			std::string name = resourceName<T>(filename);
 
 			if (std::is_same<sf::Texture, T>::value) name = "t-" + name;
 			else if (std::is_same<sf::Font, T>::value) name = "f-" + name;
