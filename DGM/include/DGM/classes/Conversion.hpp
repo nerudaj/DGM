@@ -58,6 +58,11 @@ namespace dgm {
 			return sf::Vector2f(sin(angle * PIOVER180) * size, -cos(angle * PIOVER180) * size);
 		}
 
+		/**
+		 *  \brief Convert polar coordinates to cartesian
+		 *
+		 *  \param [in] angleSize X coord is angle, Y coord is size
+		 */
 		static sf::Vector2f polarToCartesian(const sf::Vector2f &angleSize) {
 			polarToCartesian(angleSize.x, angleSize.y);
 		}
