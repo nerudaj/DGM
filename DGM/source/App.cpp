@@ -40,11 +40,11 @@ void dgm::App::run() {
 	}
 }
 
-App::App() {
+dgm::App::App() {
 	init();
 	time.reset();
 }
 
-App::~App() {
+dgm::App::~App() {
 	deinit();
 }
