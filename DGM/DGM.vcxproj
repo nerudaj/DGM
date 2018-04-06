@@ -29,6 +29,9 @@
     <ClCompile Include="source\Conversion.cpp" />
     <ClCompile Include="source\Level.cpp" />
     <ClCompile Include="source\Objects.cpp" />
+    <ClCompile Include="source\Particle.cpp" />
+    <ClCompile Include="source\ParticleSystem.cpp" />
+    <ClCompile Include="source\ParticleSystemRenderer.cpp" />
     <ClCompile Include="source\Pathfinder.cpp" />
     <ClCompile Include="source\ResourceManager.cpp" />
     <ClCompile Include="source\Strings.cpp" />
@@ -49,6 +52,9 @@
     <ClInclude Include="include\DGM\classes\Level.hpp" />
     <ClInclude Include="include\DGM\classes\Math.hpp" />
     <ClInclude Include="include\DGM\classes\Objects.hpp" />
+    <ClInclude Include="include\DGM\classes\Particle.hpp" />
+    <ClInclude Include="include\DGM\classes\ParticleSystem.hpp" />
+    <ClInclude Include="include\DGM\classes\ParticleSystemRenderer.hpp" />
     <ClInclude Include="include\DGM\classes\Pathfinder.hpp" />
     <ClInclude Include="include\DGM\classes\ResourceManager.hpp" />
     <ClInclude Include="include\DGM\classes\Strings.hpp" />

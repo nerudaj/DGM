@@ -62,3 +62,8 @@
 
 // AI
 #include "classes/Pathfinder.hpp"
+
+// Particle Systems
+#include "classes/ParticleSystemRenderer.hpp"
+#include "classes/Particle.hpp"
+#include "classes/ParticleSystem.hpp"

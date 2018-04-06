@@ -22,6 +22,12 @@
     <Filter Include="Docs">
       <UniqueIdentifier>{c615975a-dd25-47af-b88b-8c546df92c19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Particles">
+      <UniqueIdentifier>{ec691185-efe7-4054-bb1d-2b3ac2c9916e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Particles">
+      <UniqueIdentifier>{f91636ab-cbb2-4a61-a081-37ff388785cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Objects.cpp">
@@ -68,6 +74,15 @@
     </ClCompile>
     <ClCompile Include="source\Pathfinder.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ParticleSystemRenderer.cpp">
+      <Filter>Source Files\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Particle.cpp">
+      <Filter>Source Files\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ParticleSystem.cpp">
+      <Filter>Source Files\Particles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +145,15 @@
     </ClInclude>
     <ClInclude Include="include\DGM\classes\Pathfinder.hpp">
       <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DGM\classes\ParticleSystemRenderer.hpp">
+      <Filter>Header Files\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DGM\classes\Particle.hpp">
+      <Filter>Header Files\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DGM\classes\ParticleSystem.hpp">
+      <Filter>Header Files\Particles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
