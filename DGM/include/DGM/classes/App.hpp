@@ -21,5 +21,8 @@ namespace dgm {
 		void init();
 		void deinit();
 		void run();
+		
+		App();
+		~App();
 	};
 };

@@ -39,3 +39,12 @@ void dgm::App::run() {
 		time.reset();
 	}
 }
+
+App::App() {
+	init();
+	time.reset();
+}
+
+App::~App() {
+	deinit();
+}
