@@ -2,6 +2,7 @@
 
 #include <DGM\dgm.hpp>
 #include <map>
+#include <regex>
 
 namespace dgm {
 	class ResourceManager {
@@ -64,11 +65,6 @@ namespace dgm {
 		template<typename T>
 		bool loadResource(const std::string &filename) {
 			std::string name = resourceName<T>(filename);
-
-			if (std::is_same<sf::Texture, T>::value) name = "t-" + name;
-			else if (std::is_same<sf::Font, T>::value) name = "f-" + name;
-			else if (std::is_same<sf::SoundBuffer, T>::value) name = "s-" + name;
-			else if (std::is_same<dgm::AnimationData, T>::value) name = "a-" + name;
 
 			if (database.find(name) != database.end()) {
 				std::cerr << "ResourceManager::loadResource(...) - Resource with name " << name << " already exists\n";
