@@ -47,6 +47,12 @@ namespace dgm {
 		 */
 		static void circleToIntRect(const dgm::Circle &circ, sf::IntRect &dst);
 
+		/**
+		 *  \brief Convert polar coordinates to cartesian
+		 *
+		 *  \param [in] angle 0° is at [0, 1], counting clockwise
+		 *  \param [in] size Length of the vector
+		 */
 		static sf::Vector2f polarToCartesian(const float angle, const float size) {
 			const float PIOVER180 = 0.01745329252f;
 			return sf::Vector2f(sin(angle * PIOVER180) * size, -cos(angle * PIOVER180) * size);
