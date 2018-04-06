@@ -60,12 +60,12 @@ namespace dgm {
 		/**
 		 *  \brief Returns number of currently maintained objects
 		 */
-		std::size_t Size () const { return s; }
+		std::size_t size () const { return s; }
 		
 		/**
 		 *  \brief Returns how many object can be maintained
 		 */
-		std::size_t Capacity () const { return c; }
+		std::size_t capacity () const { return c; }
 		
 		/**
 		 *  \brief Adds a new object to maintained list
@@ -75,7 +75,7 @@ namespace dgm {
 		 *  \details If size is less than capacity then it is
 		 *  incremented and new object is added to maintained list.
 		 */
-		bool Add () {
+		bool add () {
 			if (s == c) return false;
 			s++;
 			return true;
@@ -88,7 +88,7 @@ namespace dgm {
 		 *  
 		 *  \details Details
 		 */
-		bool Remove(size_t index) {
+		bool remove(size_t index) {
 			if (s == 0) return false;
 
 			s--;
@@ -121,7 +121,7 @@ namespace dgm {
 		 *  but instead of returning reference to object
 		 *  it only returns index to object.
 		 */
-		std::size_t Begin() const { return 0; }
+		std::size_t begin() const { return 0; }
 		
 		/**
 		 *  \brief get index of last object + 1
@@ -133,7 +133,7 @@ namespace dgm {
 		 *  but instead of returning reference to object
 		 *  it only returns index to object.
 		 */
-		std::size_t End() const { return s; }
+		std::size_t end() const { return s; }
 		
 		/**
 		 *  \brief Retrieve object located at index size()-1
@@ -143,14 +143,14 @@ namespace dgm {
 		 *  
 		 *  \return Reference to Buffer[size()-1]
 		 */
-		T &GetLast() {
+		T &getLast() {
 			return arr[s-1][0];
 		}
 		
 		/**
 		 *  \brief
 		 */
-		const T &GetLast() const {
+		const T &getLast() const {
 			return arr[s-1][0];
 		}
 		
@@ -193,7 +193,7 @@ namespace dgm {
 		/**
 		 *  \brief Empties the buffer, but keeping the allocated memory
 		 */
-		void Clear() {
+		void clear() {
 			s = 0;
 		}
 
