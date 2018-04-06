@@ -30,10 +30,10 @@ void SimpleParticleSystem::spawnParticle() {
 	if (not particles.add()) return;
 
 	dgm::ps::Particle &particle = particles.getLast();
-	particle.setSize({ 5.f, 5.f });
+	particle.size = { 5.f, 5.f };
 	float force = emitForce + randomFloat(emitForceDelta) - emitForceDelta / 2.f;
 	float angle = emitAngle + randomFloat(emitRange) - emitRange / 2.f;
-	particle.setForward(dgm::Conversion::polarToCartesian(angle, force));
+	particle.forward = dgm::Conversion::polarToCartesian(angle, force);
 	float lifespan = averageLifespan + randomFloat(lifespanDelta) - lifespanDelta / 2.f;
 	particle.spawn(emitPosition);
 	particle.lifespan = lifespan;
@@ -58,8 +58,8 @@ void SimpleParticleSystem::update(const dgm::Time &time) {
 			particles.remove(i--);
 		}
 		
-		particle.setForward(particle.getForward() + (globalForce * time.deltaTime()));
-		particle.move(particle.getForward() * time.deltaTime());
+		particle.forward = particle.forward + (globalForce * time.deltaTime());
+		particle.move(particle.forward * time.deltaTime());
 	}
 }
 

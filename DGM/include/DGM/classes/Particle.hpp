@@ -7,11 +7,11 @@ namespace dgm {
 		class Particle {
 		protected:
 			sf::Vertex *quad;
-			sf::Vector2f forward; ///< Direction of particle movement
-			sf::Vector2f size; ///< Particle render size
 
 		public:
 			float lifespan; ///< How long till dead
+			sf::Vector2f forward; ///< Direction of particle movement
+			sf::Vector2f size; ///< Particle render size
 
 			/**
 			 *  \brief Test whether lifespan is greater than zero
@@ -22,21 +22,6 @@ namespace dgm {
 			 *  \brief Change textCoords of particle
 			 */
 			void changeFrame(const sf::IntRect &frame);
-
-			/**
-			 *  \brief Set forward vector for particle
-			 */
-			void setForward(const sf::Vector2f &forward) { Particle::forward = forward; }
-
-			/**
-			 *  \brief Get forward vector of particle
-			 */
-			const sf::Vector2f &getForward() const { return forward; }
-
-			/**
-			 *  \brief Sets the render size of particle
-			 */
-			void setSize(const sf::Vector2f &size) { Particle::size = size; }
 
 			/**
 			 *  \brief Spawns the particle
