@@ -80,7 +80,7 @@ bool dgm::AnimationData::loadFromFile(const std::string &name) {
 						throw 1;
 					}
 				}
-				else if (split[0] == "state" && state == 1) {
+				else if (split[0] == "stateName" && state == 1) {
 					stateName = split[1];
 				}
 				else {
