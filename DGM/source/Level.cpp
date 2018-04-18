@@ -40,7 +40,40 @@ sf::Vector2i dgm::Level::findClipFrameOffset(const sf::IntRect &bounds) {
 }
 
 void dgm::Level::loadCompressed(std::ifstream & load) {
-	throw std::exception("Unimplemented");
+	sf::Vector2i frameSize;
+	sf::Vector2i frameOffset;
+	sf::Vector2i dataSize;
+	sf::Vector2i tileSize;
+	sf::IntRect bounds;
+	int frames = 0;
+	dgm::Clip clip;
+
+	// Load header
+	const std::size_t headerSize = sizeof(sf::Vector2i) * 4 + sizeof(int) + sizeof(sf::IntRect);
+	char header[headerSize];
+	load.read(header, headerSize);
+
+	// Assign header to items
+	dataSize = *(sf::Vector2i*)(header);
+	tileSize = *(sf::Vector2i*)(header + sizeof(sf::Vector2i));
+	frameSize = *(sf::Vector2i*)(header + sizeof(sf::Vector2i) * 2);
+	frameOffset = *(sf::Vector2i*)(header + sizeof(sf::Vector2i) * 3);
+	frames = *(int*)(header + sizeof(sf::Vector2i) * 4);
+	bounds = *(sf::IntRect*)(header + sizeof(sf::Vector2f) * 4 + sizeof(int));
+
+	if (not clip.init(frameSize, bounds, frames, frameOffset)) throw std::exception("Invalid values for constructing clip");
+
+	int item;
+	for (int y = 0; y < dataSize.y; y++) {
+		for (int x = 0; x < dataSize.x; x++) {
+			load.read((char*)(&item), sizeof(int));
+			imageData[y * dataSize.x + x] = item;
+			load.read((char*)(&item), sizeof(int));
+			mesh[y * dataSize.x + x] = item;
+		}
+	}
+
+	renderer.build(clip, tileSize, imageData, dataSize);
 }
 
 void dgm::Level::loadUncompressed(std::ifstream & load) {
@@ -133,7 +166,26 @@ void dgm::Level::loadUncompressed(std::ifstream & load) {
 }
 
 void dgm::Level::saveCompressed(std::ofstream & save) {
-	throw std::exception("Unimplemented");
+	save.write((char*)(&mesh.getDataSize()), sizeof(sf::Vector2i));
+	save.write((char*)(&mesh.getVoxelSize()), sizeof(sf::Vector2i));
+
+	sf::IntRect bounds = findClipBoundaries();
+	sf::Vector2i frameOffset = findClipFrameOffset(bounds);
+	save.write((char*)(&(renderer.getClip().getFrameSize())), sizeof(sf::Vector2i));
+	save.write((char*)(&frameOffset), sizeof(sf::Vector2i));
+	int frames = renderer.getClip().getFrameCount();
+	save.write((char*)(&frames), sizeof(int));
+	save.write((char*)(&bounds), sizeof(sf::IntRect));
+
+	int item;
+	for (int y = 0; y < mesh.getDataSize().y; y++) {
+		for (int x = 0; x < mesh.getDataSize().x; x++) {
+			item = imageData[y * mesh.getDataSize().x + x];
+			save.write((char*)(&item), sizeof(int));
+			item = mesh[y * mesh.getDataSize().x + x];
+			save.write((char*)(&item), sizeof(int));
+		}
+	}
 }
 
 void dgm::Level::saveUncompressed(std::ofstream & save) {
