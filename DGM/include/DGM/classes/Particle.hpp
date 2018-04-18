@@ -13,6 +13,8 @@ namespace dgm {
 			sf::Vector2f forward; ///< Direction of particle movement
 			sf::Vector2f size; ///< Particle render size
 
+			sf::Vector2f getPosition() const { return quad[0].position + size / 2.f; }
+
 			/**
 			 *  \brief Test whether lifespan is greater than zero
 			 */
