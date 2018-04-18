@@ -4,13 +4,15 @@ using dgm::ps::ParticleSystem;
 using dgm::ps::SimpleParticleSystem;
 
 // *** PARTICLE SYSTEM ***
-bool ParticleSystem::init(const std::size_t particleCount, const dgm::Clip &clip) {
+bool ParticleSystem::init(const std::size_t particleCount, const dgm::Clip &clip, dgm::ps::ParticleFactoryInterface *factory) {
 	if (not renderer.init(particleCount, clip)) return false;
+	factory->reset();
 	
 	try {
 		particles.init(particleCount);
 		for (auto i = particles.begin(); i < particles.capacity(); i++) {
-			particles[i].init(renderer.getParticleVertices(i));
+			particles[i] = factory->create();
+			particles[i]->init(renderer.getParticleVertices(i));
 		}
 	}
 	catch(...) {
@@ -18,6 +20,15 @@ bool ParticleSystem::init(const std::size_t particleCount, const dgm::Clip &clip
 	}
 	
 	return true;
+}
+
+dgm::ps::ParticleSystem::ParticleSystem() {
+}
+
+dgm::ps::ParticleSystem::~ParticleSystem() {
+	for (auto i = particles.begin(); i < particles.capacity(); i++) {
+		delete particles[i];
+	}
 }
 
 float randomFloat(const float range) {
@@ -29,15 +40,15 @@ float randomFloat(const float range) {
 void SimpleParticleSystem::spawnParticle() {
 	if (not particles.add()) return;
 
-	dgm::ps::Particle &particle = particles.getLast();
-	particle.size = { 5.f, 5.f };
+	dgm::ps::Particle *particle = particles.getLast();
+	particle->size = { 5.f, 5.f };
 	float force = emitForce + randomFloat(emitForceDelta) - emitForceDelta / 2.f;
 	float angle = emitAngle + randomFloat(emitRange) - emitRange / 2.f;
-	particle.forward = dgm::Conversion::polarToCartesian(angle, force);
+	particle->forward = dgm::Conversion::polarToCartesian(angle, force);
 	float lifespan = averageLifespan + randomFloat(lifespanDelta) - lifespanDelta / 2.f;
-	particle.spawn(emitPosition);
-	particle.lifespan = lifespan;
-	particle.changeFrame(sf::IntRect(0, 0, 10, 10));
+	particle->spawn(emitPosition);
+	particle->lifespan = lifespan;
+	particle->changeFrame(sf::IntRect(0, 0, 10, 10));
 }
 
 void SimpleParticleSystem::update(const dgm::Time &time) {
@@ -50,16 +61,16 @@ void SimpleParticleSystem::update(const dgm::Time &time) {
 	}
 	
 	for (auto i = particles.begin(); i < particles.end(); i++) {
-		dgm::ps::Particle &particle = particles[i];
+		dgm::ps::Particle *particle = particles[i];
 		
-		particle.lifespan -= time.deltaTime();
-		if (not particle.alive()) {
-			particle.destroy();
+		particle->lifespan -= time.deltaTime();
+		if (not particle->alive()) {
+			particle->destroy();
 			particles.remove(i--);
 		}
 		
-		particle.forward = particle.forward + (globalForce * time.deltaTime());
-		particle.move(particle.forward * time.deltaTime());
+		particle->forward = particle->forward + (globalForce * time.deltaTime());
+		particle->move(particle->forward * time.deltaTime());
 	}
 }
 
