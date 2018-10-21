@@ -4,9 +4,17 @@
 
 namespace dgm {
 	namespace ps {
+		/**
+		 *  \brief Particle abstraction
+		 *  
+		 *  \details This class represents a single particle which
+		 *  we can move around, scale or even animate it. You can
+		 *  also have a particle with a limited (or conditioned)
+		 *  lifespan.
+		 */
 		class Particle {
 		protected:
-			sf::Vertex *quad;
+			sf::Vertex *quad; ///< Pointer to first of the four quad vertices
 
 		public:
 			float lifespan; ///< How long till dead
@@ -16,12 +24,16 @@ namespace dgm {
 			sf::Vector2f getPosition() const { return quad[0].position + size / 2.f; }
 
 			/**
-			 *  \brief Test whether lifespan is greater than zero
+			 *  \brief Is the particle alive
+			 *  
+			 *  \details Test whether lifespan is greater than zero
 			 */
 			bool alive() const { return (lifespan > 0.f); }
 
 			/**
-			 *  \brief Change textCoords of particle
+			 *  \brief Change amination frame displayed on particle
+			 *  
+			 *  \details Change textCoords of each quads vertex
 			 */
 			void changeFrame(const sf::IntRect &frame);
 

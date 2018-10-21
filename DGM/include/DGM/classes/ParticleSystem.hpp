@@ -18,11 +18,16 @@ namespace dgm {
 			virtual void reset() = 0;
 
 			/**
-			 *  \brief Returns new Particle instance
+			 *  \brief Returns new \ref Particle instance
 			 */
 			virtual dgm::ps::Particle* create() const = 0;
 		};
 
+		/**
+		 *  \brief Example usage of \ref ParticleFactoryInterface
+		 *  
+		 *  \details Simply generates instances of \ref Particle
+		 */
 		class ParticleFactory : public ParticleFactoryInterface {
 		public:
 			// Dìdí se pøes ParticleFactoryInterface.
@@ -58,17 +63,29 @@ namespace dgm {
 			~ParticleSystem();
 		};
 		
+		/**
+		 *  \brief Example usage of \ref ParticleSystem
+		 *  
+		 *  \details After calling init, set all public attributes to proper
+		 *  values, then you can call \update each frame. Those attributes will
+		 *  be used to spawn particles (exclusively white squares; you can affect that
+		 *  with other than example \ref ParticleFactory.
+		 */
 		class SimpleParticleSystem : public dgm::ps::ParticleSystem {
 		protected:
 			void spawnParticle();
-			float spawnTimer;
+			float spawnTimer; ///< Internal clock for controlling particle spawning
 			
 		public:
-			float emitForce, emitForceDelta;
-			sf::Vector2f globalForce, emitPosition;
-			float emitAngle, emitRange;
-			float averageLifespan, lifespanDelta;
-			int particlesPerSec;
+			float emitForce; ///< Average initial forward momentum of particle
+			float emitForceDelta; ///< How much can forward momentum differ from average value
+			sf::Vector2f globalForce; ///< Force vector applied to existing particles each second
+			sf::Vector2f emitPosition; ///< Where will be particles spawned from
+			float emitAngle; ///< Angle (clockwise, 0° = 12o'clock) under which will be particles fired from emitter
+			float emitRange; ///< Difference from base emit angle
+			float averageLifespan; ///< How long will particle live on average
+			float lifespanDelta; ///< How much can lifespan duration differ from average value
+			int particlesPerSec; ///< How many particles per second will be produced
 		
 			virtual void update(const dgm::Time &time) override;
 
