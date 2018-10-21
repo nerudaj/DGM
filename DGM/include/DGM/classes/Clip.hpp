@@ -1,35 +1,47 @@
-/**
- *  \file Clip.hpp
- *  \author doomista
- */
-
 #pragma once
 
+#include <DGM\dgm.hpp>
+#include <vector>
+
 namespace dgm {
-	/**
-	 *  \brief Structure for holding texture clipping data
-	 */
 	class Clip {
 	protected:
-		unsigned int size;
-		sf::IntRect *clips;
+		std::vector<sf::IntRect> frames;
+		sf::Vector2i size;
 
 	public:
-		/* METHODS */
-		unsigned int		getSize() const;
-		sf::Vector2i		getTileSize() const;
-		const sf::IntRect	&getFrame(unsigned int index) const;
+		/**
+		 *  \brief Get reference to Nth frame
+		 *
+		 *  \param [in] index Index of the frame
+		 */
+		const sf::IntRect &getFrame(const std::size_t index) const { return frames[index]; }
 		
-		bool loadFromFile(std::string filename, std::string identifier);
-		bool loadFromMemory(sf::IntRect *data, unsigned int frames);
-		bool loadFromParameters(const sf::Vector2i &frameSize, const sf::IntRect &boundaries, unsigned int frames = 0, const sf::Vector2i &frameOffset = sf::Vector2i(0, 0));
+		/**
+		 *  \brief Get number of frames stored in object
+		 */
+		std::size_t getFrameCount() const { return frames.size(); }
 		
-		void clear();
-		
-		/* CONSTRUCTORS */
+		/**
+		 *  \brief Get resolution of every frame in object
+		 */
+		const sf::Vector2i &getFrameSize() const { return size; }
+
+		/**
+		 *  \brief Initialize the object
+		 *
+		 *  \param [in] frameSize Size of the frame
+		 *  \param [in] boundaries Bounding box around all frames to load
+		 *  \param [in] frameCount Number of frames to load from boundaries
+		 *  \param [in] frameOffset Offset between two neighbouring frames
+		 *
+		 *  \details This method must be called prior to any other method.
+		 *  If frameCount is 0, maximum number of frames is loaded within bounding box
+		 */
+		bool init(const sf::Vector2i &frameSize, const sf::IntRect &boundaries, unsigned int frameCount = 0, const sf::Vector2i &frameOffset = sf::Vector2i(0, 0));
+
 		Clip();
-		Clip(std::string filename, std::string identifier);
-		Clip(const sf::Vector2i &frameSize, const sf::IntRect &boundaries, unsigned int frames = 0, const sf::Vector2i &frameOffset = sf::Vector2i(0, 0));
+		Clip(const sf::Vector2i &frameSize, const sf::IntRect &boundaries, unsigned int frameCount = 0, const sf::Vector2i &frameOffset = sf::Vector2i(0, 0));
 		~Clip();
 	};
-};
+}

@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <iostream>
+
 namespace dgm {
 	template <typename T>
 	/**
@@ -110,7 +112,7 @@ namespace dgm {
 		}
 		
 		/**
-		 *  \brief Get index of first object
+		 *  \brief get index of first object
 		 *  
 		 *  \return 0
 		 *  
@@ -122,7 +124,7 @@ namespace dgm {
 		std::size_t begin() const { return 0; }
 		
 		/**
-		 *  \brief Get index of last object + 1
+		 *  \brief get index of last object + 1
 		 *  
 		 *  \return size()
 		 *  

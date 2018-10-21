@@ -153,12 +153,12 @@ namespace dgm {
 		/**
 		 *  \brief Frees memory held by *data if necessary
 		 */
-		void free();
+		void Free();
 		
 		/**
 		 *  \brief Allocates memory to *data based on dataSize
 		 */
-		bool alloc();
+		bool Alloc();
 		
 	protected:
 		int *data;	///< Array for holding collision data
@@ -182,17 +182,17 @@ namespace dgm {
 		const int &operator[] (std::size_t index) const;
 	
 		/**
-		 *  \brief Get position of top-left corner
+		 *  \brief get position of top-left corner
 		 */
 		const sf::Vector2f &getPosition() const;
 		
 		/**
-		 *  \brief Get dimensions of *data array
+		 *  \brief get dimensions of *data array
 		 */
 		const sf::Vector2i &getDataSize() const;
 		
 		/**
-		 *  \brief Get dimensions of single voxel
+		 *  \brief get dimensions of single voxel
 		 */
 		const sf::Vector2i &getVoxelSize() const;
 	

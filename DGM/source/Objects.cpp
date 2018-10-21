@@ -93,14 +93,14 @@ dgm::Rect::~Rect() {
 // ************
 // *** MESH ***
 // ************
-void dgm::Mesh::free() {
+void dgm::Mesh::Free() {
 	if (data != NULL) {
 		delete[] data;
 		data = NULL;
 	}
 }
 
-bool dgm::Mesh::alloc() {
+bool dgm::Mesh::Alloc() {
 	data = new int [dataSize.x * dataSize.y];
 	if (data == NULL)
 		return false;
@@ -134,9 +134,9 @@ void dgm::Mesh::setVoxelSize(const sf::Vector2i &size) { voxelSize = size; }
 bool dgm::Mesh::setDataSize(const int width, const int height) { return setDataSize(sf::Vector2i(width, height)); }
 
 bool dgm::Mesh::setDataSize(const sf::Vector2i &size) {
-	free(); // Frees *data if necessary
+	Free(); // Frees *data if necessary
 	dataSize = size;
-	return alloc();// Allocates new memory
+	return Alloc();// Allocates new memory
 }
 
 void dgm::Mesh::move(const float x, const float y) {
@@ -157,5 +157,5 @@ dgm::Mesh::Mesh() {
 }
 
 dgm::Mesh::~Mesh() {
-	free();
+	Free();
 }

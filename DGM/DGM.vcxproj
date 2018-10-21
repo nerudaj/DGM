@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -18,35 +18,80 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\Animation.cpp" />
+    <ClCompile Include="source\App.cpp" />
+    <ClCompile Include="source\Clip.cpp" />
+    <ClCompile Include="source\Collision.cpp" />
+    <ClCompile Include="source\Config.cpp" />
+    <ClCompile Include="source\ConfigItem.cpp" />
+    <ClCompile Include="source\Controller.cpp" />
+    <ClCompile Include="source\Conversion.cpp" />
+    <ClCompile Include="source\Level.cpp" />
+    <ClCompile Include="source\Objects.cpp" />
+    <ClCompile Include="source\Particle.cpp" />
+    <ClCompile Include="source\ParticleSystem.cpp" />
+    <ClCompile Include="source\ParticleSystemRenderer.cpp" />
+    <ClCompile Include="source\Pathfinder.cpp" />
+    <ClCompile Include="source\ResourceManager.cpp" />
+    <ClCompile Include="source\Strings.cpp" />
+    <ClCompile Include="source\TilesetRenderer.cpp" />
+    <ClCompile Include="source\Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\DGM\classes\Animation.hpp" />
+    <ClInclude Include="include\DGM\classes\App.hpp" />
+    <ClInclude Include="include\DGM\classes\AppState.hpp" />
+    <ClInclude Include="include\DGM\classes\Buffer.hpp" />
+    <ClInclude Include="include\DGM\classes\Clip.hpp" />
+    <ClInclude Include="include\DGM\classes\Collision.hpp" />
+    <ClInclude Include="include\DGM\classes\Config.hpp" />
+    <ClInclude Include="include\DGM\classes\ConfigItem.hpp" />
+    <ClInclude Include="include\DGM\classes\Controller.hpp" />
+    <ClInclude Include="include\DGM\classes\Conversion.hpp" />
+    <ClInclude Include="include\DGM\classes\Level.hpp" />
+    <ClInclude Include="include\DGM\classes\Math.hpp" />
+    <ClInclude Include="include\DGM\classes\Objects.hpp" />
+    <ClInclude Include="include\DGM\classes\Particle.hpp" />
+    <ClInclude Include="include\DGM\classes\ParticleSystem.hpp" />
+    <ClInclude Include="include\DGM\classes\ParticleSystemRenderer.hpp" />
+    <ClInclude Include="include\DGM\classes\Pathfinder.hpp" />
+    <ClInclude Include="include\DGM\classes\ResourceManager.hpp" />
+    <ClInclude Include="include\DGM\classes\Strings.hpp" />
+    <ClInclude Include="include\DGM\classes\TilesetRenderer.hpp" />
+    <ClInclude Include="include\DGM\classes\Time.hpp" />
+    <ClInclude Include="include\DGM\classes\Window.hpp" />
+    <ClInclude Include="include\DGM\dgm.hpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{345A4A83-A03F-49DF-ADD8-CDFB1B9FF344}</ProjectGuid>
     <RootNamespace>DGM</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -79,27 +124,31 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\3rdParty\SFML-2.4.2\include;$(SolutionDir)\DGM\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\tools\coding\SFML-2.4.2\include;$(SolutionDir)\DGM\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
     </Link>
-    <PostBuildEvent>
-      <Command>cd C:\Users\doomista\Desktop\Projekty\Coding\DGM\Debug
-copy DGM.lib C:\Users\doomista\Desktop\Projekty\Coding\DGM\DGM\lib
-cd C:\Users\doomista\Desktop\Projekty\Coding\DGM\DGM\lib
-move DGM.lib dgm-d.lib</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)\3rdParty\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
+    <PostBuildEvent>
+      <Command>cd $(SolutionDir)Debug
+move dgm.lib dgm-d.lib
+copy dgm-d.lib ..\DGM\lib\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\tools\coding\SFML-2.4.2\include;$(SolutionDir)\DGM\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\tools\coding\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -108,22 +157,21 @@ move DGM.lib dgm-d.lib</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\3rdParty\SFML-2.4.2\include;$(SolutionDir)\DGM\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\tools\coding\SFML-2.4.2\include;$(SolutionDir)\DGM\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
     </Link>
-    <PostBuildEvent>
-      <Command>cd C:\Users\doomista\Desktop\Projekty\Coding\DGM\Release
-copy DGM.lib C:\Users\doomista\Desktop\Projekty\Coding\DGM\DGM\lib
-cd C:\Users\doomista\Desktop\Projekty\Coding\DGM\DGM\lib
-move DGM.lib dgm.lib</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)\3rdParty\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
+    <PostBuildEvent>
+      <Command>cd $(SolutionDir)Release
+copy dgm.lib ..\DGM\lib\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -132,52 +180,14 @@ move DGM.lib dgm.lib</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\tools\coding\SFML-2.4.2\include;$(SolutionDir)\DGM\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\tools\coding\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="source\Animation.cpp" />
-    <ClCompile Include="source\AnimationData.cpp" />
-    <ClCompile Include="source\AnimationState.cpp" />
-    <ClCompile Include="source\Clip.cpp" />
-    <ClCompile Include="source\Collision.cpp" />
-    <ClCompile Include="source\Controller.cpp" />
-    <ClCompile Include="source\Conversion.cpp" />
-    <ClCompile Include="source\Countdown.cpp" />
-    <ClCompile Include="source\Counter.cpp" />
-    <ClCompile Include="source\Dice.cpp" />
-    <ClCompile Include="source\Molded\Flaggable.cpp" />
-    <ClCompile Include="source\Molded\GameCore.cpp" />
-    <ClCompile Include="source\Objects.cpp" />
-    <ClCompile Include="source\ParticleEffect.cpp" />
-    <ClCompile Include="source\Strings.cpp" />
-    <ClCompile Include="source\TileRenderer.cpp" />
-    <ClCompile Include="source\TimeCountdown.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\DGM\classes\Animation.hpp" />
-    <ClInclude Include="include\DGM\classes\AnimationData.hpp" />
-    <ClInclude Include="include\DGM\classes\AnimationState.hpp" />
-    <ClInclude Include="include\DGM\classes\Buffer.hpp" />
-    <ClInclude Include="include\DGM\classes\Clip.hpp" />
-    <ClInclude Include="include\DGM\classes\Collision.hpp" />
-    <ClInclude Include="include\DGM\classes\Controller.hpp" />
-    <ClInclude Include="include\DGM\classes\Conversion.hpp" />
-    <ClInclude Include="include\DGM\classes\Countdown.hpp" />
-    <ClInclude Include="include\DGM\classes\Counter.hpp" />
-    <ClInclude Include="include\DGM\classes\Dice.hpp" />
-    <ClInclude Include="include\DGM\classes\Molded\Flaggable.hpp" />
-    <ClInclude Include="include\DGM\classes\Molded\GameCore.hpp" />
-    <ClInclude Include="include\DGM\classes\Objects.hpp" />
-    <ClInclude Include="include\DGM\classes\ParticleEffect.hpp" />
-    <ClInclude Include="include\DGM\classes\Strings.hpp" />
-    <ClInclude Include="include\DGM\classes\TileRenderer.hpp" />
-    <ClInclude Include="include\DGM\classes\TimeCountdown.hpp" />
-    <ClInclude Include="include\DGM\dgm.hpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -66,7 +66,7 @@ namespace dgm {
 		 * 
 		 *  \return TRUE if collision was detected. FALSE otherwise
 		 */
-		static bool basic (const dgm::Mesh &A, const dgm::Circle &B);
+		static bool basic (const dgm::Mesh &A, const dgm::Circle &B, int *meshHitPosition = nullptr);
 		
 		/**
 		 *  \brief Tests collision between mesh and a rectangle
@@ -76,7 +76,7 @@ namespace dgm {
 		 * 
 		 *  \return TRUE if collision was detected. FALSE otherwise
 		 */
-		static bool basic (const dgm::Mesh &A, const dgm::Rect &B);
+		static bool basic (const dgm::Mesh &A, const dgm::Rect &B, int *meshHitPosition = nullptr);
 		
 		/**
 		 *  \brief Elaborates movement of a circle within a mesh
@@ -92,7 +92,7 @@ namespace dgm {
 		 * 
 		 *  \return TRUE if collision was detected. FALSE otherwise
 		 */
-		static bool advanced(const dgm::Mesh &mesh, const dgm::Circle &body, sf::Vector2f &forward);
+		static bool advanced(const dgm::Mesh &mesh, const dgm::Circle &body, sf::Vector2f &forward, int *meshHitPosition = nullptr);
 		
 		/**
 		 *  \brief Elaborates movement of a rect within a mesh
@@ -108,6 +108,6 @@ namespace dgm {
 		 * 
 		 *  \return TRUE if collision was detected. FALSE otherwise
 		 */
-		static bool advanced(const dgm::Mesh &mesh, const dgm::Rect &body, sf::Vector2f &forward);
+		static bool advanced(const dgm::Mesh &mesh, const dgm::Rect &body, sf::Vector2f &forward, int *meshHitPosition = nullptr);
 	};
 }

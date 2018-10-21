@@ -5,7 +5,8 @@
  
 #pragma once
 
-#include <list>
+#include <map>
+#include <DGM/dgm.hpp>
 
 namespace dgm {
 	class AbstractController {
@@ -20,22 +21,24 @@ namespace dgm {
 	/**
 	 * \brief Class with enumerator object for X360 inputs
 	 */
-	class X360 {
-	public:
-		enum Input {
-			Empty = -1,
-			A = 0, B = 1, X = 2, Y = 3,
-			LBumper = 4, RBumper = 5,
-			Select = 6, Start = 7,
-			LStick = 8, RStick = 9,
-			LTrigger = 100, RTrigger,
-			LStick_Left = 200, LStick_Up, LStick_Right, LStick_Down,
-			RStick_Left = 300, RStick_Up, RStick_Right, RStick_Down,
-			POV_Left = 400, POV_Up, POV_Right, POV_Down,
-		};
+	enum class X360 {
+		Empty = -1,
+		A = 0, B = 1, X = 2, Y = 3,
+		LBumper = 4, RBumper = 5,
+		Select = 6, Start = 7,
+		LStick = 8, RStick = 9,
+		LTrigger = 100, RTrigger,
+		LStick_Left = 200, LStick_Up, LStick_Right, LStick_Down,
+		RStick_Left = 300, RStick_Up, RStick_Right, RStick_Down,
+		POV_Left = 400, POV_Up, POV_Right, POV_Down,
 	};
 
-	class Binding; ///< defined in Controller.cpp
+	class Binding {
+	public:
+		bool released;
+		sf::Keyboard::Key key;
+		dgm::X360 joy;
+	};
 
 	class Controller : public AbstractController {
 	protected:
@@ -43,7 +46,7 @@ namespace dgm {
 		float deadzone;
 		int index;
 
-		float getJoystickAxis(const dgm::X360::Input joy) const;
+		float getJoystickAxis(const dgm::X360 joy) const;
 
 	public:
 
@@ -73,7 +76,7 @@ namespace dgm {
 		 * keyPressed(). Once an action is marked as released then
 		 * keyPressed() will return FALSE until point where user
 		 * had released the input physically and then pressed it again.
-		 * With this, one can emulate sf::Event::KeyPressed behaviour.
+		 * With this, one can emulate sf::Event::keyPressed behaviour.
 		 *
 		 * \note In order to function properly, keyPressed should be called
 		 * every frame (to ensure that controller will notice the released key)
@@ -85,7 +88,7 @@ namespace dgm {
 		 *
 		 * \note Key is required, joy can be dgm::X360::Empty
 		 */
-		void setBinding(const int code, sf::Keyboard::Key key, dgm::X360::Input joy = dgm::X360::Empty);
+		void setBinding(const int code, sf::Keyboard::Key key, dgm::X360 joy = dgm::X360::Empty);
 
 		/**
 		 * \brief Sets the threshold for X360 axii

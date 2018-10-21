@@ -1,17 +1,11 @@
 #include <DGM\dgm.hpp>
 
-class dgm::Binding {
-public:
-	bool released;
-	sf::Keyboard::Key key;
-	dgm::X360::Input joy;
-};
-
-inline bool isJoystickAxis(dgm::X360::Input joy) {
-	return joy >= 100; // 100 is where axii start
+inline bool isJoystickAxis(dgm::X360 joy) {
+	int value = int(joy);
+	return value >= 100; // 100 is where axii start
 }
 
-float dgm::Controller::getJoystickAxis(const dgm::X360::Input joy) const {
+float dgm::Controller::getJoystickAxis(const dgm::X360 joy) const {
 	float rtn;
 
 	switch (joy) {
@@ -75,7 +69,7 @@ bool dgm::Controller::keyPressed(const int code) {
 	else if (sf::Joystick::isConnected(index) and bindings[code].joy != dgm::X360::Empty) {
 		if (isJoystickAxis(bindings[code].joy) and (getJoystickAxis(bindings[code].joy) > 0.f))
 			return (not bindings[code].released);
-		else if (sf::Joystick::isButtonPressed(index, bindings[code].joy))
+		else if (sf::Joystick::isButtonPressed(index, int(bindings[code].joy)))
 			return (not bindings[code].released);
 	}
 
@@ -89,7 +83,7 @@ bool dgm::Controller::keyPressed(const int code, float & intensity) const {
 	else if (sf::Joystick::isConnected(index) and bindings[code].joy != dgm::X360::Empty) {
 		if (isJoystickAxis(bindings[code].joy))
 			intensity = getJoystickAxis(bindings[code].joy);
-		else if (sf::Joystick::isButtonPressed(index, bindings[code].joy))
+		else if (sf::Joystick::isButtonPressed(index, int(bindings[code].joy)))
 			intensity = 100.f;
 	}
 
@@ -100,7 +94,7 @@ void dgm::Controller::releaseKey(const int code) {
 	bindings[code].released = true;
 }
 
-void dgm::Controller::setBinding(const int code, sf::Keyboard::Key key, dgm::X360::Input joy) {
+void dgm::Controller::setBinding(const int code, sf::Keyboard::Key key, dgm::X360 joy) {
 	if (bindings.size() <= size_t(code)) {
 		bindings.resize(code + 1);
 	}

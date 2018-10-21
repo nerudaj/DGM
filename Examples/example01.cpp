@@ -29,18 +29,14 @@ int main(int argc, char *argv[]) {
 		1, 0, 0, 0, 1
 	};
 	dgm::Clip clip({ 64,64 }, { 0,0,256,64 });
-	
-	dgm::ResourceManager resmgr;
-	std::vector<std::string> names;
-	if (not resmgr.loadFromDir("../Graphics", dgm::ResourceManager::Type::Graphic, &names)) {
-		return 2;
-	}
+	sf::Texture texture;
+	if (not texture.loadFromFile("../Graphics/tileset.png")) return 2;
 
 	dgm::Level level;
 	if (not level.loadFromFile("../Data/level.txt")) {
 		level.build(clip, { 64,64 }, imageData, collisionData, { 5,5 });
 	}
-	level.getRenderer().setTexture(resmgr.get<sf::Texture>("tileset"));
+	level.getRenderer().setTexture(&texture);
 
 	sf::Event event;
 	while (window.isOpen()) {

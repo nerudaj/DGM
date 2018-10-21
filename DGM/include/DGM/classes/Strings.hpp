@@ -6,6 +6,9 @@
 
 #pragma once
 
+#include <vector>
+#include <iostream>
+
 namespace dgm {
 	class Strings {
 	public:
