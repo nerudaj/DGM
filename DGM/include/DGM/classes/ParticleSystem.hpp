@@ -47,10 +47,19 @@ namespace dgm {
 			dgm::Buffer<dgm::ps::Particle*> particles;
 		
 		public:
+			/**
+			 *  \brief Render particle system to target window
+			 */
 			void draw(dgm::Window &window) { window.draw(renderer); }
 		
+			/**
+			 *  \brief Get reference to renderer object
+			 */
 			dgm::ps::ParticleSystemRenderer &getRenderer() { return renderer; }
 			
+			/**
+			*  \brief Get reference to renderer object
+			*/
 			const dgm::ps::ParticleSystemRenderer &getRenderer() const { return renderer; }
 			
 			void setTexture(sf::Texture *texture) { renderer.setTexture(texture); }

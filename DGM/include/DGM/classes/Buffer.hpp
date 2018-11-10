@@ -8,197 +8,337 @@
 #include <iostream>
 
 namespace dgm {
-	template <typename T>
 	/**
-	 *  \brief Static size buffer for fast maintenance of object arrays
-	 *  
-	 *  \details The purpose of this object is to maintain dynamic
-	 *  objects like effects, projectiles, particles in easy and
-	 *  efficient way. Using buffer, you define an array of object
-	 *  of a static size that allows you to dynamically add and
-	 *  remove object as you need (and as long as you don't exceed
-	 *  defined capacity). All add/remove actions are performed in
-	 *  constant time and they suppose that your objects are fully
-	 *  initialized and only need to "spawn" in your logic.
-	 */
+	* \brief Dynamic buffer array with add/remove operations
+	*
+	* \details This class is useful for cases where you need
+	* constant-sized memory block (dynamically allocated),
+	* which has O(1) for addition/deletion of items and where
+	* order of items can change.
+	*
+	* In addition, constructor of each item is called only
+	* once when the container is allocated. This way, you
+	* always have to manually initialize data each time you
+	* get a reference to "new" item, but you can elide
+	* initialization which would remain constant anyways and
+	* take a lot of time. (An example: if you have array of
+	* enemies and all enemies use the same spritesheet. Even
+	* though you always have to set their initial lives, position
+	* and such, you don't have to load the texture each time,
+	* saving you a lot of time).
+	*
+	* Also, if you obtain pointer to stored item once, this
+	* pointer is guaranteed to be valid until the container
+	* destructor is called.
+	*/
+	template<typename T, typename A = std::allocator<T>>
 	class Buffer {
-	private:
-		std::size_t s; ///< Size (number of curretnly maintained objects)
-		std::size_t c; ///< Capacity (total number of available objects)
-		T **arr;
-		
-		bool error(std::string errstr) {
-			std::cerr << errstr << std::endl;
-			return false;
+	protected:
+		T * *data; ///< Array of pointers to data
+		std::size_t dataSize; ///< Number of used items
+		std::size_t dataCapacity; ///< Number of allocated items
+
+	public:
+		class const_iterator {
+		protected:
+			T * *ptr; ///< Pointer to data
+
+		public:
+			typedef ptrdiff_t difference_type;
+			typedef T value_type;
+			typedef value_type& reference;
+			typedef value_type* pointer;
+			typedef std::random_access_iterator_tag iterator_category;
+
+			const reference &operator*() const {
+				return **ptr;
+			}
+
+			const_iterator &operator++() {
+				ptr++;
+				return *this;
+			}
+
+			const_iterator operator++(int) {
+				const_iterator copy(*this);
+				ptr++;
+				return copy;
+			}
+
+			const_iterator &operator--() {
+				ptr--;
+				return *this;
+			}
+
+			const_iterator operator--(int) {
+				const_iterator copy(*this);
+				ptr--;
+				return copy;
+			}
+
+			const_iterator &operator=(const const_iterator &other) {
+				ptr = other.ptr;
+			}
+
+			difference_type operator-(const const_iterator &other) {
+				return ptr - other.ptr;
+			}
+
+			difference_type operator+(const const_iterator &other) {
+				return ptr + other.ptr;
+			}
+
+			bool operator!=(const const_iterator &other) {
+				return ptr != other.ptr;
+			}
+
+			friend void swap(const_iterator &first, const_iterator &second) {
+				std::swap(first.ptr, second.ptr);
+			}
+
+			const_iterator(value_type **value) { ptr = value; }
+			const_iterator(const_iterator &&other) { ptr = other.ptr; }
+			const_iterator(const const_iterator &other) { ptr = other.ptr; }
+			~const_iterator() {}
+		};
+
+		class iterator : public const_iterator {
+		protected:
+			T * *ptr; ///< Pointer to data
+
+		public:
+			typedef ptrdiff_t difference_type;
+			typedef T value_type;
+			typedef value_type& reference;
+			typedef value_type* pointer;
+			typedef std::random_access_iterator_tag iterator_category;
+
+			reference &operator*() const {
+				return **ptr;
+			}
+
+			iterator &operator++() {
+				ptr++;
+				return *this;
+			}
+
+			iterator operator++(int) {
+				iterator copy(*this);
+				ptr++;
+				return copy;
+			}
+
+			iterator &operator--() {
+				ptr--;
+				return *this;
+			}
+
+			iterator operator--(int) {
+				iterator copy(*this);
+				ptr--;
+				return copy;
+			}
+
+			iterator &operator=(const iterator &other) {
+				ptr = other.ptr;
+			}
+
+			difference_type operator-(const const_iterator &other) {
+				return ptr - other.ptr;
+			}
+
+			difference_type operator+(const const_iterator &other) {
+				return ptr + other.ptr;
+			}
+
+			iterator &operator+=(int i) {
+			}
+
+			bool operator!=(const iterator &second) {
+				return ptr != second.ptr;
+			}
+
+			friend void swap(iterator &first, iterator &second) {
+				std::swap(first.ptr, second.ptr);
+			}
+
+			iterator(value_type **value) { ptr = value; }
+			iterator(const iterator &other) { ptr = other.ptr; }
+			iterator(iterator &&other) { ptr = other.ptr; }
+			~iterator() {}
+		};
+
+		/**
+		* \brief Add an item to buffer
+		*
+		* \return TRUE on success, FALSE if capacity of container has been reached
+		*
+		* \details Container always holds N allocated and initialized items where
+		* N is total capacity of container. But those items are hidden until
+		* this function unhides them, making them included in range loops and such.
+		*/
+		bool expand() {
+			if (dataSize == dataCapacity) return false;
+
+			return ++dataSize;
 		}
-	
-		bool allocate(std::size_t size) {
-			arr = new T * [size];
-			
-			if (arr == NULL) return false;
-			
-			for (std::size_t i = 0; i < size; i++) {
-				arr[i] = NULL;
-				arr[i] = new T;
-				
-				if (arr[i] == NULL) {
-					for (int p = i - 1; p >= 0; p--) delete arr[p];
-					return false;
+
+		/**
+		* \brief Remove item at index
+		*
+		* \param [in] index Index of element to remove
+		*
+		* \details This will swap the item at position \p index
+		* with the last valid item and decrease size of the container,
+		* hiding the removed item.
+		*/
+		bool remove(std::size_t index) {
+			if (index >= dataSize) return false;
+
+			std::swap(data[index], data[--dataSize]);
+
+			return true;
+		}
+
+		void remove(const iterator &itr) {
+			remove(itr - begin());
+		}
+
+		void remove(const const_iterator &itr) {
+			remove(itr - begin());
+		}
+
+		/**
+		* \brief Get element to last available item
+		*
+		* \details Last item equals to last added item with \ref expand
+		* unless \ref remove was called. Use this immediately \ref expand
+		* to initialize the unhid item.
+		*/
+		T &last() { return *data[dataSize - 1]; }
+
+		/**
+		* \brief Get element to last available item
+		*
+		* \details Last item equals to last added item with \ref expand
+		* unless \ref remove was called. Use this immediately \ref expand
+		* to initialize the unhid item.
+		*/
+		const T &last() const { return *data[dataSize - 1]; }
+
+		/**
+		* \brief Resize buffer array
+		*
+		* \param [in] maxSize New capacity for array
+		*
+		* \details This method is used for setting new size of the
+		* buffer array. If \p newSize is bigger than current \ref capacity
+		* then new items will be constructed. If \p newSize is less, then
+		* some items on high indices will be invalidated and deleted.
+		*
+		* If not items are deleted via this function, any pointers to them
+		* are still valid, even after resize.
+		*
+		* \note This method is expensive. The best way is to use it once when
+		* your program is initializing.
+		*/
+		void resize(std::size_t maxSize) {
+			if (dataCapacity <= maxSize) throw std::bad_array_new_length();
+
+			// Upscaling buffer
+			if (data) {
+				// Allocate bigger array
+				T **newData = new T*[maxSize];
+				if (newData == NULL) throw std::bad_alloc();
+
+				// Copy valid pointers
+				for (unsigned i = 0; i < dataCapacity; i++) {
+					newData[i] = data[i];
+				}
+
+				// Allocate new pointers
+				for (unsigned i = dataCapacity; i < maxSize; i++) {
+					newData[i] = new T;
+					if (newData[i] == NULL) throw std::bad_alloc();
+				}
+
+				// Free old array, assign new array
+				delete[] data;
+				data = newData;
+			}
+			// Creating buffer
+			else {
+				// Allocate bigger array
+				data = new T*[maxSize];
+				if (data == NULL) throw std::bad_alloc();
+
+				// Allocate all pointers
+				for (dataCapacity = 0; dataCapacity < maxSize; dataCapacity++) {
+					data[dataCapacity] = new T;
+					if (data[dataCapacity] == NULL) throw std::bad_alloc();
 				}
 			}
-			
-			return true;
 		}
-		
-		void swap (size_t a, size_t b) {
-			T *tmp = arr[a];
-			arr[a] = arr[b];
-			arr[b] = tmp;
-		}
-	
-	public:
-		/**
-		 *  \brief Returns number of currently maintained objects
-		 */
-		std::size_t size () const { return s; }
-		
-		/**
-		 *  \brief Returns how many object can be maintained
-		 */
-		std::size_t capacity () const { return c; }
-		
-		/**
-		 *  \brief Adds a new object to maintained list
-		 *  
-		 *  \return TRUE on success, FALSE otherwise (capacity reached)
-		 *  
-		 *  \details If size is less than capacity then it is
-		 *  incremented and new object is added to maintained list.
-		 */
-		bool add () {
-			if (s == c) return false;
-			s++;
-			return true;
-		}
-		
-		/**
-		 *  \brief Removes the selected object from maintained list
-		 *  
-		 *  \return TRUE on success, FALSE otherwise.
-		 *  
-		 *  \details Details
-		 */
-		bool remove(size_t index) {
-			if (s == 0) return false;
 
-			s--;
-			if (s != index) swap(index, s);
+		T &operator[] (std::size_t index) { return *data[index]; }
 
-			return true;
-		}
-		
-		/**
-		 *  \brief
-		 */
-		T &operator[] (std::size_t index) {
-			return arr[index][0];
-		}
-		
-		/**
-		 *  \brief
-		 */
-		const T &operator[] (std::size_t index) const {
-			return arr[index][0];
-		}
-		
-		/**
-		 *  \brief get index of first object
-		 *  
-		 *  \return 0
-		 *  
-		 *  \details Basically substitute for 0. This
-		 *  function tries to emulate c++ iterator syntax
-		 *  but instead of returning reference to object
-		 *  it only returns index to object.
-		 */
-		std::size_t begin() const { return 0; }
-		
-		/**
-		 *  \brief get index of last object + 1
-		 *  
-		 *  \return size()
-		 *  
-		 *  \details Basically substitute for size(). This
-		 *  function tries to emulate c++ iterator syntax
-		 *  but instead of returning reference to object
-		 *  it only returns index to object.
-		 */
-		std::size_t end() const { return s; }
-		
-		/**
-		 *  \brief Retrieve object located at index size()-1
-		 *  
-		 *  \details This function is particulary useful for
-		 *  setting up newly added object.
-		 *  
-		 *  \return Reference to Buffer[size()-1]
-		 */
-		T &getLast() {
-			return arr[s-1][0];
-		}
-		
-		/**
-		 *  \brief
-		 */
-		const T &getLast() const {
-			return arr[s-1][0];
-		}
-		
-		/**
-		 *  \brief Initializes the buffer with 'size' objects
-		 *  
-		 *  \details Internal size is set to zero and internal
-		 *  capacity is set to 'size'.
-		 *  
-		 *  \return TRUE on success, FALSE otherwise.
-		 */
-		bool init (std::size_t size) {
-			std::string ErrHeader ("dgm::Buffer::init(...) - ");
-			
-			if (arr != NULL) return error(ErrHeader + "Memory is already allocated. Free it with deinit() before attemting to reallocate.");
-			
-			if (not allocate(size)) return error(ErrHeader + "Could not allocate memory.");
-			
-			c = size;
-			s = 0;
-			return true;
-		}
-		
-		/**
-		 *  \brief Clears the memory from all allocated items
-		 *  
-		 *  \details Is automatically called from destructor.
-		 */
-		void deinit() {
-			if (arr != NULL) {
-				for (unsigned int i = 0; i < c; i++) delete arr[i];
+		const T &operator[] (std::size_t index) const { return *data[index]; }
 
-				delete[] arr;
-				arr = NULL;
-				s = 0;
-				c = 0;
+		/**
+		* \brief Get number of used items
+		*/
+		std::size_t size() const { return dataSize; }
+
+		/**
+		* \brief Get total number of available items
+		*/
+		std::size_t capacity() const { return dataCapacity; }
+
+		/**
+		* \brief Test whether buffer is empty
+		*/
+		bool empty() const { return dataSize == 0; }
+
+		/**
+		* \brief Test whether buffer is full
+		*/
+		bool full() const { return dataSize == dataCapacity; }
+
+		const_iterator begin() noexcept { return const_iterator(data); }
+
+		const_iterator end() noexcept { return const_iterator(data + dataSize); }
+
+		Buffer &operator=(Buffer other) = delete;
+
+		Buffer() {
+			data = NULL;
+			dataSize = 0;
+			dataCapacity = 0;
+		}
+
+		Buffer(std::size_t maxSize) {
+			data = NULL;
+			dataSize = 0;
+			dataCapacity = 0;
+
+			resize(maxSize);
+		}
+
+		Buffer(const Buffer &buffer) = delete;
+		Buffer(Buffer &&buffer) = delete;
+
+		~Buffer() {
+			if (data) {
+				for (unsigned i = 0; i < dataCapacity; i++) {
+					delete data[i];
+				}
+
+				delete[] data;
 			}
-		}
-		
-		/**
-		 *  \brief Empties the buffer, but keeping the allocated memory
-		 */
-		void clear() {
-			s = 0;
-		}
 
-		Buffer() {}
-		Buffer(unsigned long size) { init(size);  }
-		~Buffer() { deinit();  }
+			data = NULL;
+			dataSize = 0;
+			dataCapacity = 0;
+		}
 	};
-};
+}

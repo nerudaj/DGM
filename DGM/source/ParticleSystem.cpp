@@ -9,10 +9,13 @@ bool ParticleSystem::init(const std::size_t particleCount, const dgm::Clip &clip
 	factory->reset();
 	
 	try {
-		particles.init(particleCount);
-		for (auto i = particles.begin(); i < particles.capacity(); i++) {
-			particles[i] = factory->create();
-			particles[i]->init(renderer.getParticleVertices(i));
+		particles.resize(particleCount);
+
+		unsigned cnt = 0;
+		for (auto &particle : particles) {
+			cnt++;
+			particle = factory->create();
+			particle->init(renderer.getParticleVertices(cnt));
 		}
 	}
 	catch(...) {
@@ -26,8 +29,8 @@ dgm::ps::ParticleSystem::ParticleSystem() {
 }
 
 dgm::ps::ParticleSystem::~ParticleSystem() {
-	for (auto i = particles.begin(); i < particles.capacity(); i++) {
-		delete particles[i];
+	for (auto &particle : particles) {
+		delete particle;
 	}
 }
 
@@ -38,9 +41,9 @@ float randomFloat(const float range) {
 
 // *** SIMPLE PARTICLE SYSTEM ***
 void SimpleParticleSystem::spawnParticle() {
-	if (not particles.add()) return;
+	if (not particles.expand()) return;
 
-	dgm::ps::Particle *particle = particles.getLast();
+	dgm::ps::Particle *particle = particles.last();
 	particle->size = { 5.f, 5.f };
 	float force = emitForce + randomFloat(emitForceDelta) - emitForceDelta / 2.f;
 	float angle = emitAngle + randomFloat(emitRange) - emitRange / 2.f;
@@ -60,15 +63,15 @@ void SimpleParticleSystem::update(const dgm::Time &time) {
 		spawnParticle();
 	}
 	
-	for (auto i = particles.begin(); i < particles.end(); i++) {
-		dgm::ps::Particle *particle = particles[i];
-		
+	unsigned cnt = 0;
+	for (auto &particle : particles) {
+		cnt++;
 		particle->lifespan -= time.deltaTime();
 		if (not particle->alive()) {
 			particle->destroy();
-			particles.remove(i--);
+			particles.remove(cnt);
 		}
-		
+
 		particle->forward = particle->forward + (globalForce * time.deltaTime());
 		particle->move(particle->forward * time.deltaTime());
 	}
