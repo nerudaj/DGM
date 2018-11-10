@@ -60,9 +60,6 @@
 #include "classes/TilesetRenderer.hpp"
 #include "classes/Level.hpp"
 
-// AI
-#include "classes/Pathfinder.hpp"
-
 // Particle Systems
 #include "classes/ParticleSystemRenderer.hpp"
 #include "classes/Particle.hpp"
