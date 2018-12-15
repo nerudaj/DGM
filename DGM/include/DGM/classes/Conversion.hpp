@@ -20,7 +20,7 @@ namespace dgm {
 		 *
 		 * \returns NULL on failure, valid pointer to int array otherwise
 		 */
-		static const int *stringToIntArray(const char delimiter, const std::string &str, std::size_t &size);
+		static std::vector<int> stringToIntArray(const char delimiter, const std::string &str);
 
 		/**
 		 * \brief Takes a string of integer numbers separated with delimiter

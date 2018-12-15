@@ -6,6 +6,7 @@ const float PIOVER180 = 0.01745329252f;
 
 using std::vector;
 using std::string;
+using dgm::Conversion;
 
 uint8_t hexBitToInt(const char bit) {
 	switch (bit) {
@@ -35,7 +36,7 @@ uint8_t hexToInt(const std::string &hex) {
 	return result;
 }
 
-sf::Color dgm::Conversion::stringToColor(const std::string & str) {
+sf::Color Conversion::stringToColor(const std::string & str) {
 	std::regex hexaShort("#[0-9a-fA-F]{3}");
 	std::regex hexaLong("#[0-9a-fA-F]{6}");
 	std::string base;
@@ -59,58 +60,51 @@ sf::Color dgm::Conversion::stringToColor(const std::string & str) {
 	return sf::Color(colorBits[0], colorBits[1], colorBits[2]);
 }
 
-const int * dgm::Conversion::stringToIntArray(const char delimiter, const std::string & str, std::size_t & size) {
+vector<int> Conversion::stringToIntArray(const char delimiter, const std::string & str) {
 	vector<string> split;
 	Strings::split(delimiter, str, split);
 	
-	size = split.size();
-	int *result = new int[size];
-	if (result == NULL)
-		return NULL;
+	vector<int> result(split.size());
 
-	for (size_t i = 0; i < size; i++) {
+	for (size_t i = 0; i < split.size(); i++) {
 		result[i] = int(strtol(split[i].c_str(), NULL, 10));
 	}
 
 	return result;
 }
 
-bool dgm::Conversion::stringToVector2i(const char delimiter, const std::string & str, sf::Vector2i & dst) {
-	size_t size;
-	const int *arr = dgm::Conversion::stringToIntArray(delimiter, str, size);
+bool Conversion::stringToVector2i(const char delimiter, const std::string & str, sf::Vector2i & dst) {
+	auto arr = Conversion::stringToIntArray(delimiter, str);
 
-	if (size == 2) {
+	if (arr.size() == 2) {
 		dst.x = arr[0];
 		dst.y = arr[1];
 	}
 
-	delete arr;
-	return (size == 2);
+	return (arr.size() == 2);
 }
 
-bool dgm::Conversion::stringToIntRect(const char delimiter, const std::string & str, sf::IntRect & dst) {
-	size_t size;
-	const int *arr = dgm::Conversion::stringToIntArray(delimiter, str, size);
+bool Conversion::stringToIntRect(const char delimiter, const std::string & str, sf::IntRect & dst) {
+	auto arr = Conversion::stringToIntArray(delimiter, str);
 
-	if (size == 4) {
+	if (arr.size() == 4) {
 		dst.left = arr[0];
 		dst.top = arr[1];
 		dst.width = arr[2];
 		dst.height = arr[3];
 	}
 
-	delete arr;
-	return (size == 4);
+	return (arr.size() == 4);
 }
 
-void dgm::Conversion::circleToIntRect(const dgm::Circle & circ, sf::IntRect & dst) {
+void Conversion::circleToIntRect(const dgm::Circle & circ, sf::IntRect & dst) {
 	dst.left = int(circ.getPosition().x - circ.getRadius());
 	dst.top = int(circ.getPosition().y - circ.getRadius());
 	dst.width = int(circ.getRadius()) * 2;
 	dst.height = int(circ.getRadius()) * 2;
 }
 
-sf::Vector2f dgm::Conversion::cartesianToPolar(const float x, const float y) {
+sf::Vector2f Conversion::cartesianToPolar(const float x, const float y) {
 	std::cerr << "Conversion::cartesianToPolar(...) - TODO this\n";
 	float size = dgm::Math::vectorSize(x, y);
 
