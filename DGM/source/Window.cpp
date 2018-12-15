@@ -1,6 +1,6 @@
 #include <DGM\dgm.hpp>
 
-void dgm::Window::open(const dgm::Config & config) {
+void dgm::Window::open(const cfg::Ini & config) {
 	if (config.hasSection("Window")) {
 		auto section = config["Window"];
 		open(sf::Vector2u(section["width"].asInt(), section["height"].asInt()), section["title"].asString(), section["fullscreen"].asBool());
@@ -20,7 +20,7 @@ void dgm::Window::close() {
 	window.close();
 }
 
-void dgm::Window::close(dgm::Config & config) {
+void dgm::Window::close(cfg::Ini & config) {
 	config["Window"]["width"] = int(size.x);
 	config["Window"]["height"] = int(size.y);
 	config["Window"]["title"] = title;

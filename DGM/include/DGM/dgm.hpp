@@ -39,13 +39,16 @@
 #endif
 #endif
 
+#pragma comment(lib, "strings")
+#pragma comment(lib, "config")
+#pragma comment(lib, "logger")
+
 #include <ciso646>	// keywords: and, or, and_eq, or_eq, xor, xor_eq, bitand, bitor, not, compl, not_eq
 
-#include "classes/Buffer.hpp"
-#include "classes/Strings.hpp"
+#include <Buffer.hpp> // from dsh
+#include <Strings.hpp> // from dsh
+#include <Config.hpp> // from dsh
 #include "classes/Objects.hpp"
-#include "classes/ConfigItem.hpp"
-#include "classes/Config.hpp"
 #include "classes/Collision.hpp"
 #include "classes/Math.hpp"
 #include "classes/Conversion.hpp"

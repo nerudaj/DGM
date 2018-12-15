@@ -33,9 +33,6 @@
     <ClCompile Include="source\Objects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Strings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -57,12 +54,6 @@
     <ClCompile Include="source\Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Config.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ConfigItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -70,9 +61,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\TilesetRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Pathfinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\ParticleSystemRenderer.cpp">
@@ -94,9 +82,6 @@
     </ClInclude>
     <ClInclude Include="include\DGM\classes\Objects.hpp">
       <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DGM\classes\Strings.hpp">
-      <Filter>Header Files\Aux</Filter>
     </ClInclude>
     <ClInclude Include="include\DGM\classes\Window.hpp">
       <Filter>Header Files\Core</Filter>
@@ -125,12 +110,6 @@
     <ClInclude Include="include\DGM\classes\Animation.hpp">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\DGM\classes\Config.hpp">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DGM\classes\ConfigItem.hpp">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
     <ClInclude Include="include\DGM\classes\ResourceManager.hpp">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
@@ -142,9 +121,6 @@
     </ClInclude>
     <ClInclude Include="include\DGM\classes\Math.hpp">
       <Filter>Header Files\Aux</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DGM\classes\Pathfinder.hpp">
-      <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="include\DGM\classes\ParticleSystemRenderer.hpp">
       <Filter>Header Files\Particles</Filter>

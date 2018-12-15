@@ -12,10 +12,10 @@ namespace dgm {
 		int style;
 
 	public:
-		void open(const dgm::Config &config);
+		void open(const cfg::Ini &config);
 		void open(const sf::Vector2u &resolution, const std::string &title, const bool fullscreen);
 		void close();
-		void close(dgm::Config &config);
+		void close(cfg::Ini &config);
 		bool pollEvent(sf::Event &event) { return window.pollEvent(event); }
 		void toggleFullscreen();
 		

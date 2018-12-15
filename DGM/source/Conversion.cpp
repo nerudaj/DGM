@@ -61,7 +61,7 @@ sf::Color dgm::Conversion::stringToColor(const std::string & str) {
 
 const int * dgm::Conversion::stringToIntArray(const char delimiter, const std::string & str, std::size_t & size) {
 	vector<string> split;
-	dgm::Strings::split(delimiter, str, split);
+	Strings::split(delimiter, str, split);
 	
 	size = split.size();
 	int *result = new int[size];

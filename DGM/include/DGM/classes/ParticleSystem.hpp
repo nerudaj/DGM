@@ -44,7 +44,7 @@ namespace dgm {
 		class ParticleSystem {
 		protected:
 			dgm::ps::ParticleSystemRenderer renderer;
-			dgm::Buffer<dgm::ps::Particle*> particles;
+			Buffer<dgm::ps::Particle*> particles;
 		
 		public:
 			/**

@@ -39,7 +39,7 @@ bool dgm::AnimationData::loadFromFile(const std::string &name) {
 				state = 0;
 			}
 			else {
-				dgm::Strings::split('=', buffer, split);
+				Strings::split('=', buffer, split);
 
 				if (split.size() != 2) {
 					std::cerr << "AnimationData::loadFromFile(...) - Expected key=value, got " << buffer << "\n";

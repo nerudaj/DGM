@@ -93,7 +93,7 @@ void dgm::Level::loadUncompressed(std::ifstream & load) {
 		load >> buffer;
 
 		if (mode == 0) {
-			dgm::Strings::split('=', buffer, split);
+			Strings::split('=', buffer, split);
 			
 			if (split.size() != 2) throw std::exception("Expected key=value pair in header section");
 
@@ -150,7 +150,7 @@ void dgm::Level::loadUncompressed(std::ifstream & load) {
 			}
 		}
 		else if (mode == 1) {
-			dgm::Strings::split(':', buffer, split);
+			Strings::split(':', buffer, split);
 
 			if (split.size() != 2) throw std::exception("Expected key=value pair in header section");
 
