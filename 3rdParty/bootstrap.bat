@@ -6,8 +6,9 @@ cscript C:\tools\bin\unzip.vbs sfml.zip
 move SFML-2.5.1 SFML
 
 echo Downloading dshlibs
-cscript C:\tools\bin\wget.js "https://github.com/nerudaj/dsh/releases/download/libraries_v0.1/dshlibs-0.1.zip" dshlibs.zip
+cscript C:\tools\bin\wget.js "https://github.com/nerudaj/dsh/releases/download/dshlibs_v0.1.1/dshlibs-0.1.1.zip" dshlibs.zip
 cscript C:\tools\bin\unzip.vbs dshlibs.zip
+move dshlibs-0.1.1 dshlibs
 
 del sfml.zip dshlibs.zip
 
