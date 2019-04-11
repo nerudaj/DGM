@@ -1,6 +1,7 @@
 #include <DGM\dgm.hpp>
 #include <regex>
 #include <algorithm>
+#include <Strings.hpp>
 
 const float PIOVER180 = 0.01745329252f;
 
@@ -9,21 +10,7 @@ using std::string;
 using dgm::Conversion;
 
 uint8_t hexBitToInt(const char bit) {
-	switch (bit) {
-	case 'a':
-		return 10;
-	case 'b':
-		return 11;
-	case 'c':
-		return 12;
-	case 'd':
-		return 13;
-	case 'e':
-		return 14;
-	case 'f':
-		return 15;
-	}
-
+	if ('a' <= bit && bit <= 'f') return uint8_t(bit - 'a' + 10);
 	return uint8_t(bit - '0');
 }
 
