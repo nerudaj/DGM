@@ -12,7 +12,9 @@ namespace dgm {
 		void deinit();
 
 	public:
-		enum class Type { Graphic, Sound, Font, AnimationData };
+		enum class Type : size_t {
+			Graphic, Sound, Font, AnimationData
+		};
 		
 		/**
 		 *  \brief Converts filename of a resource into identifier within ResourceManager

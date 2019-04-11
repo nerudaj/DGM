@@ -8,7 +8,7 @@
 
 /* This is just an internal testing sandbox */
 int main(int argc, char *argv[]) {
-	dgm::Config config;
+	cfg::Ini config;
 	if (not config.loadFromFile("../Data/config.ini")) return 1;
 
 	dgm::Window window;

@@ -57,9 +57,6 @@
     <ClCompile Include="source\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Level.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\TilesetRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -111,9 +108,6 @@
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="include\DGM\classes\ResourceManager.hpp">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DGM\classes\Level.hpp">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="include\DGM\classes\TilesetRenderer.hpp">

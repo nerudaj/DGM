@@ -25,7 +25,6 @@
     <ClCompile Include="source\Collision.cpp" />
     <ClCompile Include="source\Controller.cpp" />
     <ClCompile Include="source\Conversion.cpp" />
-    <ClCompile Include="source\Level.cpp" />
     <ClCompile Include="source\Objects.cpp" />
     <ClCompile Include="source\Particle.cpp" />
     <ClCompile Include="source\ParticleSystem.cpp" />
@@ -43,7 +42,6 @@
     <ClInclude Include="include\DGM\classes\Collision.hpp" />
     <ClInclude Include="include\DGM\classes\Controller.hpp" />
     <ClInclude Include="include\DGM\classes\Conversion.hpp" />
-    <ClInclude Include="include\DGM\classes\Level.hpp" />
     <ClInclude Include="include\DGM\classes\Math.hpp" />
     <ClInclude Include="include\DGM\classes\Objects.hpp" />
     <ClInclude Include="include\DGM\classes\Particle.hpp" />
@@ -106,20 +104,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>C:\tools\utils;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\tools\utils;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\tools\utils\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\tools\utils\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LibraryPath>C:\tools\utils;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\tools\utils;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\tools\utils\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\tools\utils\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\tools\utils;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\tools\utils;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\tools\utils\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\tools\utils\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\tools\utils;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\tools\utils;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\tools\utils\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\tools\utils\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -134,6 +132,7 @@
     <PostBuildEvent />
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)\3rdParty\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>logger.lib;strings.lib;config.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
       <Command>cd $(SolutionDir)Debug
@@ -169,6 +168,7 @@ copy dgm-d.lib ..\DGM\lib\</Command>
     <PostBuildEvent />
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)\3rdParty\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>logger.lib;strings.lib;config.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
       <Command>cd $(SolutionDir)Release
