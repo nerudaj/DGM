@@ -31,13 +31,13 @@ namespace dgm {
 	 */
 	class Animation {
 	protected:
-		sf::Time elapsed; ///< Time elapsed since last frame change
-		sf::Time timePerFrame; ///< Time between two frame changes
-		std::size_t frameIndex; ///< Index of current frame within animation
-		int flags; ///< Flags for current animation
-		bool mallocked; ///< Whether animations were allocated inside or outside of this class
-		sf::Sprite *boundSprite; ///< Animated sprite
-		AnimationData *animations; ///< Database of animation state
+		sf::Time elapsedTime;                 ///< Time elapsed since last frame change
+		sf::Time timePerFrame;                ///< Time between two frame changes
+		std::size_t frameIndex;               ///< Index of current frame within animation
+		Animation::Flags flags;               ///< Flags for current animation
+		bool mallocked;                       ///< Whether animations were allocated inside or outside of this class
+		sf::Sprite *boundSprite;              ///< Animated sprite
+		AnimationData *animations;            ///< Database of animation state
 		AnimationData::iterator currentState; ///< Iterator to selected animation state
 		
 		void reset();

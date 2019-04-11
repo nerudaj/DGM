@@ -113,7 +113,7 @@ bool dgm::AnimationData::addState(const std::string &stateName, const dgm::Clip 
 }
 
 void dgm::Animation::reset() {
-	elapsed = sf::Time::Zero;
+	elapsedTime = sf::Time::Zero;
 	frameIndex = 0;
 }
 
@@ -122,9 +122,9 @@ void dgm::Animation::UpdateSprite() {
 }
 
 bool dgm::Animation::update(const dgm::Time &time) {
-	elapsed += time.elapsed();
-	if (elapsed > timePerFrame) {
-		elapsed -= timePerFrame;
+	elapsedTime += time.getElapsed();
+	if (elapsedTime > timePerFrame) {
+		elapsedTime -= timePerFrame;
 		
 		frameIndex++;
 		if (frameIndex == currentState->second.getFrameCount()) {

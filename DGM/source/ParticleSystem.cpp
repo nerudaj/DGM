@@ -56,7 +56,7 @@ void SimpleParticleSystem::spawnParticle() {
 
 void SimpleParticleSystem::update(const dgm::Time &time) {
 	const float SPAWN_TIMEOUT = sf::seconds(1).asSeconds() / particlesPerSec;
-	spawnTimer += time.deltaTime();
+	spawnTimer += time.getDeltaTime();
 	
 	while (spawnTimer > SPAWN_TIMEOUT) {
 		spawnTimer -= SPAWN_TIMEOUT;
@@ -66,14 +66,14 @@ void SimpleParticleSystem::update(const dgm::Time &time) {
 	unsigned cnt = 0;
 	for (auto &particle : particles) {
 		cnt++;
-		particle->lifespan -= time.deltaTime();
+		particle->lifespan -= time.getDeltaTime();
 		if (not particle->alive()) {
 			particle->destroy();
 			particles.remove(cnt);
 		}
 
-		particle->forward = particle->forward + (globalForce * time.deltaTime());
-		particle->move(particle->forward * time.deltaTime());
+		particle->forward = particle->forward + (globalForce * time.getDeltaTime());
+		particle->move(particle->forward * time.getDeltaTime());
 	}
 }
 
