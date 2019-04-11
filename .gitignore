@@ -291,3 +291,5 @@ __pycache__/
 *.xsd.cs
 DGM/lib/dgm.lib
 DGM/lib/dgm.lib
+
+DGM/lib/dgm-d.lib
