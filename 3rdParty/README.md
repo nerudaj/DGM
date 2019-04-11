@@ -1,17 +1,9 @@
 # Setup
 
-Before attempting to build DGM by yourself, download SFML 2.4.2 to this folder. You should end up
-with the following folder structure:
-```
-SFML-2.4.2/
-	bin/
-	cmake/
-	doc/
-	examples/
-	include/
-	lib/
-	readme.txt
-	licence.txt
-```
+If you have installed the [dsh suite](https://github.com/nerudaj/dsh) and VS2017, you can run `bootstrap.bat` and everything will be done automatically. If you do not have dsh suite, do these steps:
 
-With this, the project will compile just fine.
+ * Download SFML-2.5.1 for your compiler to this folder and unzip it
+ * Rename the unzipped folder to just `SFML`
+ * Download current release of [dshlibs](https://github.com/nerudaj/dsh/releases/download/libraries_v0.1/dshlibs-0.1.zip) and unzip it to this folder
+
+Optionally copy appropriate SFML dlls to `vsbuild\Release` and `vsbuild\Debug` (bootstrap does that).
