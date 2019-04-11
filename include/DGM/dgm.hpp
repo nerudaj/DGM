@@ -41,7 +41,12 @@
 
 #include <ciso646>	// keywords: and, or, and_eq, or_eq, xor, xor_eq, bitand, bitor, not, compl, not_eq
 
-#include <Config.hpp> // from dsh
+// dsh libraries
+#include <Logger.hpp>
+#include <Config.hpp>
+#include <Strings.hpp>
+
+// DGM core
 #include "classes/Buffer.hpp"
 #include "classes/Objects.hpp"
 #include "classes/Collision.hpp"
