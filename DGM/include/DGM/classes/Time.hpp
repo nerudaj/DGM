@@ -4,19 +4,19 @@
 
 namespace dgm {
 	class Time {
-	protected:
+	private:
 		sf::Clock clock;
-		sf::Time elapsedp;
-		float deltaTimep;
+		sf::Time  elapsed;
+		float     deltaTime;
 
 	public:
-		float deltaTime() const { return deltaTimep; }
+		float getDeltaTime() const { return deltaTime; }
 
-		const sf::Time &elapsed() const { return elapsedp; }
+		const sf::Time &getElapsed() const { return elapsed; }
 
 		void reset() {
-			elapsedp = clock.restart();
-			deltaTimep = elapsedp.asSeconds();
+			elapsed = clock.restart();
+			deltaTime = elapsed.asSeconds();
 		}
 	};
 }
