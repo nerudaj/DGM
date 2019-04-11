@@ -1,44 +1,24 @@
 # DGM
-## Introduction
-Is a SFML extension library that aims on faster development of 2D games. It's features include (but
-are not limited to):
 
-* Animations
-* Particle Effects
-* Collisions
-* Design Patterns
-* Any many more!
+DGM is C++ library meant for faster and more convenient 2D game development with popular library SFML. Among other features there is animation engine and particle system engine.
 
-DGM is completely free, feel free to use it as you see fit (just mention the author please :) ).
+## Setting up
 
-## Installation
+If you want to build the DGM from source you'll need to do this:
 
-You can either use official releases or build the library for yourself. I am not experienced in terms
-of Makefile generations and similar stuff (if you like the project, you can help with that) so the
-only version that can be obtained is for windows, compiled with Visual Studio 2015.
+ * Install Visual Studio 2017
+ * Download proper dependencies into 3rdParty folder. For more details refer to readme in that folder
+ * Create a directory called `vsbuild` and run command `cmake ..` in it
+ * Now you can fire up newly created solution file and start compiling
 
-If you wish to build the library for yourself, make sure you install SFML into 3rdParty directory.
-Output files will be compiled into `DGM\include` and `DGM\lib`.
+## Packaging
 
-## Documentation
+Packaging is done in three stages:
 
-The code is documented using Doxygen, so you can generate documentation. Also I will do my best to
-populate the wiki with tutorials and usage articles.
+ 1) Build DGM in Debug mode
+ 2) Build DGM in Release mode
+ 3) Run `prepare-release.bat` from root folder
 
-## Usage
+This will create folder DGM-<version_number> which you can then zip and distribute!
 
-DGM works currently with SFML-2.4.2. The setup is quite simple. Create a new project and let it know
-where are folders: `SFML-2.4.2\include`, `DGM\include`, `SFML-2.4.2\lib`, `DGM\lib`. Then just write
-following code at the beginning of main.cpp:
-```c++
-#include <DGM\dgm.hpp>
-
-#ifdef _DEBUG
-#pragma comment(lib, "dgm-d.lib")
-#else
-#pragma comment(lib, "dgm.lib")
-#endif
-```
-
-DGM will automatically link all SFML headers (except Net) and link all SFML libraries (except Net).
-Now you can code!
+*NOTE:* DGM is using something called dshlibs. Since it is stuff from my personal repo, headers of dshlibs are bundled with DGM and code is statically compiled *into* DGM itself. SFML, on the other hand is not mine and user have to download it separately.
