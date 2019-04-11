@@ -16,8 +16,6 @@ namespace dgm {
 		 * splits it to integer array and returns pointer to newly allocated
 		 * array. Size of array is stored in size.
 		 *
-		 * \note Call delete on the array when you are done with it
-		 *
 		 * \returns NULL on failure, valid pointer to int array otherwise
 		 */
 		static std::vector<int> stringToIntArray(const char delimiter, const std::string &str);
@@ -28,7 +26,7 @@ namespace dgm {
 		 *
 		 * \details On failure, dst is not modified
 		 *
-		 * \returns TRUE if str contains only precisely int number. FALSE otherwise
+		 * \returns TRUE if str contains only precisely two int numbers. FALSE otherwise
 		 */
 		static bool stringToVector2i(const char delimiter, const std::string &str, sf::Vector2i &dst);
 
@@ -38,7 +36,7 @@ namespace dgm {
 		*
 		* \details On failure, dst is not modified
 		*
-		* \returns TRUE if str contains precisely four int number. FALSE otherwise
+		* \returns TRUE if str contains precisely four int numbers. FALSE otherwise
 		*/
 		static bool stringToIntRect(const char delimiter, const std::string &str, sf::IntRect &dst);
 
