@@ -30,6 +30,12 @@ namespace dgm {
 	 *  \brief Class for animating objects
 	 */
 	class Animation {
+	public:
+		enum class Flags : std::size_t {
+			RunOnce = 0,
+			Looping = 1
+		};
+
 	protected:
 		sf::Time elapsedTime;                 ///< Time elapsed since last frame change
 		sf::Time timePerFrame;                ///< Time between two frame changes
@@ -44,11 +50,6 @@ namespace dgm {
 		void UpdateSprite();
 		
 	public:
-		class Flags {
-		public:
-			enum { RunOnce = 0, Looping = 1 };
-		};
-	
 		/**
 		 *  \brief update animation counters
 		 *  
@@ -86,7 +87,7 @@ namespace dgm {
 		 *  frame and update will return FALSE. With Looping, animation will start
 		 *  over by itself and update always returns TRUE.
 		 */
-		bool setState(const std::string &state, int flags = dgm::Animation::Flags::Looping);
+		bool setState(const std::string &state, Animation::Flags flags = Animation::Flags::Looping);
 		
 		/**
 		 *  \brief get number of frames per second

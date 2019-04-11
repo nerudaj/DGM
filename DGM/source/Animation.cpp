@@ -1,6 +1,7 @@
 #include <DGM\dgm.hpp>
 #include <cassert>
 #include <fstream>
+#include <Strings.hpp>
 
 bool dgm::AnimationData::loadFromFile(const std::string &name) {
 	std::ifstream load(name);
@@ -148,7 +149,7 @@ void dgm::Animation::setSpeed(int fps) {
 	timePerFrame = sf::milliseconds(1000 / fps);
 }
 
-bool dgm::Animation::setState(const std::string &state, int flags) {
+bool dgm::Animation::setState(const std::string &state, dgm::Animation::Flags flags) {
 	currentState = animations->find(state);
 	if (currentState == animations->end()) return false;
 	
