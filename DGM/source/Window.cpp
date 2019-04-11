@@ -11,7 +11,7 @@ void dgm::Window::open(const sf::Vector2u & resolution, const std::string & titl
 	size = resolution;
 	Window::title = title;
 	Window::style = fullscreen ? sf::Style::Fullscreen : sf::Style::Default;
-	isFullscreen_ = fullscreen;
+	Window::fullscreen = fullscreen;
 
 	window.create({ resolution.x, resolution.y, 32 }, title, style);
 }
@@ -24,24 +24,12 @@ void dgm::Window::close(cfg::Ini & config) {
 	config["Window"]["width"] = int(size.x);
 	config["Window"]["height"] = int(size.y);
 	config["Window"]["title"] = title;
-	config["Window"]["fullscreen"] = isFullscreen_;
+	config["Window"]["fullscreen"] = fullscreen;
 	close();
 }
 
 void dgm::Window::toggleFullscreen() {
 	close();
-	isFullscreen_ = !isFullscreen_;
-	open(size, title, isFullscreen_);
-}
-
-void dgm::Window::beginDraw(const sf::Color &color) {
-	window.clear(color);
-}
-
-void dgm::Window::draw(sf::Drawable & drawable) {
-	window.draw(drawable);
-}
-
-void dgm::Window::endDraw() {
-	window.display();
+	fullscreen = !fullscreen;
+	open(size, title, fullscreen);
 }

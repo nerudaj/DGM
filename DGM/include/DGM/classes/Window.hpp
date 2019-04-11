@@ -6,7 +6,7 @@ namespace dgm {
 	class Window {
 	protected:
 		sf::RenderWindow window;
-		bool isFullscreen_;
+		bool fullscreen;
 		sf::Vector2u size;
 		std::string title;
 		int style;
@@ -20,7 +20,8 @@ namespace dgm {
 		void toggleFullscreen();
 		
 		bool isOpen() const { return window.isOpen(); }
-		bool isFullscreen() const { return isFullscreen_; }
+		bool isFullscreen() const { return fullscreen; }
+
 		const sf::Vector2u &getSize() const { return size; }
 		sf::RenderWindow &getWindowContext() { return window; }
 		const sf::RenderWindow &getWindowContext() const { return window; }
