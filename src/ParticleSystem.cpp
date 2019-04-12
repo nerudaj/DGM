@@ -11,11 +11,9 @@ bool ParticleSystem::init(const std::size_t particleCount, const dgm::Clip &clip
 	try {
 		particles.resize(particleCount);
 
-		unsigned cnt = 0;
-		for (auto &particle : particles) {
-			cnt++;
-			particle = factory->create();
-			particle->init(renderer.getParticleVertices(cnt));
+		for (unsigned i = 0; i < particles.capacity(); i++) {
+			particles[i] = factory->create();
+			particles[i]->init(renderer.getParticleVertices(i));
 		}
 	}
 	catch(...) {
@@ -29,8 +27,8 @@ dgm::ps::ParticleSystem::ParticleSystem() {
 }
 
 dgm::ps::ParticleSystem::~ParticleSystem() {
-	for (auto &particle : particles) {
-		delete particle;
+	for (unsigned i = 0; i < particles.capacity(); i++) {
+		delete particles[i];
 	}
 }
 
@@ -63,17 +61,15 @@ void SimpleParticleSystem::update(const dgm::Time &time) {
 		spawnParticle();
 	}
 	
-	unsigned cnt = 0;
-	for (auto &particle : particles) {
-		cnt++;
-		particle->lifespan -= time.getDeltaTime();
-		if (not particle->alive()) {
-			particle->destroy();
-			particles.remove(cnt);
+	for (unsigned i = 0; i < particles.size(); i++) {
+		particles[i]->lifespan -= time.getDeltaTime();
+		if (not particles[i]->alive()) {
+			particles[i]->destroy();
+			particles.remove(i);
 		}
 
-		particle->forward = particle->forward + (globalForce * time.getDeltaTime());
-		particle->move(particle->forward * time.getDeltaTime());
+		particles[i]->forward = particles[i]->forward + (globalForce * time.getDeltaTime());
+		particles[i]->move(particles[i]->forward * time.getDeltaTime());
 	}
 }
 
