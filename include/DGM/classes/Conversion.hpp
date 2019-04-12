@@ -6,10 +6,12 @@ namespace dgm {
 	class Conversion {
 	public:
 		/**
-		 * \brief Takes a string with hex representation of a color (#XXXXXX)
+		 * \brief Takes a string with hex representation of a color (#XXXXXX or #XXX)
 		 * and converts it to output sf::Color
+		 *
+		 * If color is not valid, black is returned
 		 */
-		static sf::Color stringToColor(const std::string &str);
+		static sf::Color stringToColor(std::string str);
 
 		/**
 		 * \brief Takes a string of integer numbers separated with delimiter
@@ -51,22 +53,33 @@ namespace dgm {
 		 *  \param [in] angle 0° is at [0, 1], counting clockwise
 		 *  \param [in] size Length of the vector
 		 */
-		static sf::Vector2f polarToCartesian(const float angle, const float size) {
+		static sf::Vector2f polarToCartesian(float angle, float size) {
 			const float PIOVER180 = 0.01745329252f;
-			return sf::Vector2f(sin(angle * PIOVER180) * size, -cos(angle * PIOVER180) * size);
+			angle *= PIOVER180;
+			return sf::Vector2f(std::cos(angle), std::sin(angle)) * size;
 		}
 
 		/**
-		 *  \brief Convert polar coordinates to cartesian
+		 *  \brief Convert polar coordinates (in degrees) to cartesian
 		 *
 		 *  \param [in] angleSize X coord is angle, Y coord is size
 		 */
 		static sf::Vector2f polarToCartesian(const sf::Vector2f &angleSize) {
-			polarToCartesian(angleSize.x, angleSize.y);
+			return polarToCartesian(angleSize.x, angleSize.y);
 		}
 
+		/**
+		 *  \brief Convert cartesian coordinates to polar
+		 *
+		 *  \return X component of returned vector is angle, Y component is size
+		 */
 		static sf::Vector2f cartesianToPolar(const float x, const float y);
 
+		/**
+		*  \brief Convert cartesian coordinates to polar
+		*
+		*  \return X component of returned vector is angle, Y component is size
+		*/
 		static sf::Vector2f cartesianToPolar(const sf::Vector2f &coordinates) {
 			return cartesianToPolar(coordinates.x, coordinates.y);
 		}

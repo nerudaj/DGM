@@ -4,43 +4,46 @@
 #include <Strings.hpp>
 
 const float PIOVER180 = 0.01745329252f;
+const float _180OVERPI = 57.2957795131f;
 
 using std::vector;
 using std::string;
 using dgm::Conversion;
 
-uint8_t hexBitToInt(const char bit) {
+uint8_t nibbleToUint8(const char bit) {
 	if ('a' <= bit && bit <= 'f') return uint8_t(bit - 'a' + 10);
 	return uint8_t(bit - '0');
 }
 
-uint8_t hexToInt(const std::string &hex) {
+uint8_t hexToUint8(const std::string &hex) {
 	uint8_t result = 0;
 	for (auto bit : hex) {
 		result *= 16;
-		result += hexBitToInt(bit);
+		result += nibbleToUint8(bit);
 	}
 	return result;
 }
 
-sf::Color Conversion::stringToColor(const std::string & str) {
-	std::regex hexaShort("#[0-9a-fA-F]{3}");
-	std::regex hexaLong("#[0-9a-fA-F]{6}");
-	std::string base;
-	uint8_t colorBits[3];
+inline void uppercaseToLowercase(std::string &str) {
+	std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+}
+
+sf::Color Conversion::stringToColor(std::string str) {
+	const std::regex hexaShort("#[0-9a-f]{3}");
+	const std::regex hexaLong("#[0-9a-f]{6}");
+
+	uppercaseToLowercase(str);
+	
+	uint8_t colorBits[3] = { 0 };
 	
 	if (std::regex_match(str, hexaShort)) {
-		base = str.substr(1);
-		std::transform(base.begin(), base.end(), base.begin(), ::tolower);
-		for (int i = 0; i < 3; i++) {
-			colorBits[i] = hexToInt(base.substr(i, 1));
+		for (unsigned i = 1; i < str.size(); i++) {
+			colorBits[i] = hexToUint8(str.substr(i, 1));
 		}
 	}
 	else if (std::regex_match(str, hexaLong)) {
-		base = str.substr(1);
-		std::transform(base.begin(), base.end(), base.begin(), ::tolower);
-		for (int i = 0; i < 3; i++) {
-			colorBits[i] = hexToInt(base.substr(i * 2, 2));
+		for (unsigned i = 1, p = 0; i < str.size(); i += 2, p++) {
+			colorBits[p] = hexToUint8(str.substr(i, 2));
 		}
 	}
 
@@ -63,10 +66,7 @@ vector<int> Conversion::stringToIntArray(const char delimiter, const std::string
 bool Conversion::stringToVector2i(const char delimiter, const std::string & str, sf::Vector2i & dst) {
 	auto arr = Conversion::stringToIntArray(delimiter, str);
 
-	if (arr.size() == 2) {
-		dst.x = arr[0];
-		dst.y = arr[1];
-	}
+	if (arr.size() == 2) dst = { arr[0], arr[1] };
 
 	return (arr.size() == 2);
 }
@@ -92,11 +92,13 @@ void Conversion::circleToIntRect(const dgm::Circle & circ, sf::IntRect & dst) {
 }
 
 sf::Vector2f Conversion::cartesianToPolar(const float x, const float y) {
-	std::cerr << "Conversion::cartesianToPolar(...) - TODO this\n";
 	float size = dgm::Math::vectorSize(x, y);
 
-	float angle = asin(x / size);
+	     if (x == 0.f && y < 0.f)  return { 270.f, size };
+	else if (x == 0.f && y >= 0.f) return {  90.f, size };
+	else if (y == 0.f && x < 0.f)  return { 180.f, size };
+	else if (y == 0.f && x >= 0.f) return {   0.f, size };
 
-	return sf::Vector2f();
+	return { std::atan2(y, x) * _180OVERPI, size };
 }
 
