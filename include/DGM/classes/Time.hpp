@@ -18,5 +18,9 @@ namespace dgm {
 			elapsed = clock.restart();
 			deltaTime = elapsed.asSeconds();
 		}
+
+		Time() {
+			reset();
+		}
 	};
 }
