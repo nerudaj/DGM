@@ -77,7 +77,21 @@ set(LIB_STR optimized ${LIB_STR_R} debug ${LIB_STR_D})
 
 target_link_libraries(${NAME} ${LIB_LOG} ${LIB_CFG} ${LIB_STR})
 
-# Sandbox target
-add_executable(Sandbox WIN32 tests/sandbox.cpp)
-target_include_directories (Sandbox PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
-target_link_libraries(Sandbox ${NAME})
+# Example targets aka compile tests
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
+
+## Example 01
+add_executable(Example01 WIN32 examples/example01.cpp)
+target_link_libraries(Example01 ${NAME})
+
+## Example 02
+add_executable(Example02 WIN32 examples/example02.cpp)
+target_link_libraries(Example02 ${NAME})
+
+## Example 03
+add_executable(Example03 WIN32 examples/example03.cpp)
+target_link_libraries(Example03 ${NAME})
+
+## Example 04
+add_executable(Example04 WIN32 examples/example04.cpp)
+target_link_libraries(Example04 ${NAME})
