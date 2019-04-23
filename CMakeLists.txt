@@ -17,8 +17,7 @@ link_directories("${SFML_FOLDER}/lib")
 include_directories("${DSH_FOLDER}/include")
 link_directories("${DSH_FOLDER}/lib")
 
-# DGM library
-add_library(${NAME}
+set (DGM_SOURCES
 	src/Animation.cpp
 	src/App.cpp
 	src/Clip.cpp
@@ -33,6 +32,30 @@ add_library(${NAME}
 	src/TilesetRenderer.cpp
 	src/Window.cpp
 )
+
+set (DGM_HEADERS
+	include/DGM/dgm.hpp
+	include/DGM/classes/Animation.hpp
+	include/DGM/classes/App.hpp
+	include/DGM/classes/AppState.hpp
+	include/DGM/classes/Buffer.hpp
+	include/DGM/classes/Clip.hpp
+	include/DGM/classes/Collision.hpp
+	include/DGM/classes/Controller.hpp
+	include/DGM/classes/Conversion.hpp
+	include/DGM/classes/Math.hpp
+	include/DGM/classes/Objects.hpp
+	include/DGM/classes/Particle.hpp
+	include/DGM/classes/ParticleSystem.hpp
+	include/DGM/classes/ParticleSystemRenderer.hpp
+	include/DGM/classes/ResourceManager.hpp
+	include/DGM/classes/TilesetRenderer.hpp
+	include/DGM/classes/Time.hpp
+	include/DGM/classes/Window.hpp
+)
+
+# DGM library
+add_library(${NAME} ${DGM_SOURCES} ${DGM_HEADERS})
 
 target_include_directories (${NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
