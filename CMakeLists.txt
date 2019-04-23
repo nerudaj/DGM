@@ -43,6 +43,7 @@ set (DGM_HEADERS
 	include/DGM/classes/Collision.hpp
 	include/DGM/classes/Controller.hpp
 	include/DGM/classes/Conversion.hpp
+	include/DGM/classes/Error.hpp
 	include/DGM/classes/Math.hpp
 	include/DGM/classes/Objects.hpp
 	include/DGM/classes/Particle.hpp
@@ -95,3 +96,7 @@ target_link_libraries(Example03 ${NAME})
 ## Example 04
 add_executable(Example04 WIN32 examples/example04.cpp)
 target_link_libraries(Example04 ${NAME})
+
+## Example 05
+add_executable(Example05 WIN32 examples/example05.cpp)
+target_link_libraries(Example05 ${NAME})

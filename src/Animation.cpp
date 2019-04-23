@@ -3,6 +3,136 @@
 #include <fstream>
 #include <Strings.hpp>
 
+using dgm::Animation;
+using dgm::AnimationStates;
+
+const AnimationStates NullStates = {
+	{ "NullState", dgm::Clip() }
+};
+
+bool Animation::update(const dgm::Time &time) {
+	elapsedTime += time.getElapsed();
+	if (elapsedTime > timePerFrame) {
+		elapsedTime -= timePerFrame;
+
+		currentFrameIndex++;
+		if (currentFrameIndex == currentState->second.getFrameCount()) {
+			currentFrameIndex = 0;
+			if (not isLooping()) {
+				return false;
+			}
+		}
+
+		updateSprite();
+	}
+
+	return true;
+}
+
+void Animation::updateSprite() {
+	assert(boundSprite);
+	boundSprite->setTextureRect(currentState->second.getFrame(currentFrameIndex));
+}
+
+void Animation::setState(const std::string &state, bool looping) {
+	if (states.get().find(state) == states.get().end()) {
+		throw dgm::GeneralException("Cannot find animation state '" + state + "'");
+	}
+
+	currentState = states.get().find(state);
+	setLooping(looping);
+}
+
+void Animation::bindSprite(sf::Sprite *sprite) {
+	assert(sprite != nullptr);
+	boundSprite = sprite;
+}
+
+void Animation::setSpeed(int framePerSecond) {
+	timePerFrame = sf::milliseconds(1000.f / framePerSecond);
+}
+
+Animation::Animation() : states(NullStates) {
+	localInstance = nullptr;
+	boundSprite = nullptr;
+	elapsedTime = sf::seconds(0);
+
+	setSpeed(30);
+	currentFrameIndex = 0;
+	currentState = states.get().begin();
+
+	setLooping(false);
+}
+
+Animation::Animation(const std::string &filename, int framesPerSecond) : states(NullStates) {
+	instantiateLocally();
+	*localInstance = Animation::loadStatesFromFile(filename);
+
+	states = *localInstance;
+	boundSprite = nullptr;
+	elapsedTime = sf::seconds(0);
+
+	setSpeed(framesPerSecond);
+	currentFrameIndex = 0;
+	currentState = states.get().begin();
+
+	setLooping(false);
+}
+
+void Animation::instantiateLocally() {
+	localInstance = new AnimationStates;
+	if (!localInstance) {
+		throw dgm::GeneralException("Cannot allocate memory for animation states!");
+	}
+}
+
+Animation::Animation(Animation &&other) : states(other.states) {
+	localInstance = other.localInstance;
+	other.localInstance = nullptr;
+
+	boundSprite = other.boundSprite;
+	elapsedTime = other.elapsedTime;
+	timePerFrame = other.timePerFrame;
+	currentFrameIndex = other.currentFrameIndex;
+	currentState = other.currentState;
+	looping = other.looping;
+}
+
+Animation::Animation(const Animation &other) : states(other.states) {
+	if (other.isLocallyInstantiated()) {
+		instantiateLocally();
+		*localInstance = *other.localInstance;
+		states = *localInstance;
+	}
+	else {
+		localInstance = nullptr;
+	}
+
+	boundSprite = other.boundSprite;
+	elapsedTime = other.elapsedTime;
+	timePerFrame = other.timePerFrame;
+	currentFrameIndex = other.currentFrameIndex;
+	currentState = other.currentState;
+	looping = other.looping;
+}
+
+Animation::Animation(const AnimationStates &states, int framesPerSecond) : states(states) {
+	localInstance = nullptr;
+}
+
+Animation::~Animation() {
+	if (isLocallyInstantiated()) {
+		delete localInstance;
+		localInstance = nullptr;
+	}
+}
+
+AnimationStates Animation::loadStatesFromFile(const std::string &filename) {
+	throw dgm::GeneralException("Animation::loadStatesFromFile is not implemented!");
+	return AnimationStates();
+}
+
+/*
 bool dgm::AnimationData::loadFromFile(const std::string &name) {
 	std::ifstream load(name);
 	std::string buffer;
@@ -101,106 +231,4 @@ bool dgm::AnimationData::loadFromFile(const std::string &name) {
 	load.clear();
 
 	return true;
-}
-
-bool dgm::AnimationData::addState(const std::string &stateName, const dgm::Clip &clip) {
-	if (this->find(stateName) != this->end()) {
-		std::cerr << "Animation::addState - State named " << stateName << " already exists\n";
-		return false;
-	}
-	
-	(*this)[stateName] = clip;
-	return true;
-}
-
-void dgm::Animation::reset() {
-	elapsedTime = sf::Time::Zero;
-	frameIndex = 0;
-}
-
-void dgm::Animation::UpdateSprite() {
-	boundSprite->setTextureRect(currentState->second.getFrame(frameIndex));
-}
-
-bool dgm::Animation::update(const dgm::Time &time) {
-	elapsedTime += time.getElapsed();
-	if (elapsedTime > timePerFrame) {
-		elapsedTime -= timePerFrame;
-		
-		frameIndex++;
-		if (frameIndex == currentState->second.getFrameCount()) {
-			frameIndex = 0;
-			if (not (flags == Flags::Looping)) {
-				return false;
-			}
-		}
-		
-		UpdateSprite();
-	}
-	
-	return true;
-}
-
-void dgm::Animation::setSprite(sf::Sprite *sprite) {
-	boundSprite = sprite;
-}
-
-void dgm::Animation::setSpeed(int fps) {
-	timePerFrame = sf::milliseconds(1000 / fps);
-}
-
-bool dgm::Animation::setState(const std::string &state, dgm::Animation::Flags flags) {
-	currentState = animations->find(state);
-	if (currentState == animations->end()) return false;
-	
-	reset();
-	Animation::flags = flags;
-	UpdateSprite();
-	
-	return true;
-}
-
-bool dgm::Animation::loadFromFile(const std::string &filename) {
-	animations = new AnimationData;
-	if (animations == NULL) {
-		return false;
-	}
-	
-	if (not animations->loadFromFile(filename)) {
-		delete animations;
-		return false;
-	}
-	
-	mallocked = true;
-	return true;
-}
-
-bool dgm::Animation::loadFromMemory(dgm::AnimationData *data) {
-	assert(data != NULL);
-	
-	if (mallocked) {
-		std::cerr << "Animation::loadFromMemory - Memory already occupied\n";
-	}
-	
-	animations = data;
-	return true;
-}
-
-void dgm::Animation::deinit() {
-	if (mallocked) {
-		delete animations;
-		animations = nullptr;
-		mallocked = true;
-	}
-}
-
-dgm::Animation::Animation() {
-	mallocked = false;
-	animations = nullptr;
-	boundSprite = nullptr;
-	timePerFrame = sf::milliseconds(50);
-}
-
-dgm::Animation::~Animation() {
-	deinit();
-}
+}*/

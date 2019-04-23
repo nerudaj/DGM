@@ -47,6 +47,7 @@
 #include <Strings.hpp>
 
 // DGM core
+#include "classes/Error.hpp"
 #include "classes/Buffer.hpp"
 #include "classes/Objects.hpp"
 #include "classes/Collision.hpp"
