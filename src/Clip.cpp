@@ -9,8 +9,12 @@ bool dgm::Clip::init(const sf::Vector2i & frameSize, const sf::IntRect & boundar
 
 
 	if (frameCount == 0) {
-		sf::Vector2i blockSize = frameSize + frameOffset;
+		sf::Vector2i blockSize = frameSize;
 		sf::Vector2i chunkSize(boundaries.width, boundaries.height);
+
+		if (blockSize.x + frameOffset.x <= chunkSize.x) blockSize.x += frameOffset.x;
+		if (blockSize.y + frameOffset.y <= chunkSize.y) blockSize.y += frameOffset.y;
+
 		frameCount = (chunkSize.x / blockSize.x) * (chunkSize.y / blockSize.y);
 	}
 
@@ -44,7 +48,7 @@ bool dgm::Clip::init(const sf::Vector2i & frameSize, const sf::IntRect & boundar
 dgm::Clip::Clip() {
 }
 
-dgm::Clip::Clip(const sf::Vector2i & frameSize, const sf::IntRect & boundaries, unsigned int frameCount, const sf::Vector2i & frameOffset) {
+dgm::Clip::Clip(const sf::Vector2i & frameSize, const sf::IntRect & boundaries, std::size_t frameCount, const sf::Vector2i & frameOffset) {
 	init(frameSize, boundaries, frameCount, frameOffset);
 }
 
