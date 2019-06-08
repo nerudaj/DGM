@@ -4,6 +4,7 @@ project (dgm)
 set (NAME ${PROJECT_NAME})
 set (SFML_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/SFML")
 set (DSH_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/dshlibs")
+set (JSON_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/json")
 
 if (NOT CMAKE_DEBUG_POSTFIX)
 	set(CMAKE_DEBUG_POSTFIX "-d")
@@ -16,6 +17,9 @@ link_directories("${SFML_FOLDER}/lib")
 # Where dsh libraries are installed
 include_directories("${DSH_FOLDER}/include")
 link_directories("${DSH_FOLDER}/lib")
+
+# Where json library is installed
+include_directories("${JSON_FOLDER}") # only header file, no library
 
 set (DGM_SOURCES
 	src/Animation.cpp

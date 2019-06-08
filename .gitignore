@@ -1,6 +1,7 @@
 ## Ignore 3rd party libraries
 3rdParty/SFML
 3rdParty/dshlibs
+3rdParty/json
 
 ## Include solution file
 vsbuild

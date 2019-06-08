@@ -12,6 +12,9 @@ move dshlibs-0.1.1 dshlibs
 
 del sfml.zip dshlibs.zip
 
+echo Downloading nlohmann's json
+cscript C:\tools\bin\wget.js "https://github.com/nlohmann/json/releases/download/v3.6.1/json.hpp" json.hpp
+
 cd ..
 mkdir vsbuild\Debug
 mkdir vsbuild\Release
