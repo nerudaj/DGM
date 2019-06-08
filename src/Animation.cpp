@@ -2,6 +2,7 @@
 #include <cassert>
 #include <fstream>
 #include <Strings.hpp>
+#include <json.hpp>
 
 using dgm::Animation;
 using dgm::AnimationStates;
@@ -23,24 +24,24 @@ bool Animation::update(const dgm::Time &time) {
 			}
 		}
 
-		updateSprite();
+		updateSpriteTextureRect();
 	}
 
 	return true;
 }
 
-void Animation::updateSprite() {
-	assert(boundSprite);
-	boundSprite->setTextureRect(currentState->second.getFrame(currentFrameIndex));
-}
-
 void Animation::setState(const std::string &state, bool looping) {
-	if (states.get().find(state) == states.get().end()) {
+	if (isCurrentStateValid() && currentState->first == state) return;
+
+	auto newState = states.get().find(state);
+	if (newState == states.get().end()) {
 		throw dgm::GeneralException("Cannot find animation state '" + state + "'");
 	}
 
-	currentState = states.get().find(state);
+	currentState = newState;
 	setLooping(looping);
+
+	reset();
 }
 
 void Animation::bindSprite(sf::Sprite *sprite) {
@@ -74,7 +75,7 @@ Animation::Animation(const std::string &filename, int framesPerSecond) : states(
 
 	setSpeed(framesPerSecond);
 	currentFrameIndex = 0;
-	currentState = states.get().begin();
+	currentState = states.get().end();
 
 	setLooping(false);
 }
@@ -127,108 +128,63 @@ Animation::~Animation() {
 	}
 }
 
-AnimationStates Animation::loadStatesFromFile(const std::string &filename) {
-	throw dgm::GeneralException("Animation::loadStatesFromFile is not implemented!");
-	return AnimationStates();
+sf::Vector2i getVec2iFromJsonArray(const nlohmann::json &json) {
+	return { json[0], json[1] };
 }
 
-/*
-bool dgm::AnimationData::loadFromFile(const std::string &name) {
-	std::ifstream load(name);
-	std::string buffer;
-	std::vector<std::string> split;
-	int state = 0;
+sf::IntRect getIntRectFromJsonArray(const nlohmann::json &json) {
+	return { json[0], json[1], json[2], json[3] };
+}
 
-	sf::Vector2i globalFrameSize = sf::Vector2i(0, 0), localFrameSize, globalFrameOffset = sf::Vector2i(0, 0), localFrameOffset;
-	unsigned int globalFrameCount = 0, localFrameCount;
-	sf::IntRect boundaries;
-	std::string stateName;
-	dgm::Clip clip;
-
-	try {
-		while (load >> buffer) {
-			if (buffer == "begin") {
-				localFrameSize = globalFrameSize;
-				localFrameOffset = globalFrameOffset;
-				localFrameCount = globalFrameCount;
-				boundaries = sf::IntRect(0, 0, 0, 0);
-				stateName = "";
-				state = 1;
-			}
-			else if (buffer == "end") {
-				if (stateName.empty()) {
-					std::cerr << "AnimationData::loadFromFile(...) - Undefined state name\n";
-					throw 1;
-				}
-				else if (boundaries == sf::IntRect(0, 0, 0, 0)) {
-					std::cerr << "AnimationData::loadFromFile(...) - Undefined boundaries\n";
-					throw 1;
-				}
-
-				clip.init(localFrameSize, boundaries, localFrameCount, globalFrameOffset);
-				(*this)[stateName] = clip;
-				state = 0;
-			}
-			else {
-				Strings::split('=', buffer, split);
-
-				if (split.size() != 2) {
-					std::cerr << "AnimationData::loadFromFile(...) - Expected key=value, got " << buffer << "\n";
-					throw 1;
-				}
-
-				if (split[0] == "frameSize") {
-					if (state == 1 && !dgm::Conversion::stringToVector2i(':', split[1], localFrameSize)) {
-						std::cerr << "AnimationData::loadFromFile(...) - Failed to parse frameSize (" << split[1] << ")\n";
-						throw 1;
-					}
-					else if (state == 0 && !dgm::Conversion::stringToVector2i(':', split[1], globalFrameSize)) {
-						std::cerr << "AnimationData::loadFromFile(...) - Failed to parse frameSize (" << split[1] << ")\n";
-						throw 1;
-					}
-				}
-				else if (split[0] == "frameOffset") {
-					if (state == 1 && !dgm::Conversion::stringToVector2i(':', split[1], localFrameOffset)) {
-						std::cerr << "AnimationData::loadFromFile(...) - Failed to parse frameOffset (" << split[1] << ")\n";
-						throw 1;
-					}
-					else if (state == 0 && !dgm::Conversion::stringToVector2i(':', split[1], globalFrameOffset)) {
-						std::cerr << "AnimationData::loadFromFile(...) - Failed to parse frameOffset (" << split[1] << ")\n";
-						throw 1;
-					}
-				}
-				else if (split[0] == "frames") {
-					if (state == 0) {
-						globalFrameCount = std::stoi(split[1]);
-					}
-					else if (state == 1) {
-						localFrameCount = std::stoi(split[1]);
-					}
-				}
-				else if (split[0] == "boundaries" && state == 1) {
-					if (!dgm::Conversion::stringToIntRect(':', split[1], boundaries)) {
-						std::cerr << "AnimationData::loadFromFile(...) - Failed to parse boundaries (" << split[1] << ")\n";
-						throw 1;
-					}
-				}
-				else if (split[0] == "stateName" && state == 1) {
-					stateName = split[1];
-				}
-				else {
-					std::cerr << "AnimationData::loadFromFile(...) - Unknown key " << split[1] << "\n";
-					throw 1;
-				}
-			}
-		}
-	}
-	catch (...) {
-		load.close();
-		load.clear();
-		return false;
-	}
-
+AnimationStates Animation::loadStatesFromFile(const std::string &filename) {
+	std::ifstream load(filename);
+	nlohmann::json file;
+	load >> file;
 	load.close();
 	load.clear();
 
-	return true;
-}*/
+	AnimationStates result;
+
+	// Parse defaults from file
+	sf::Vector2i defaultFrameSize = { 8, 8 };
+	sf::Vector2i defaultFrameOffset = { 0, 0 };
+	if (file.contains("defaults")) {
+		if (file["defaults"].contains("frame")) {
+			auto frame = file["defaults"]["frame"];
+			if (frame.contains("size")) {
+				defaultFrameSize = getVec2iFromJsonArray(frame["size"]);
+			}
+			if (frame.contains("offset")) {
+				defaultFrameOffset = getVec2iFromJsonArray(frame["offset"]);
+			}
+		}
+	}
+
+	// Parse through states
+	for (auto& state : file["states"].items()) {
+		sf::Vector2i frameSize = defaultFrameSize;
+		sf::Vector2i frameOffset = defaultFrameOffset;
+		unsigned frameCount = 0;
+
+		std::string name = state.key();
+		auto data = state.value();
+
+		auto bounds = getIntRectFromJsonArray(data.at("bounds"));
+		if (data.contains("frame")) {
+			auto frame = data["frame"];
+			if (frame.contains("size")) {
+				frameSize = getVec2iFromJsonArray(frame["size"]);
+			}
+			if (frame.contains("offset")) {
+				frameOffset = getVec2iFromJsonArray(frame["offset"]);
+			}
+			if (frame.contains("count")) {
+				frameCount = frame["count"];
+			}
+		}
+
+		result[name].init(frameSize, bounds, frameCount, frameOffset);
+	}
+
+	return result;
+}

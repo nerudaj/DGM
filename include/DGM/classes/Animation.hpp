@@ -26,11 +26,17 @@ namespace dgm {
 		AnimationStates::const_iterator currentState;
 		bool looping;
 
+		bool isCurrentStateValid() {
+			return currentState != states.get().end();
+		}
+
 		bool isLocallyInstantiated() const {
 			return localInstance;
 		}
 
-		void updateSprite();
+		void updateSpriteTextureRect() {
+			boundSprite->setTextureRect(currentState->second.getFrame(currentFrameIndex));
+		}
 
 		void instantiateLocally();
 
@@ -74,7 +80,7 @@ namespace dgm {
 		 *  \brief Get speed as number of frames per second
 		 */
 		int getSpeed() const {
-			return 1000.f / timePerFrame.asMilliseconds();
+			return static_cast<int>(1000.f / timePerFrame.asMilliseconds());
 		}
 
 		/**
@@ -86,6 +92,15 @@ namespace dgm {
 
 		bool isLooping() const {
 			return looping;
+		}
+
+		/**
+		 *  \brief Reset the current state of animation to frame 0
+		 */
+		void reset() {
+			currentFrameIndex = 0;
+			elapsedTime = sf::Time::Zero;
+			updateSpriteTextureRect();
 		}
 
 		static AnimationStates loadStatesFromFile(const std::string &filename);
