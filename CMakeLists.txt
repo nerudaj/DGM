@@ -69,18 +69,21 @@ target_include_directories (${NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include"
 find_library(LIB_LOG_D logger-d  NAMES logger-d.lib  HINTS "${DSH_FOLDER}/lib")
 find_library(LIB_CFG_D config-d  NAMES config-d.lib  HINTS "${DSH_FOLDER}/lib")
 find_library(LIB_STR_D strings-d NAMES strings-d.lib HINTS "${DSH_FOLDER}/lib")
+find_library(LIB_LVLD_D leveld-d NAMES leveld-d.lib HINTS "${DSH_FOLDER}/lib")
 message(${LIB_CFG_D})
 
 find_library(LIB_LOG_R logger  NAMES logger.lib  HINTS "${DSH_FOLDER}/lib")
 find_library(LIB_CFG_R config  NAMES config.lib  HINTS "${DSH_FOLDER}/lib")
 find_library(LIB_STR_R strings NAMES strings.lib HINTS "${DSH_FOLDER}/lib")
+find_library(LIB_LVLD_R leveld NAMES leveld.lib HINTS "${DSH_FOLDER}/lib")
 message(${LIB_CFG_R})
 
 set(LIB_LOG optimized ${LIB_LOG_R} debug ${LIB_LOG_D})
 set(LIB_CFG optimized ${LIB_CFG_R} debug ${LIB_CFG_D})
 set(LIB_STR optimized ${LIB_STR_R} debug ${LIB_STR_D})
+set(LIB_LVLD optimized ${LIB_LVLD_R} debug ${LIB_LVLD_D})
 
-target_link_libraries(${NAME} ${LIB_LOG} ${LIB_CFG} ${LIB_STR})
+target_link_libraries(${NAME} ${LIB_LOG} ${LIB_CFG} ${LIB_STR} ${LIB_LVLD})
 
 # Example targets aka compile tests
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
@@ -104,3 +107,7 @@ target_link_libraries(Example04 ${NAME})
 ## Example 05
 add_executable(Example05 WIN32 examples/example05.cpp)
 target_link_libraries(Example05 ${NAME})
+
+## Example 06
+add_executable(Example06 WIN32 examples/example06.cpp)
+target_link_libraries(Example06 ${NAME})
