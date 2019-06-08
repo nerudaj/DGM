@@ -40,7 +40,7 @@ namespace dgm {
 			if (std::is_same<sf::Texture, T>::value) name = "t-" + name;
 			else if (std::is_same<sf::Font, T>::value) name = "f-" + name;
 			else if (std::is_same<sf::SoundBuffer, T>::value) name = "s-" + name;
-			else if (std::is_same<dgm::AnimationData, T>::value) name = "a-" + name;
+//			else if (std::is_same<dgm::AnimationData, T>::value) name = "a-" + name;
 
 			return name;
 		}
