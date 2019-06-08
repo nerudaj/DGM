@@ -2,132 +2,114 @@
 
 #include <DGM\dgm.hpp>
 #include <map>
+#include <functional>
 
 namespace dgm {
-	class AnimationData : public std::map<std::string, dgm::Clip> {
-	public:
-		/**
-		 *  \brief Load database from file
-		 *  
-		 *  \param [in] name Name of the file
-		 *  \return TRUE on success, FALSE otherwise
-		 *  
-		 *  \details TODO: Syntax
-		 */
-		bool loadFromFile(const std::string &name);
-		
-		/**
-		 *  \brief Add state to database
-		 *  
-		 *  \param [in] stateName Name of the state
-		 *  \param [in] clip Clip object describing the frames
-		 *  \return TRUE on success, FALSE if state with stateName already exists
-		 */
-		bool addState(const std::string &stateName, const dgm::Clip &clip);
-	};
-	
+	typedef std::map<std::string, dgm::Clip> AnimationStates;
+
 	/**
-	 *  \brief Class for animating objects
+	 *  \brief Object animating a single sprite
+	 * 
+	 *  \details Animation contains a database of animation states
+	 *  and a pointer to some sprite. When you set a certain named state
+	 *  and start calling update, then the image displayed on sprite
+	 *  will be changed.
 	 */
 	class Animation {
-	public:
-		enum class Flags : std::size_t {
-			RunOnce = 0,
-			Looping = 1
-		};
+	private:
+		std::reference_wrapper<const AnimationStates> states;
+		AnimationStates *localInstance;
+		sf::Sprite *boundSprite;
+		sf::Time elapsedTime;
+		sf::Time timePerFrame;
+		std::size_t currentFrameIndex;
+		AnimationStates::const_iterator currentState;
+		bool looping;
 
-	protected:
-		sf::Time elapsedTime;                 ///< Time elapsed since last frame change
-		sf::Time timePerFrame;                ///< Time between two frame changes
-		std::size_t frameIndex;               ///< Index of current frame within animation
-		Animation::Flags flags;               ///< Flags for current animation
-		bool mallocked;                       ///< Whether animations were allocated inside or outside of this class
-		sf::Sprite *boundSprite;              ///< Animated sprite
-		AnimationData *animations;            ///< Database of animation state
-		AnimationData::iterator currentState; ///< Iterator to selected animation state
-		
-		void reset();
-		void UpdateSprite();
-		
+		bool isCurrentStateValid() {
+			return currentState != states.get().end();
+		}
+
+		bool isLocallyInstantiated() const {
+			return localInstance;
+		}
+
+		void updateSpriteTextureRect() {
+			boundSprite->setTextureRect(currentState->second.getFrame(currentFrameIndex));
+		}
+
+		void instantiateLocally();
+
 	public:
 		/**
-		 *  \brief update animation counters
-		 *  
-		 *  \param [in] time Time elapsed since last call to this method
-		 *  \return TRUE if animation continues, FALSE if animation ended
-		 *  
-		 *  \details Animation can only end when the current state was set as not
-		 *  looping.
+		 *  \brief Update animation object with time
+		 *
+		 *  \details If time progressed by enough amount (defined by \ref setSpeed)
+		 *  then boundSprite is updated to show next frame of
+		 *  the animation. If no more frames are available for
+		 *  currently set state and looping is set to false, then
+		 *  update will return false. Otherwise it returns true.
 		 */
 		bool update(const dgm::Time &time);
-		
+
 		/**
-		 *  \brief Bind sprite to animation object
-		 *  
-		 *  \param [in] sprite Pointer to valid sprite object
+		 *  \brief Set the new animation state
+		 *
+		 *  \details Animation will play from the first
+		 *  frame of the new animation state. If looping is set
+		 *  to true then animation will start over when it finishes
+		 *  and \ref update will always return true.
 		 */
-		void setSprite(sf::Sprite *sprite);
-		
+		void setState(const std::string &state, bool looping = false);
+
 		/**
-		 *  \brief Set speed of animation
-		 *  
-		 *  \param [in] fps How many frames per sec should happen
+		 *  \brief Bind sprite to animation
 		 */
-		void setSpeed(int fps);
-		
+		void bindSprite(sf::Sprite *sprite);
+
 		/**
-		 *  \brief Change animation state
-		 *  
-		 *  \param [in] state Name of the state
-		 *  \param [in] flags How animation should behave
-		 *  \return TRUE if state was found and set, FALSE otherwise
-		 *  
-		 *  \details If state was not found, previous state is still running.
-		 *  If flags are set to RunOnce, animation will end after passing last
-		 *  frame and update will return FALSE. With Looping, animation will start
-		 *  over by itself and update always returns TRUE.
+		 *  \brief Set speed of animation in frames per second
 		 */
-		bool setState(const std::string &state, Animation::Flags flags = Animation::Flags::Looping);
-		
+		void setSpeed(int framesPerSecond);
+
+		void setLooping(bool looping) {
+			Animation::looping = looping;
+		}
+
 		/**
-		 *  \brief get number of frames per second
+		 *  \brief Get speed as number of frames per second
 		 */
-		int getSpeed() const { return 1000 / timePerFrame.asMilliseconds(); }
-		
+		int getSpeed() const {
+			return static_cast<int>(1000.f / timePerFrame.asMilliseconds());
+		}
+
 		/**
-		 *  \brief get name of selected state
+		 *  \brief Get name of currently selected state
 		 */
-		const std::string &getState() const { return currentState->first; }
-		
+		const std::string &getStateName() const {
+			return currentState->first;
+		}
+
+		bool isLooping() const {
+			return looping;
+		}
+
 		/**
-		 *  \brief Load animation database from file
-		 *  
-		 *  \param [in] filename File with data to load
-		 *  \return TRUE on success, FALSE otherwise
+		 *  \brief Reset the current state of animation to frame 0
 		 */
-		bool loadFromFile(const std::string &filename);
-		
-		/**
-		 *  \brief initialize object from existing database
-		 *  
-		 *  \param [in] data Initialized animation database
-		 *  \return TRUE on success, FALSE otherwise
-		 *  
-		 *  \details This method will only take pointer to existing data and
-		 *  work with them, no copying involved. It is useful when you're using
-		 *  ResourceManager and/or want to initialize a lot of animation objects
-		 *  with the same data, saving on memory.
-		 */
-		bool loadFromMemory(dgm::AnimationData *data);
-		
-		/**
-		 *  \brief Clear the memory
-		 *  
-		 *  \details This is called automatically by destructor
-		 */
-		void deinit();
-		
+		void reset() {
+			currentFrameIndex = 0;
+			elapsedTime = sf::Time::Zero;
+			updateSpriteTextureRect();
+		}
+
+		static AnimationStates loadStatesFromFile(const std::string &filename);
+
 		Animation();
+		Animation(const std::string &filename, int framesPerSecond = 30);
+		Animation(const AnimationStates &states, int framesPerSecond = 30);
+		Animation(Animation &&other);
+		Animation(const Animation &other);
 		~Animation();
 	};
 }

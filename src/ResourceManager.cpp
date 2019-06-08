@@ -34,10 +34,10 @@ bool dgm::ResourceManager::loadFromDir(const std::string &foldername, dgm::Resou
 			if (not loadResource<sf::SoundBuffer>(itemPath.string())) return false;
 			name = resourceName<sf::SoundBuffer>(itemPath.string());
 			break;
-		case Type::AnimationData:
+		/*case Type::AnimationData:
 			if (not loadResource<dgm::AnimationData>(itemPath.string())) return false;
 			name = resourceName<dgm::AnimationData>(itemPath.string());
-			break;
+			break;*/
 		}
 
 		if (names != nullptr) {

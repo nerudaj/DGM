@@ -8,7 +8,6 @@ void dgm::Window::open(const cfg::Ini & config) {
 }
 
 void dgm::Window::open(const sf::Vector2u & resolution, const std::string & title, const bool fullscreen) {
-	size = resolution;
 	Window::title = title;
 	Window::style = fullscreen ? sf::Style::Fullscreen : sf::Style::Default;
 	Window::fullscreen = fullscreen;
@@ -17,6 +16,8 @@ void dgm::Window::open(const sf::Vector2u & resolution, const std::string & titl
 }
 
 void dgm::Window::close(cfg::Ini & config) {
+	auto size = getSize();
+
 	config["Window"]["width"] = int(size.x);
 	config["Window"]["height"] = int(size.y);
 	config["Window"]["title"] = title;
@@ -25,6 +26,7 @@ void dgm::Window::close(cfg::Ini & config) {
 }
 
 void dgm::Window::toggleFullscreen() {
+	auto size = getSize();
 	close();
 	fullscreen = !fullscreen;
 	open(size, title, fullscreen);

@@ -45,8 +45,10 @@
 #include <Logger.hpp>
 #include <Config.hpp>
 #include <Strings.hpp>
+#include <LevelD.hpp>
 
 // DGM core
+#include "classes/Error.hpp"
 #include "classes/Buffer.hpp"
 #include "classes/Objects.hpp"
 #include "classes/Collision.hpp"

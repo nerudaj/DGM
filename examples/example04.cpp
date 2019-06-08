@@ -98,6 +98,7 @@ int main() {
 
 		window.endDraw();
 	}
+
 	return 0;
 }
 
