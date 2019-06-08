@@ -45,6 +45,7 @@
 #include <Logger.hpp>
 #include <Config.hpp>
 #include <Strings.hpp>
+#include <LevelD.hpp>
 
 // DGM core
 #include "classes/Error.hpp"
