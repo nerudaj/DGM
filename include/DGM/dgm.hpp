@@ -49,12 +49,12 @@
 #include "classes/Controller.hpp"
 #include "classes/Time.hpp"
 #include "classes/Clip.hpp"
-#include "classes/ResourceManager.hpp"
 #include "classes/Window.hpp"
 #include "classes/App.hpp"
 #include "classes/AppState.hpp"
 #include "classes/Animation.hpp"
 #include "classes/TilesetRenderer.hpp"
+#include "classes/ResourceManager.hpp"
 
 // Particle Systems
 #include "classes/ParticleSystemRenderer.hpp"
