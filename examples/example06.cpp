@@ -15,7 +15,6 @@
 *  will be handled in the next examples.
 */
 
-#define NO_AUDIO
 #define NO_NETWORK
 
 #include <DGM/dgm.hpp>

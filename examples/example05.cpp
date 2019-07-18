@@ -13,8 +13,7 @@
 *  Example demonstrates usage of dgm::Clip
 */
 
-// Disallow linkage of sfml audio and network modules
-#define NO_AUDIO
+// Disallow linkage of sfml network module
 #define NO_NETWORK
 
 #include <DGM/dgm.hpp>
@@ -44,7 +43,7 @@ private:
 
 	sf::Vector2f positionFromXY(int x, int y) {
 		auto texRect = sprite.getTextureRect();
-		sf::Vector2f texSize(texRect.width, texRect.height);
+		sf::Vector2f texSize(float(texRect.width), float(texRect.height));
 		sf::Vector2f position(x * texSize.x, y * texSize.y);
 		return position + originOffset;
 	}
@@ -84,7 +83,7 @@ public:
 	}
 
 	void init(const sf::Texture &texture, const sf::IntRect &textureRect) {
-		sf::Vector2f texSize(textureRect.width, textureRect.height);
+		sf::Vector2f texSize(float(textureRect.width), float(textureRect.height));
 
 		sprite.setSize(texSize);
 		sprite.setTexture(&texture);
@@ -107,7 +106,7 @@ private:
 
 	void initTiles(int level, const dgm::Clip &clip) {
 		tiles.resize(level * level - 1);
-		for (unsigned i = 0; i < level * level - 1; i++) {
+		for (unsigned i = 0; i < unsigned(level * level) - 1; i++) {
 			tiles[i].init(texture, clip.getFrame(i));
 			tiles[i].setPosition(i % level, i / level);
 		}
@@ -126,11 +125,13 @@ private:
 	}
 
 	void shuffle() {
-		std::random_shuffle(indices.begin(), indices.end());
+		std::random_device seed;
+		std::mt19937 generator(seed());
+		std::shuffle(indices.begin(), indices.end(), generator);
 
 		int index = 0;
-		for (unsigned y = 0; y < width; y++) {
-			for (unsigned x = 0; x < width; x++) {
+		for (int y = 0; y < width; y++) {
+			for (int x = 0; x < width; x++) {
 				if (indices[index] != -1) {
 					tiles[indices[index]].sendTo(x, y);
 				}
@@ -154,8 +155,8 @@ public:
 	}
 
 	void clicked(const sf::Vector2i &mousePos) {
-		int x = mousePos.x / (tileSize.x);
-		int y = mousePos.y / (tileSize.y);
+		int x = mousePos.x / int(tileSize.x);
+		int y = mousePos.y / int(tileSize.y);
 		int index = y * width + x;
 
 		if (x > 0 && indices[index - 1] == -1) {

@@ -10,8 +10,7 @@
  *  used (only for demonstration, of course it can be programmed more effectively).
  */
 
-// Disallow linkage of sfml audio and network modules
-#define NO_AUDIO
+// Disallow linkage of sfml network module
 #define NO_NETWORK
 
 #include <DGM/dgm.hpp>

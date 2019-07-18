@@ -14,8 +14,7 @@
  *  AI which will drive the car for you!
  */
 
-// Disallow linkage of sfml audio and network modules
-#define NO_AUDIO
+// Disallow linkage of sfml network module
 #define NO_NETWORK
 
 #include <DGM/dgm.hpp>

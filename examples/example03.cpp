@@ -7,8 +7,7 @@
  *  \note You can exit this one only by pressing Esc!
  */
 
-// Disallow linkage of sfml audio and network modules
-#define NO_AUDIO
+// Disallow linkage of sfml network module
 #define NO_NETWORK
 
 #include <DGM/dgm.hpp>
