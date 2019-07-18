@@ -7,9 +7,9 @@
 using dgm::Animation;
 using dgm::AnimationStates;
 
-const AnimationStates NullStates = {
+const std::shared_ptr<AnimationStates> NULL_STATES = std::make_shared<AnimationStates>(AnimationStates({
 	{ "NullState", dgm::Clip() }
-};
+}));
 
 bool Animation::update(const dgm::Time &time) {
 	elapsedTime += time.getElapsed();
@@ -33,8 +33,8 @@ bool Animation::update(const dgm::Time &time) {
 void Animation::setState(const std::string &state, bool looping) {
 	if (isCurrentStateValid() && currentState->first == state) return;
 
-	auto newState = states.get().find(state);
-	if (newState == states.get().end()) {
+	auto newState = states->find(state);
+	if (newState == states->end()) {
 		throw dgm::GeneralException("Cannot find animation state '" + state + "'");
 	}
 
@@ -53,79 +53,44 @@ void Animation::setSpeed(int framePerSecond) {
 	timePerFrame = sf::milliseconds(1000.f / framePerSecond);
 }
 
-Animation::Animation() : states(NullStates) {
-	localInstance = nullptr;
+Animation::Animation() {
+	states = NULL_STATES;
+
 	boundSprite = nullptr;
 	elapsedTime = sf::seconds(0);
 
 	setSpeed(30);
 	currentFrameIndex = 0;
-	currentState = states.get().begin();
+	currentState = states->begin();
 
 	setLooping(false);
 }
 
-Animation::Animation(const std::string &filename, int framesPerSecond) : states(NullStates) {
-	instantiateLocally();
-	*localInstance = Animation::loadStatesFromFile(filename);
+Animation::Animation(const std::string &filename, int framesPerSecond) {
+	states = Animation::loadStatesFromFile(filename);
 
-	states = *localInstance;
 	boundSprite = nullptr;
 	elapsedTime = sf::seconds(0);
 
 	setSpeed(framesPerSecond);
 	currentFrameIndex = 0;
-	currentState = states.get().end();
+	currentState = states->end();
 
 	setLooping(false);
 }
 
-void Animation::instantiateLocally() {
-	localInstance = new AnimationStates;
-	if (!localInstance) {
-		throw dgm::GeneralException("Cannot allocate memory for animation states!");
-	}
-}
 
-Animation::Animation(Animation &&other) : states(other.states) {
-	localInstance = other.localInstance;
-	other.localInstance = nullptr;
+Animation::Animation(const std::shared_ptr<AnimationStates> &states, int framesPerSecond) {
+	Animation::states = states;
 
-	boundSprite = other.boundSprite;
-	elapsedTime = other.elapsedTime;
-	timePerFrame = other.timePerFrame;
-	currentFrameIndex = other.currentFrameIndex;
-	currentState = other.currentState;
-	looping = other.looping;
-}
+	boundSprite = nullptr;
+	elapsedTime = sf::seconds(0);
 
-Animation::Animation(const Animation &other) : states(other.states) {
-	if (other.isLocallyInstantiated()) {
-		instantiateLocally();
-		*localInstance = *other.localInstance;
-		states = *localInstance;
-	}
-	else {
-		localInstance = nullptr;
-	}
+	setSpeed(framesPerSecond);
+	currentFrameIndex = 0;
+	currentState = states->end();
 
-	boundSprite = other.boundSprite;
-	elapsedTime = other.elapsedTime;
-	timePerFrame = other.timePerFrame;
-	currentFrameIndex = other.currentFrameIndex;
-	currentState = other.currentState;
-	looping = other.looping;
-}
-
-Animation::Animation(const AnimationStates &states, int framesPerSecond) : states(states) {
-	localInstance = nullptr;
-}
-
-Animation::~Animation() {
-	if (isLocallyInstantiated()) {
-		delete localInstance;
-		localInstance = nullptr;
-	}
+	setLooping(false);
 }
 
 sf::Vector2i getVec2iFromJsonArray(const nlohmann::json &json) {
@@ -136,7 +101,7 @@ sf::IntRect getIntRectFromJsonArray(const nlohmann::json &json) {
 	return { json[0], json[1], json[2], json[3] };
 }
 
-AnimationStates Animation::loadStatesFromFile(const std::string &filename) {
+std::shared_ptr<AnimationStates> Animation::loadStatesFromFile(const std::string &filename) {
 	std::ifstream load(filename);
 	nlohmann::json file;
 	load >> file;
@@ -186,5 +151,5 @@ AnimationStates Animation::loadStatesFromFile(const std::string &filename) {
 		result[name].init(frameSize, bounds, frameCount, frameOffset);
 	}
 
-	return result;
+	return std::make_shared<AnimationStates>(result);
 }

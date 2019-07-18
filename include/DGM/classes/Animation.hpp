@@ -3,6 +3,7 @@
 #include <DGM\dgm.hpp>
 #include <map>
 #include <functional>
+#include <memory>
 
 namespace dgm {
 	typedef std::map<std::string, dgm::Clip> AnimationStates;
@@ -17,8 +18,7 @@ namespace dgm {
 	 */
 	class Animation {
 	private:
-		std::reference_wrapper<const AnimationStates> states;
-		AnimationStates *localInstance;
+		std::shared_ptr<AnimationStates> states;
 		sf::Sprite *boundSprite;
 		sf::Time elapsedTime;
 		sf::Time timePerFrame;
@@ -27,18 +27,12 @@ namespace dgm {
 		bool looping;
 
 		bool isCurrentStateValid() {
-			return currentState != states.get().end();
-		}
-
-		bool isLocallyInstantiated() const {
-			return localInstance;
+			return currentState != states->end();
 		}
 
 		void updateSpriteTextureRect() {
 			boundSprite->setTextureRect(currentState->second.getFrame(currentFrameIndex));
 		}
-
-		void instantiateLocally();
 
 	public:
 		/**
@@ -103,13 +97,10 @@ namespace dgm {
 			updateSpriteTextureRect();
 		}
 
-		static AnimationStates loadStatesFromFile(const std::string &filename);
+		static std::shared_ptr<AnimationStates> loadStatesFromFile(const std::string &filename);
 
 		Animation();
 		Animation(const std::string &filename, int framesPerSecond = 30);
-		Animation(const AnimationStates &states, int framesPerSecond = 30);
-		Animation(Animation &&other);
-		Animation(const Animation &other);
-		~Animation();
+		Animation(const std::shared_ptr<AnimationStates> &states, int framesPerSecond = 30);
 	};
 }
