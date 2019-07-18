@@ -1,7 +1,7 @@
 #include <DGM\dgm.hpp>
 #include <cassert>
 
-void dgm::TilesetRenderer::draw(sf::RenderTarget & target, sf::RenderStates states) const {
+void dgm::Tileset::draw(sf::RenderTarget & target, sf::RenderStates states) const {
 	// apply the transform
 	states.transform *= getTransform();
 
@@ -12,7 +12,7 @@ void dgm::TilesetRenderer::draw(sf::RenderTarget & target, sf::RenderStates stat
 	target.draw(vertices, states);
 }
 
-void dgm::TilesetRenderer::changeTile_(float x, float y, uint32_t tileIndex, uint32_t tileValue) {
+void dgm::Tileset::changeTile(float x, float y, uint32_t tileIndex, uint32_t tileValue) {
 	assert(tileValue < clip.getFrameCount());
 	assert(tileIndex * 4 < vertices.getVertexCount());
 
@@ -35,12 +35,12 @@ void dgm::TilesetRenderer::changeTile_(float x, float y, uint32_t tileIndex, uin
 	quad[3].texCoords = sf::Vector2f(float(frame.left), float(frame.top + frame.height));
 }
 
-void dgm::TilesetRenderer::build(const dgm::Clip &clip, const sf::Vector2i tileSize, const std::vector<int> &imageData, const sf::Vector2i &dataSize) {
+void dgm::Tileset::build(const dgm::Clip &clip, const sf::Vector2i tileSize, const std::vector<int> &imageData, const sf::Vector2i &dataSize) {
 	assert(imageData.size() == dataSize.x * dataSize.y);
 
-	TilesetRenderer::clip = clip;
-	TilesetRenderer::tileSize = sf::Vector2f(float(tileSize.x), float(tileSize.y));
-	TilesetRenderer::dataSize = dataSize;
+	Tileset::clip = clip;
+	Tileset::tileSize = sf::Vector2f(float(tileSize.x), float(tileSize.y));
+	Tileset::dataSize = dataSize;
 
 	// initialize vertex array
 	vertices.clear();
@@ -55,13 +55,13 @@ void dgm::TilesetRenderer::build(const dgm::Clip &clip, const sf::Vector2i tileS
 	}
 }
 
-void dgm::TilesetRenderer::setTexture(sf::Texture * texture) {
+void dgm::Tileset::setTexture(sf::Texture * texture) {
 	assert(texture != NULL);
 	texturePtr = texture;
 }
 
-dgm::TilesetRenderer::TilesetRenderer() {
+dgm::Tileset::Tileset() {
 }
 
-dgm::TilesetRenderer::~TilesetRenderer() {
+dgm::Tileset::~Tileset() {
 }
