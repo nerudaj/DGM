@@ -96,8 +96,8 @@ bool dgm::Collision::basic(const dgm::Rect &A, const dgm::Rect &B) {
 }
 
 void normalizeBoundaries(sf::IntRect &dst, const sf::IntRect *src, const dgm::Mesh &mesh) {
-	sf::Vector2i meshSize = mesh.getDataSize();
-	sf::Vector2i tileSize = mesh.getVoxelSize();
+	sf::Vector2u meshSize = mesh.getDataSize();
+	sf::Vector2u tileSize = mesh.getVoxelSize();
 	
 	dst.left	= src->left / tileSize.x;
 	dst.top		= src->top  / tileSize.y;
@@ -113,8 +113,8 @@ void normalizeBoundaries(sf::IntRect &dst, const sf::IntRect *src, const dgm::Me
 bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Circle &B, int *meshHitPosition) {
 	sf::IntRect outBody;
 	sf::IntRect bounds;
-	sf::Vector2i tileSize = A.getVoxelSize();
-	sf::Vector2i meshSize = A.getDataSize();
+	sf::Vector2u tileSize = A.getVoxelSize();
+	sf::Vector2u meshSize = A.getDataSize();
 	sf::Vector2f meshPos = A.getPosition();
 	
 	dgm::Conversion::circleToIntRect(B, outBody);
@@ -144,7 +144,7 @@ bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Circle &B, int *meshHi
 bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Rect &B, int *meshHitPosition) {
 	sf::IntRect outBody(sf::FloatRect(B.getPosition() - A.getPosition(), B.getSize()));
 	sf::IntRect bounds;
-	sf::Vector2i meshSize = A.getDataSize();
+	sf::Vector2u meshSize = A.getDataSize();
 
 	normalizeBoundaries(bounds, &outBody, A);
 
