@@ -117,3 +117,7 @@ target_link_libraries(Example05 ${NAME})
 ## Example 06
 add_executable(Example06 WIN32 examples/example06.cpp)
 target_link_libraries(Example06 ${NAME})
+
+## Example 07
+add_executable(Example07 WIN32 examples/example07.cpp)
+target_link_libraries(Example07 ${NAME})
