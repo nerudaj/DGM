@@ -144,7 +144,8 @@ public:
 		carInput.setBinding(RIGHT, sf::Keyboard::D, dgm::X360::LStick_Right);
 
 		car.setup(32.f, 24.f, 128.f, 45.f, &carInput);
-		car.spawn(sf::Vector2f(app->window.getSize() / unsigned(2)));
+		auto wsize = app->window.getSize();
+		car.spawn(sf::Vector2f(wsize / 2u));
 		return true;
 	}
 };
