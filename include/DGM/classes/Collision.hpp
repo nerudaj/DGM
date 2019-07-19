@@ -66,7 +66,7 @@ namespace dgm {
 		 * 
 		 *  \return TRUE if collision was detected. FALSE otherwise
 		 */
-		static bool basic (const dgm::Mesh &A, const dgm::Circle &B, int *meshHitPosition = nullptr);
+		static bool basic (const dgm::Mesh &A, const dgm::Circle &B, std::size_t *meshHitPosition = nullptr);
 		
 		/**
 		 *  \brief Tests collision between mesh and a rectangle
@@ -76,38 +76,26 @@ namespace dgm {
 		 * 
 		 *  \return TRUE if collision was detected. FALSE otherwise
 		 */
-		static bool basic (const dgm::Mesh &A, const dgm::Rect &B, int *meshHitPosition = nullptr);
+		static bool basic (const dgm::Mesh &A, const dgm::Rect &B, std::size_t *meshHitPosition = nullptr);
 		
 		/**
-		 *  \brief Elaborates movement of a circle within a mesh
+		 *  \brief Elaborates movement of an object within a mesh
 		 * 
-		 *  \param Existing mesh object
-		 *  \param Existing circle object
-		 *  \param Movement defining forward vector
+		 *  \param  [in]     Existing mesh object
+		 *  \param  [in]     Existing object
+		 *  \param  [inout]  Movement defining forward vector
+		 *  \param  [out]    Which tile was hit
 		 * 
-		 *  \details This function tries to apply the forward vector to the body object
-		 *  and then tests collision with the mesh. If the collision is found, function
-		 *  tries to modify the vector so that at movement can occur in at least one
-		 *  direction. Neccessary for 8+ direction movement and platformers.
+		 *  Function assumes that mesh is a level and body is an object within it
+		 *  that wants to move using the forward vector. Function tests possible
+		 *  collisions with mesh, modifying forward in such way that applying it to
+		 *  body would not result in collision. If any collision was detected, true
+		 *  will be returned and index of collided mesh tile will be stored in
+		 *  meshHitPosition (if was specified).
 		 * 
 		 *  \return TRUE if collision was detected. FALSE otherwise
 		 */
-		static bool advanced(const dgm::Mesh &mesh, const dgm::Circle &body, sf::Vector2f &forward, int *meshHitPosition = nullptr);
-		
-		/**
-		 *  \brief Elaborates movement of a rect within a mesh
-		 * 
-		 *  \param Existing mesh object
-		 *  \param Existing rect object
-		 *  \param Movement defining forward vector
-		 * 
-		 *  \details This function tries to apply the forward vector to the body object
-		 *  and then tests collision with the mesh. If the collision is found, function
-		 *  tries to modify the vector so that at movement can occur in at least one
-		 *  direction. Neccessary for 8+ direction movement and platformers.
-		 * 
-		 *  \return TRUE if collision was detected. FALSE otherwise
-		 */
-		static bool advanced(const dgm::Mesh &mesh, const dgm::Rect &body, sf::Vector2f &forward, int *meshHitPosition = nullptr);
+		template<class T>
+		static bool advanced(const dgm::Mesh &mesh, T body, sf::Vector2f &forward, std::size_t *meshHitPosition = nullptr);
 	};
 }
