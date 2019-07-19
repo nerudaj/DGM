@@ -80,11 +80,11 @@ namespace dgm {
 				ptr = other.ptr;
 			}
 
-			difference_type operator-(const const_iterator &other) {
+			difference_type operator-(const const_iterator &other) const {
 				return ptr - other.ptr;
 			}
 
-			difference_type operator+(const const_iterator &other) {
+			difference_type operator+(const const_iterator &other) const {
 				return ptr + other.ptr;
 			}
 
@@ -143,11 +143,11 @@ namespace dgm {
 				ptr = other.ptr;
 			}
 
-			difference_type operator-(const const_iterator &other) {
+			difference_type operator-(const const_iterator &other) const {
 				return ptr - other.ptr;
 			}
 
-			difference_type operator+(const const_iterator &other) {
+			difference_type operator+(const const_iterator &other) const {
 				return ptr + other.ptr;
 			}
 
