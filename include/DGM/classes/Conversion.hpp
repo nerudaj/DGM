@@ -43,11 +43,6 @@ namespace dgm {
 		static bool stringToIntRect(const char delimiter, const std::string &str, sf::IntRect &dst);
 
 		/**
-		 * \brief Creates a bounding box of a circle, storing result to dst
-		 */
-		static void circleToIntRect(const dgm::Circle &circ, sf::IntRect &dst);
-
-		/**
 		 *  \brief Convert polar coordinates to cartesian
 		 *
 		 *  \param [in] angle 0° is at [0, 1], counting clockwise

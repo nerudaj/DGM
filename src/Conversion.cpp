@@ -84,13 +84,6 @@ bool Conversion::stringToIntRect(const char delimiter, const std::string & str, 
 	return (arr.size() == 4);
 }
 
-void Conversion::circleToIntRect(const dgm::Circle & circ, sf::IntRect & dst) {
-	dst.left = int(circ.getPosition().x - circ.getRadius());
-	dst.top = int(circ.getPosition().y - circ.getRadius());
-	dst.width = int(circ.getRadius()) * 2;
-	dst.height = int(circ.getRadius()) * 2;
-}
-
 sf::Vector2f Conversion::cartesianToPolar(const float x, const float y) {
 	float size = dgm::Math::vectorSize(x, y);
 
