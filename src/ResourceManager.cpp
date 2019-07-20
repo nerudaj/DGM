@@ -30,10 +30,76 @@ std::string dgm::ResourceManager::getResourceName(const std::string & filename) 
 	return filename.substr(++itr);
 }
 
+template<typename T>
+void ResourceManager::loadResource(const std::string &filename) {
+	T *resource = new T;
+	if (!resource) {
+		throw dgm::EnvironmentException("Could not allocate memory for resource");
+	}
+	
+	try {
+		loadResourceFromFile(filename, *resource);
+	}
+	catch (std::exception &e) {
+		delete resource;
+		throw dgm::GeneralException("Could not load resource '" + filename + "', reason: '" + std::string(e.what()) + "'");
+	}
+
+	std::string name = getResourceName(filename);
+	if (isResourceInDatabase(name)) {
+		delete resource;
+		throw dgm::ResourceException("Resource called '" + name + "' is already in database!");
+	}
+
+	try {
+		database[name] = resource;
+	}
+	catch (...) {
+		delete resource;
+		throw dgm::EnvironmentException("Could not insert resource into database");
+	}
+}
+
+template void ResourceManager::loadResource<sf::Texture>(const std::string &filename);
+template void ResourceManager::loadResource<sf::SoundBuffer>(const std::string &filename);
+template void ResourceManager::loadResource<sf::Font>(const std::string &filename);
+template void ResourceManager::loadResource<std::shared_ptr<dgm::AnimationStates>>(const std::string &filename);
+
+template<typename T>
+void ResourceManager::loadResourceDir(const std::string &folder, bool recursive) {
+	namespace fs = std::experimental::filesystem::v1;
+
+	fs::path path(folder);
+	if (not fs::is_directory(path)) {}
+
+	fs::directory_iterator itr(path);
+	for (auto item : itr) {
+		fs::path itemPath(item);
+
+		if (fs::is_directory(itemPath) && recursive) {
+			loadResourceDir<T>(itemPath.generic_string(), recursive);
+		}
+
+		try {
+			loadResource<T>(itemPath.generic_string());
+		}
+		catch (dgm::GeneralException &e) {
+			if (pedantic) throw e;
+		}
+	}
+}
+
+template void ResourceManager::loadResourceDir<sf::Texture>(const std::string &filename, bool recursive);
+template void ResourceManager::loadResourceDir<sf::SoundBuffer>(const std::string &filename, bool recursive);
+template void ResourceManager::loadResourceDir<sf::Font>(const std::string &filename, bool recursive);
+template void ResourceManager::loadResourceDir<std::shared_ptr<dgm::AnimationStates>>(const std::string &filename, bool recursive);
+
 ResourceManager::ResourceManager() {
+	pedantic = true;
 }
 
 ResourceManager::ResourceManager(ResourceManager &&other) {
+	pedantic = true;
 	database = other.database;
 	other.database.clear();
 }
