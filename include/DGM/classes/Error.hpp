@@ -7,4 +7,14 @@ namespace dgm {
 	public:
 		GeneralException(const std::string &message) : std::runtime_error(message) {}
 	};
+	
+	class ResourceException : public std::runtime_error {
+	public:
+		ResourceException(const std::string &message) : std::runtime_error(message) {}
+	};
+	
+	class EnvironmentException : public std::runtime_error {
+	public:
+		EnvironmentException(const std::string &message) : std::runtime_error(message) {}
+	};
 }
