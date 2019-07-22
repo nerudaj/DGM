@@ -64,8 +64,8 @@ int main(int argc, char *argv[]) {
 	dgm::Time time;
 	
 	dgm::ResourceManager resmgr;
-	resmgr.setPedantic(false);
-	resmgr.loadResourceDir<sf::Texture>(resourceDir); // will load soldier.png and image.png
+	resmgr.setPedantic(false); // loadResourceDir will only load compatible files and ignore everything else
+	resmgr.loadResourceDir<sf::Texture>(resourceDir); // will load soldier.png, image.png and tileset.png
 	resmgr.loadResourceDir<std::shared_ptr<dgm::AnimationStates>>(resourceDir); // will load soldier.json
 	
 	dgm::Buffer<Soldier> soldiers(SOLDIER_COUNT);
