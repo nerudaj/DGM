@@ -55,9 +55,8 @@ void dgm::Tileset::build(const dgm::Clip &clip, const sf::Vector2i tileSize, con
 	}
 }
 
-void dgm::Tileset::setTexture(sf::Texture * texture) {
-	assert(texture != NULL);
-	texturePtr = texture;
+void dgm::Tileset::setTexture(sf::Texture &texture) {
+	texturePtr = &texture;
 }
 
 dgm::Tileset::Tileset() {

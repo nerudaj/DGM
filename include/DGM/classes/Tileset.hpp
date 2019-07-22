@@ -67,7 +67,7 @@ namespace dgm {
 		 *  Pointers retrieved from ResourceManager can be directly passed to
 		 *  this function.
 		 */
-		void setTexture(sf::Texture *texture);
+		void setTexture(sf::Texture &texture);
 
 		const dgm::Clip &getClip() const { return clip; }
 
