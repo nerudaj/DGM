@@ -21,19 +21,20 @@ cd ..
 
 echo Phase 4 - Release filesys
 set /p version=<VERSION
-mkdir DGM-%version%\include
-mkdir DGM-%version%\lib
+mkdir RELEASE
+mkdir RELEASE\DGM-%version%\include
+mkdir RELEASE\DGM-%version%\lib
 
 echo Phase 5 - Copying data
-copy changelog.txt DGM-%version%
-copy vsbuild\Debug\dgm-d.lib DGM-%version%\lib
-copy vsbuild\Release\dgm.lib DGM-%version%\lib
-robocopy /S include DGM-%version%\include
+copy changelog.txt RELEASE\DGM-%version%
+copy vsbuild\Debug\dgm-d.lib RELEASE\DGM-%version%\lib
+copy vsbuild\Release\dgm.lib RELEASE\DGM-%version%\lib
+robocopy /S include RELEASE\DGM-%version%\include
 robocopy 3rdParty\dshlibs\include DGM-%version%\include Config.hpp Args.hpp Item.hpp Csv.hpp Ini.hpp Logger.hpp Strings.hpp
 
 echo Phase 6 - Project template
-mkdir DGM-Project-Template-%version%
-robocopy /S template DGM-Project-Template-%version%
+mkdir RELEASE\DGM-Project-Template-%version%
+robocopy /S template RELEASE\DGM-Project-Template-%version%
 
 echo Done!
 

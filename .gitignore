@@ -5,3 +5,6 @@
 
 ## Include solution file
 vsbuild
+
+## Ignore release folders
+RELEASE
