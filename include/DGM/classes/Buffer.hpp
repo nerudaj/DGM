@@ -80,11 +80,11 @@ namespace dgm {
 				ptr = other.ptr;
 			}
 
-			difference_type operator-(const const_iterator &other) {
+			difference_type operator-(const const_iterator &other) const {
 				return ptr - other.ptr;
 			}
 
-			difference_type operator+(const const_iterator &other) {
+			difference_type operator+(const const_iterator &other) const {
 				return ptr + other.ptr;
 			}
 
@@ -143,11 +143,11 @@ namespace dgm {
 				ptr = other.ptr;
 			}
 
-			difference_type operator-(const const_iterator &other) {
+			difference_type operator-(const const_iterator &other) const {
 				return ptr - other.ptr;
 			}
 
-			difference_type operator+(const const_iterator &other) {
+			difference_type operator+(const const_iterator &other) const {
 				return ptr + other.ptr;
 			}
 
@@ -236,15 +236,13 @@ namespace dgm {
 		* then new items will be constructed. If \p newSize is less, then
 		* some items on high indices will be invalidated and deleted.
 		*
-		* If not items are deleted via this function, any pointers to them
+		* If items are not deleted via this function, any pointers to them
 		* are still valid, even after resize.
 		*
 		* \note This method is expensive. The best way is to use it once when
 		* your program is initializing.
 		*/
 		void resize(std::size_t maxSize) {
-			if (dataCapacity <= maxSize) throw std::bad_array_new_length();
-
 			// Upscaling buffer
 			if (data) {
 				// Allocate bigger array

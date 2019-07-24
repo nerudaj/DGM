@@ -1,65 +1,111 @@
 #include <DGM/dgm.hpp>
-#include <regex>
-#include <experimental/filesystem>
-namespace fs = std::experimental::filesystem::v1;
+#include <stdexcept>
 
-void dgm::ResourceManager::deinit() {
-	for (auto item : database) {
-		freeResource(item.first);
+using dgm::ResourceManager;
+
+void ResourceManager::loadResourceFromFile(const std::string &filename, sf::Texture &texture) {
+	if (not texture.loadFromFile(filename)) {
+		throw std::runtime_error("Cannot load texture");
 	}
 }
 
-bool dgm::ResourceManager::loadFromDir(const std::string &foldername, dgm::ResourceManager::Type type, std::vector<std::string> *names) {
-	fs::path path(foldername);
-	if (not fs::is_directory(path)) {
-		std::cerr << "ResourceManager::loadFromDir - " << foldername << " is not a directory!\n";
-		return false;
+void ResourceManager::loadResourceFromFile(const std::string &filename, sf::Font &font) {
+	if (not font.loadFromFile(filename)) {
+		throw std::runtime_error("Cannot load font");
 	}
-
-	fs::recursive_directory_iterator dirIter(path);
-	for (auto item : dirIter) {
-		fs::path itemPath(item);
-		std::string name;
-
-		switch (type) {
-		case Type::Font:
-			if (not loadResource<sf::Font>(itemPath.string())) return false;
-			name = resourceName<sf::Font>(itemPath.string());
-			break;
-		case Type::Graphic:
-			if (not loadResource<sf::Texture>(itemPath.string())) return false;
-			name = resourceName<sf::Texture>(itemPath.string());
-			break;
-		case Type::Sound:
-			if (not loadResource<sf::SoundBuffer>(itemPath.string())) return false;
-			name = resourceName<sf::SoundBuffer>(itemPath.string());
-			break;
-		case Type::AnimationData:
-			if (not loadResource<dgm::AnimationData>(itemPath.string())) return false;
-			name = resourceName<dgm::AnimationData>(itemPath.string());
-			break;
-		}
-
-		if (names != nullptr) {
-			(*names).push_back(name);
-		}
-	}
-
-	return true;
 }
 
-void dgm::ResourceManager::freeResource(const std::string &name) {
-	if (database.find(name) == database.end()) return;
-
-	auto itr = database.find(name);
-	delete itr->second;
-	database.erase(itr);
+void ResourceManager::loadResourceFromFile(const std::string &filename, sf::SoundBuffer &sound) {
+	if (not sound.loadFromFile(filename)) {
+		throw std::runtime_error("Cannot load sound buffer");
+	}
 }
 
-dgm::ResourceManager::ResourceManager() {
+void ResourceManager::loadResourceFromFile(const std::string &filename, std::shared_ptr<dgm::AnimationStates> &states) {
+	states = dgm::Animation::loadStatesFromFile(filename);
+}
+
+std::string dgm::ResourceManager::getResourceName(const std::string & filename) {
+	auto itr = filename.find_last_of('/');
+	return filename.substr(++itr);
+}
+
+template<typename T>
+void ResourceManager::loadResource(const std::string &filename) {
+	T *resource = new T;
+	if (!resource) {
+		throw dgm::EnvironmentException("Could not allocate memory for resource");
+	}
 	
+	try {
+		loadResourceFromFile(filename, *resource);
+	}
+	catch (std::exception &e) {
+		delete resource;
+		throw dgm::GeneralException("Could not load resource '" + filename + "', reason: '" + std::string(e.what()) + "'");
+	}
+
+	std::string name = getResourceName(filename);
+	if (isResourceInDatabase(name)) {
+		delete resource;
+		throw dgm::ResourceException("Resource called '" + name + "' is already in database!");
+	}
+
+	try {
+		database[name] = resource;
+	}
+	catch (...) {
+		delete resource;
+		throw dgm::EnvironmentException("Could not insert resource into database");
+	}
 }
 
-dgm::ResourceManager::~ResourceManager() {
-	deinit();
+template void ResourceManager::loadResource<sf::Texture>(const std::string &filename);
+template void ResourceManager::loadResource<sf::SoundBuffer>(const std::string &filename);
+template void ResourceManager::loadResource<sf::Font>(const std::string &filename);
+template void ResourceManager::loadResource<std::shared_ptr<dgm::AnimationStates>>(const std::string &filename);
+
+template<typename T>
+void ResourceManager::loadResourceDir(const std::string &folder, bool recursive) {
+	namespace fs = std::experimental::filesystem::v1;
+
+	fs::path path(folder);
+	if (not fs::is_directory(path)) {}
+
+	fs::directory_iterator itr(path);
+	for (auto item : itr) {
+		fs::path itemPath(item);
+
+		if (fs::is_directory(itemPath) && recursive) {
+			loadResourceDir<T>(itemPath.generic_string(), recursive);
+		}
+
+		try {
+			loadResource<T>(itemPath.generic_string());
+		}
+		catch (dgm::GeneralException &e) {
+			if (pedantic) throw e;
+		}
+	}
+}
+
+template void ResourceManager::loadResourceDir<sf::Texture>(const std::string &filename, bool recursive);
+template void ResourceManager::loadResourceDir<sf::SoundBuffer>(const std::string &filename, bool recursive);
+template void ResourceManager::loadResourceDir<sf::Font>(const std::string &filename, bool recursive);
+template void ResourceManager::loadResourceDir<std::shared_ptr<dgm::AnimationStates>>(const std::string &filename, bool recursive);
+
+ResourceManager::ResourceManager() {
+	pedantic = true;
+}
+
+ResourceManager::ResourceManager(ResourceManager &&other) {
+	pedantic = true;
+	database = other.database;
+	other.database.clear();
+}
+
+ResourceManager::~ResourceManager() {
+	for (auto keyval : database) {
+		free(keyval.second);
+	}
 }

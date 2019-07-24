@@ -4,7 +4,10 @@
 #include <cassert>
 
 namespace dgm {
-	class TilesetRenderer : public sf::Drawable, public sf::Transformable {
+	/**
+	 *  \brief Class for rendering tileset based maps
+	 */
+	class Tileset : public sf::Drawable, public sf::Transformable {
 	private:
 		virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
@@ -15,7 +18,7 @@ namespace dgm {
 		sf::Vector2i dataSize;
 		dgm::Clip clip;
 
-		void changeTile_(float x, float y, uint32_t tileIndex, uint32_t tileValue);
+		void changeTile(float x, float y, uint32_t tileIndex, uint32_t tileValue);
 
 	public:
 		/**
@@ -34,7 +37,7 @@ namespace dgm {
 		 */
 		void changeTile(uint32_t tileX, uint32_t tileY, uint32_t tileValue) {
 			assert(tileX < uint32_t(dataSize.x) && tileY < uint32_t(dataSize.y));
-			changeTile_(float(tileX), float(tileY), tileY * dataSize.x + tileX, tileValue);
+			changeTile(float(tileX), float(tileY), tileY * dataSize.x + tileX, tileValue);
 		}
 
 		/**
@@ -64,11 +67,11 @@ namespace dgm {
 		 *  Pointers retrieved from ResourceManager can be directly passed to
 		 *  this function.
 		 */
-		void setTexture(sf::Texture *texture);
+		void setTexture(sf::Texture &texture);
 
 		const dgm::Clip &getClip() const { return clip; }
 
-		TilesetRenderer();
-		~TilesetRenderer();
+		Tileset();
+		~Tileset();
 	};
 }

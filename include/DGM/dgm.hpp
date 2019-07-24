@@ -3,10 +3,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-
-#ifndef NO_AUDIO
-	#include <SFML/Audio.hpp>
-#endif
+#include <SFML/Audio.hpp>
 
 #ifndef NO_NETWORK
 	#include <SFML/Network.hpp>
@@ -17,9 +14,7 @@
 	#pragma comment(lib, "sfml-system.lib")
 	#pragma comment(lib, "sfml-graphics.lib")
 	#pragma comment(lib, "sfml-window.lib")
-#ifndef NO_AUDIO
 	#pragma comment(lib, "sfml-audio.lib")
-#endif
 
 #ifndef NO_NETWORK
 	#pragma comment(lib, "sfml-network.lib")
@@ -29,10 +24,7 @@
 	#pragma comment(lib, "sfml-system-d.lib")
 	#pragma comment(lib, "sfml-graphics-d.lib")
 	#pragma comment(lib, "sfml-window-d.lib")
-
-#ifndef NO_AUDIO
 	#pragma comment(lib, "sfml-audio-d.lib")
-#endif
 
 #ifndef NO_NETWORK
 	#pragma comment(lib, "sfml-network-d.lib")
@@ -45,8 +37,10 @@
 #include <Logger.hpp>
 #include <Config.hpp>
 #include <Strings.hpp>
+#include <LevelD.hpp>
 
 // DGM core
+#include "classes/Error.hpp"
 #include "classes/Buffer.hpp"
 #include "classes/Objects.hpp"
 #include "classes/Collision.hpp"
@@ -55,12 +49,12 @@
 #include "classes/Controller.hpp"
 #include "classes/Time.hpp"
 #include "classes/Clip.hpp"
-#include "classes/ResourceManager.hpp"
 #include "classes/Window.hpp"
 #include "classes/App.hpp"
 #include "classes/AppState.hpp"
 #include "classes/Animation.hpp"
-#include "classes/TilesetRenderer.hpp"
+#include "classes/Tileset.hpp"
+#include "classes/ResourceManager.hpp"
 
 // Particle Systems
 #include "classes/ParticleSystemRenderer.hpp"

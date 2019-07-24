@@ -113,6 +113,7 @@ void dgm::Controller::setIndex(const int index) {
 }
 
 dgm::Controller::Controller() {
+	index = 0;
 	bindings.resize(16);
 }
 

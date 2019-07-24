@@ -1,0 +1,27 @@
+{
+	"defaults": {
+		"frame": {
+			"size": [80, 64],
+			"offset": [0, 8]
+		}
+	},
+	"states": {
+		"idle-right": {
+			"frame": {
+				"size": [80, 64],
+				"offset": [0, 8],
+				"count": 1
+			},
+			"bounds": [0, 0, 80, 64]
+		},
+		"idle-left": {
+			"bounds": [0, 72, 80, 64]
+		},
+		"run-right": {
+			"bounds": [0, 0, 320, 64]
+		},
+		"run-left": {
+			"bounds": [0, 72, 320, 64]
+		}
+	}
+}

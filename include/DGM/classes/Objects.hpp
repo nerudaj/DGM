@@ -149,22 +149,11 @@ namespace dgm {
 	 *  Access cell at [x, y] by y * dataSize.x + x.
 	 */
 	class Mesh : public Object {
-	private:
-		/**
-		 *  \brief Frees memory held by *data if necessary
-		 */
-		void Free();
-		
-		/**
-		 *  \brief Allocates memory to *data based on dataSize
-		 */
-		bool Alloc();
-		
 	protected:
-		int *data;	///< Array for holding collision data
+		std::vector<int> data;	///< Array for holding collision data
 		sf::Vector2f position;	///< Position of top-left corner
-		sf::Vector2i dataSize; ///< dataSize.x * dataSize.y is size of data array
-		sf::Vector2i voxelSize; ///< How big rectangle does single cell of data represents
+		sf::Vector2u dataSize; ///< dataSize.x * dataSize.y is size of data array
+		sf::Vector2u voxelSize; ///< How big rectangle does single cell of data represents
 		
 	public:
 		/**
@@ -172,69 +161,88 @@ namespace dgm {
 		 *  
 		 *  Access cell at [x, y] by y * dataSize.x + x.
 		 */
-		int &operator[] (std::size_t index);
+		int &operator[] (std::size_t index) {
+			return data[index];
+		}
 		
 		/**
 		 *  \brief Read-only access to *data
 		 *  
 		 *  Access cell at [x, y] by y * dataSize.x + x.
 		 */
-		const int &operator[] (std::size_t index) const;
+		const int &operator[] (std::size_t index) const {
+			return data[index];
+		}
 	
 		/**
 		 *  \brief get position of top-left corner
 		 */
-		const sf::Vector2f &getPosition() const;
+		const sf::Vector2f &getPosition() const {
+			return position;
+		}
 		
 		/**
 		 *  \brief get dimensions of *data array
 		 */
-		const sf::Vector2i &getDataSize() const;
+		const sf::Vector2u &getDataSize() const {
+			return dataSize;
+		}
 		
 		/**
 		 *  \brief get dimensions of single voxel
 		 */
-		const sf::Vector2i &getVoxelSize() const;
+		const sf::Vector2u &getVoxelSize() const {
+			return voxelSize;
+		}
 	
 		/**
 		 *  \brief Set position of top-left corner
 		 */
-		void setPosition(const float x, const float y);
+		void setPosition(const float x, const float y) {
+			position.x = x;
+			position.y = y;
+		}
 		
 		/**
 		 *  \brief Set position of top-left corner
 		 */
-		void setPosition(const sf::Vector2f &position);
+		void setPosition(const sf::Vector2f &position) {
+			Mesh::position = position;
+		}
 		
 		/**
 		 *  \brief Set dimensions of single voxel
 		 */
-		void setVoxelSize(const int width, const int height);
+		void setVoxelSize(const unsigned width, const unsigned height) {
+			voxelSize.x = width;
+			voxelSize.y = height;
+		}
 		
 		/**
 		 *  \brief Set dimensions of single voxel
 		 */
-		void setVoxelSize(const sf::Vector2i &size);
+		void setVoxelSize(const sf::Vector2u &size) { 
+			voxelSize = size; 
+		}
 		
 		/**
 		 *  \brief Set dimensions of data array
 		 *  
-		 *  \details This will allocate memory for *data.
+		 *  \details This will allocate memory for data.
 		 *  Any data stored here prior to this call will be lost.
-		 *  
-		 *  \returns TRUE on success, FALSE on malloc failure
 		 */
-		bool setDataSize(const int width, const int height);
+		void setDataSize(const unsigned width, const unsigned height) {
+			setDataSize(sf::Vector2u(width, height)); 
+		}
 		
 		/**
 		 *  \brief Set dimensions of data array
 		 *  
-		 *  \details This will allocate memory for *data.
+		 *  \details This will allocate memory for data.
 		 *  Any data stored here prior to this call will be lost.
 		 *  
-		 *  \returns TRUE on success, FALSE on malloc failure
 		 */
-		bool setDataSize(const sf::Vector2i &size);
+		void setDataSize(const sf::Vector2u &size);
 		
 		/**
 		 *  \brief Moves object
@@ -247,6 +255,5 @@ namespace dgm {
 		void move(const sf::Vector2f &forward);
 		
 		Mesh();
-		~Mesh();
 	};
 }

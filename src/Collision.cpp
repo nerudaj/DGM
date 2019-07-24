@@ -95,42 +95,43 @@ bool dgm::Collision::basic(const dgm::Rect &A, const dgm::Rect &B) {
 	return false;
 }
 
-void normalizeBoundaries(sf::IntRect &dst, const sf::IntRect *src, const dgm::Mesh &mesh) {
-	sf::Vector2i meshSize = mesh.getDataSize();
-	sf::Vector2i tileSize = mesh.getVoxelSize();
+sf::IntRect normalizeBoundaries(const sf::IntRect &src, const dgm::Mesh &mesh) {
+	sf::IntRect dst;
+
+	sf::Vector2u meshSize = mesh.getDataSize();
+	sf::Vector2u tileSize = mesh.getVoxelSize();
 	
-	dst.left	= src->left / tileSize.x;
-	dst.top		= src->top  / tileSize.y;
-	dst.width	= (src->left + src->width)  / tileSize.x;
-	dst.height	= (src->top  + src->height) / tileSize.y;
+	dst.left	= src.left / tileSize.x;
+	dst.top		= src.top  / tileSize.y;
+	dst.width	= (src.left + src.width)  / tileSize.x;
+	dst.height	= (src.top  + src.height) / tileSize.y;
 	
 	if (dst.left < 0)				dst.left	= 0;
 	if (dst.width  >= meshSize.x)	dst.width	= meshSize.x - 1;
 	if (dst.top  < 0) 				dst.top		= 0;
 	if (dst.height >= meshSize.y)	dst.height	= meshSize.y - 1;
+
+	return dst;
 }
 
-bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Circle &B, int *meshHitPosition) {
-	sf::IntRect outBody;
-	sf::IntRect bounds;
-	sf::Vector2i tileSize = A.getVoxelSize();
-	sf::Vector2i meshSize = A.getDataSize();
-	sf::Vector2f meshPos = A.getPosition();
-	
-	dgm::Conversion::circleToIntRect(B, outBody);
-	normalizeBoundaries(bounds, &outBody, A);
+bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Circle &B, std::size_t *meshHitPosition) {
+	sf::Vector2f radius(B.getRadius(), B.getRadius());
+	sf::IntRect outBody(sf::FloatRect(B.getPosition() - radius - A.getPosition(), radius * 2.f));
+	sf::IntRect bounds = normalizeBoundaries(outBody, A);
 
-	dgm::Rect box;
-	box.setSize(float(tileSize.x), float(tileSize.y));
+	sf::Vector2f tileSize(A.getVoxelSize());
+	unsigned meshWidth = A.getDataSize().x;
+
+	dgm::Rect box(sf::Vector2f(0.f, 0.f), tileSize);
 	
 	for (int y = bounds.top; y <= bounds.height; y++) {
 		for (int x = bounds.left; x <= bounds.width; x++) {
-			if (A[y * meshSize.x + x] > 0) {
-				box.setPosition(float(x * tileSize.x) + meshPos.x, float(y * tileSize.y) + meshPos.y);
+			if (A[y * meshWidth + x] > 0) {
+				box.setPosition(sf::Vector2f(float(x) * tileSize.x, float(y) * tileSize.y) + A.getPosition());
 				
 				if (dgm::Collision::basic(box, B)) {
 					if (meshHitPosition != nullptr) {
-						(*meshHitPosition) = (y * meshSize.x + x);
+						(*meshHitPosition) = y * meshWidth + x;
 					}
 					return true;
 				}
@@ -141,18 +142,18 @@ bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Circle &B, int *meshHi
 	return false;
 }
 
-bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Rect &B, int *meshHitPosition) {
+bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Rect &B, std::size_t *meshHitPosition) {
 	sf::IntRect outBody(sf::FloatRect(B.getPosition() - A.getPosition(), B.getSize()));
-	sf::IntRect bounds;
-	sf::Vector2i meshSize = A.getDataSize();
+	sf::IntRect bounds = normalizeBoundaries(outBody, A);
 
-	normalizeBoundaries(bounds, &outBody, A);
+	sf::Vector2u meshSize = A.getDataSize();
+	unsigned meshWidth = A.getDataSize().x;
 
 	for (int y = bounds.top; y <= bounds.height; y++) {
 		for (int x = bounds.left; x <= bounds.width; x++) {
-			if (A[y * meshSize.x + x] > 0) {
+			if (A[y * meshWidth + x] > 0) {
 				if (meshHitPosition != nullptr) {
-					(*meshHitPosition) = (y * meshSize.x + x);
+					(*meshHitPosition) = y * meshWidth + x;
 				}
 				return true;
 			}
@@ -162,24 +163,23 @@ bool dgm::Collision::basic(const dgm::Mesh &A, const dgm::Rect &B, int *meshHitP
 	return false;
 }
 
-bool dgm::Collision::advanced(const dgm::Mesh &mesh, const dgm::Circle &body, sf::Vector2f &forward, int *meshHitPosition) {
-	dgm::Circle aux = body;
-	aux.move(forward);
-	
-	if (!dgm::Collision::basic(mesh, aux)) {
+template<typename T>
+bool dgm::Collision::advanced(const dgm::Mesh &mesh, T body, sf::Vector2f &forward, std::size_t *meshHitPosition) {
+	auto localForward = forward;
+
+	body.move(localForward);
+	if (!dgm::Collision::basic(mesh, body)) {
 		return false;
 	}
 	
-	aux = body;
-	aux.move(forward.x, 0.f);
-	if (!dgm::Collision::basic(mesh, aux, meshHitPosition)) {
+	body.move(0.f, -localForward.y);
+	if (!dgm::Collision::basic(mesh, body, meshHitPosition)) {
 		forward.y = 0.f;
 		return true;
 	}
 	
-	aux = body;
-	aux.move(0.f, forward.y);
-	if (!dgm::Collision::basic(mesh, aux, meshHitPosition)) {
+	body.move(-localForward.x, localForward.y);
+	if (!dgm::Collision::basic(mesh, body, meshHitPosition)) {
 		forward.x = 0.f;
 		return true;
 	}
@@ -188,28 +188,5 @@ bool dgm::Collision::advanced(const dgm::Mesh &mesh, const dgm::Circle &body, sf
 	return true;
 }
 
-bool dgm::Collision::advanced(const dgm::Mesh &mesh, const dgm::Rect &body, sf::Vector2f &forward, int *meshHitPosition) {
-	dgm::Rect aux = body;
-	aux.move(forward);
-	
-	if (!dgm::Collision::basic(mesh, aux, meshHitPosition)) {
-		return false;
-	}
-	
-	aux = body;
-	aux.move(forward.x, 0.f);
-	if (!dgm::Collision::basic(mesh, aux, meshHitPosition)) {
-		forward.y = 0.f;
-		return true;
-	}
-	
-	aux = body;
-	aux.move(0.f, forward.y);
-	if (!dgm::Collision::basic(mesh, aux)) {
-		forward.x = 0.f;
-		return true;
-	}
-	
-	forward = sf::Vector2f (0.f, 0.f);
-	return true;
-}
+template bool dgm::Collision::advanced<dgm::Circle>(const dgm::Mesh &mesh, dgm::Circle body, sf::Vector2f &forward, std::size_t *meshHitPosition);
+template bool dgm::Collision::advanced<dgm::Rect>(const dgm::Mesh &mesh, dgm::Rect body, sf::Vector2f &forward, std::size_t *meshHitPosition);
