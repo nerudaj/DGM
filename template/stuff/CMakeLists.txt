@@ -59,6 +59,7 @@ set ( HEADER_FILES
 	src/AppStateMainMenu.hpp
 	src/AppStateMenuOptions.hpp
 	src/AppStateIngame.hpp
+	src/Gui.hpp
 )
 
 add_executable ( ${PROJECT_NAME} WIN32
