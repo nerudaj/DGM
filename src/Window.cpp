@@ -5,6 +5,9 @@ void dgm::Window::open(const cfg::Ini & config) {
 		auto section = config["Window"];
 		open(sf::Vector2u(section["width"].asInt(), section["height"].asInt()), section["title"].asString(), section["fullscreen"].asBool());
 	}
+	else {
+		open({1280, 720}, "", false);
+	}
 }
 
 void dgm::Window::open(const sf::Vector2u & resolution, const std::string & title, const bool fullscreen) {
