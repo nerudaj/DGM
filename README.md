@@ -13,12 +13,10 @@ If you want to build the DGM from source you'll need to do this:
 
 ## Packaging
 
-Packaging is done in three stages:
+First off, check that changelog.txt reflects all changes made to the project, then determine new version and write this version to the `VERSION` file.
 
- 1) Build DGM in Debug mode
- 2) Build DGM in Release mode
- 3) Run `prepare-release.bat` from root folder
+Next, run the `prepare-release.bat` and wait until the script finishes (there's a `pause` at the end of the script, you need to check for that.
 
-This will create folder DGM-<version_number> which you can then zip and distribute!
+Now, in the `RELEASE` folder you can find folders `DGM-<version>` and `DGM-Project-Template-<version>`. Zip each of these folders separately. These zips are your release.
 
 *NOTE:* DGM is using something called dshlibs. Since it is stuff from my personal repo, headers of dshlibs are bundled with DGM and code is statically compiled *into* DGM itself. SFML, on the other hand is not mine and user have to download it separately.

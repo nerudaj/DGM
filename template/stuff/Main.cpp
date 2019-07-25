@@ -5,7 +5,7 @@
 #include "AppStateIngame.hpp"
 
 int main(int argc, char *argv[]) {
-	std::string rootDir = "../template/stuff";
+	std::string rootDir = "..";
 	if (argc == 2) {
 		rootDir = argv[1];
 	}

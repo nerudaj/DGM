@@ -10,6 +10,8 @@ move CMakeLists.txt ..
 move *.hpp ..\src
 move *.cpp ..\src
 move graphics ..
+move VERSION ..
+move prepare-release.bat ..
 
 move 3rdparty-readme.md ..\3rdParty\Readme.md
 

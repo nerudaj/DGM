@@ -34,7 +34,7 @@ namespace dgm {
 		void draw(sf::Drawable &drawable) { window.draw(drawable); }
 		void endDraw() { window.display(); }
 
-		Window() {}
+		Window() : fullscreen(false) {}
 		Window(const cfg::Ini &config) { open(config); }
 		Window(const sf::Vector2u &resolution, const std::string &title, bool fullscreen) { open(resolution, title, fullscreen); }
 		~Window() { if (isOpen()) close(); }

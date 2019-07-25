@@ -1,2 +1,11 @@
+DGM 1.1.6
+	- Fix rootDir of template project
+	- Embed dshlibs into dgm.lib
+	- Add Gui.hpp to template project CMakeLists.txt
+	- Make LevelD.hpp part of DGM release
+	- Add prepare-release.bat to template project
+	- Update appropriate readmes
+	- Fix broken dgm::Window open on empty ini file
+
 DGM 1.0.0
 	- initial release
