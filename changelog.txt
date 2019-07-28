@@ -1,3 +1,6 @@
+DGM 1.1+1.6
+	- Implement Options for template project
+
 DGM 1.1.6
 	- Fix rootDir of template project
 	- Embed dshlibs into dgm.lib

@@ -9,7 +9,7 @@ void AppStateMainMenu::processButtonClick(int id) {
 		break;
 
 	case Options:
-		app->pushState(new AppStateMenuOptions());
+		app->pushState(new AppStateMenuOptions(resmgr));
 		break;
 
 	case Quit:
