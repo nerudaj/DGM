@@ -26,7 +26,7 @@ namespace dgm {
 		bool isOpen() const { return window.isOpen(); }
 		bool isFullscreen() const { return fullscreen; }
 
-		const sf::Vector2u &getSize() const { return window.getSize(); }
+		sf::Vector2u getSize() const { return window.getSize(); }
 		sf::RenderWindow &getWindowContext() { return window; }
 		const sf::RenderWindow &getWindowContext() const { return window; }
 
