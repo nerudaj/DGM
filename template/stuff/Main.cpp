@@ -11,7 +11,9 @@ int main(int argc, char *argv[]) {
 	}
 
 	cfg::Ini ini;
-	ini.loadFromFile(rootDir + "/app.ini");
+	try {
+		ini.loadFromFile(rootDir + "/app.ini");
+	} catch (...) {}
 
 	dgm::App app;
 	app.window.open(ini);
