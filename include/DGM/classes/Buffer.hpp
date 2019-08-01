@@ -255,7 +255,7 @@ namespace dgm {
 				}
 
 				// Allocate new pointers
-				for (unsigned i = dataCapacity; i < maxSize; i++) {
+				for (size_t i = dataCapacity; i < maxSize; i++) {
 					newData[i] = new T;
 					if (newData[i] == NULL) throw std::bad_alloc();
 				}
