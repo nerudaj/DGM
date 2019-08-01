@@ -50,7 +50,7 @@ void Animation::bindSprite(sf::Sprite *sprite) {
 }
 
 void Animation::setSpeed(int framePerSecond) {
-	timePerFrame = sf::milliseconds(1000.f / framePerSecond);
+	timePerFrame = sf::milliseconds(1000 / framePerSecond);
 }
 
 Animation::Animation() {

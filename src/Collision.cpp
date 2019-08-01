@@ -106,10 +106,10 @@ sf::IntRect normalizeBoundaries(const sf::IntRect &src, const dgm::Mesh &mesh) {
 	dst.width	= (src.left + src.width)  / tileSize.x;
 	dst.height	= (src.top  + src.height) / tileSize.y;
 	
-	if (dst.left < 0)				dst.left	= 0;
-	if (dst.width  >= meshSize.x)	dst.width	= meshSize.x - 1;
-	if (dst.top  < 0) 				dst.top		= 0;
-	if (dst.height >= meshSize.y)	dst.height	= meshSize.y - 1;
+	if (dst.left < 0) dst.left = 0;
+	if (unsigned(dst.width)  >= meshSize.x)	dst.width = meshSize.x - 1;
+	if (dst.top  < 0) dst.top = 0;
+	if (unsigned(dst.height) >= meshSize.y)	dst.height = meshSize.y - 1;
 
 	return dst;
 }

@@ -3,7 +3,7 @@
 #include <DGM\dgm.hpp>
 #include <cassert>
 
-bool dgm::Clip::init(const sf::Vector2i & frameSize, const sf::IntRect & boundaries, unsigned int frameCount, const sf::Vector2i & frameOffset) {
+bool dgm::Clip::init(const sf::Vector2i & frameSize, const sf::IntRect & boundaries, std::size_t frameCount, const sf::Vector2i & frameOffset) {
 	assert(frameSize.x > 0 and frameSize.y > 0);
 	assert(boundaries.width > 0 and boundaries.height > 0);
 
