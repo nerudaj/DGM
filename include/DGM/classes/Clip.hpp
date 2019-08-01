@@ -38,10 +38,10 @@ namespace dgm {
 		 *  \details This method must be called prior to any other method.
 		 *  If frameCount is 0, maximum number of frames is loaded within bounding box
 		 */
-		bool init(const sf::Vector2i &frameSize, const sf::IntRect &boundaries, unsigned int frameCount = 0, const sf::Vector2i &frameOffset = sf::Vector2i(0, 0));
+		bool init(const sf::Vector2i &frameSize, const sf::IntRect &boundaries, std::size_t frameCount = 0, const sf::Vector2i &frameOffset = sf::Vector2i(0, 0));
 
 		Clip();
-		Clip(const sf::Vector2i &frameSize, const sf::IntRect &boundaries, unsigned int frameCount = 0, const sf::Vector2i &frameOffset = sf::Vector2i(0, 0));
+		Clip(const sf::Vector2i &frameSize, const sf::IntRect &boundaries, std::size_t frameCount = 0, const sf::Vector2i &frameOffset = sf::Vector2i(0, 0));
 		~Clip();
 	};
 }
