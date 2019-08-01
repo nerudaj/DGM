@@ -86,7 +86,10 @@ public:
 
 int main(int argc, char *argv[]) {
 	cfg::Args args("d:");
-	if (!args.parse(argc, argv)) {
+	try {
+		args.parse(argc, argv);
+	}
+	catch (...) {
 		return 1;
 	}
 
