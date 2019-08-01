@@ -1,4 +1,7 @@
-DGM 1.1+1.6
+DGM 1.2.9
+	- Bumped to dshlibs 0.5.3
+	- Switched from x86 to x64
+	- Examples are part of release now
 	- Implement Options for template project
 
 DGM 1.1.6
