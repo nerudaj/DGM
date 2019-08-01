@@ -44,6 +44,7 @@ robocopy /S template RELEASE\DGM-Project-Template-%version%
 
 echo Done!
 
-pause
+cd RELEASE
+move DGM-%version% DGM-%version%-vs2019-x64
 
 @echo on
