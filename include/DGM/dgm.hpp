@@ -34,7 +34,6 @@
 #include <ciso646>	// keywords: and, or, and_eq, or_eq, xor, xor_eq, bitand, bitor, not, compl, not_eq
 
 // dsh libraries
-#include <Logger.hpp>
 #include <Config.hpp>
 #include <Strings.hpp>
 #include <LevelD.hpp>
