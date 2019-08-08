@@ -21,6 +21,10 @@ After bootstrapping, one of the things that will appear is the `prepare-release.
  4. Prepare release filestructure
  5. Copy binaries, libraries and assets to release file structure
 
-For this to work, you either need to have cmake in path or have dsh suite. You also need to have VS 2017. The last thing you have to do is to modify variables declared in the top of the script to match some of your settings (name of the builddir, name of solution, name of project, etc).
+For this to work, you either need to have cmake in path or have dsh suite. You also need to have VS 2017 or 2019. The last thing you have to do is to modify variables declared in the top of the script to match some of your settings (name of the builddir, name of solution, name of project, etc).
 
 If you consider the script to be useful, feel free to add whatever operations and files you fancy.
+
+## copy-dlls.bat
+
+This simple script only copies dlls from 3rdParty libraries and places them to `vsbuild\Release` and `vsbuild\Debug` folders.
