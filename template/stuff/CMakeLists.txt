@@ -14,15 +14,18 @@ set ( MY_CXX_COMPILE_FEATURES cxx_generic_lambdas cxx_range_for cxx_strong_enums
 ## Dependencies
 set ( SFML_FOLDER  "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/SFML" )
 set ( DGM_FOLDER   "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/DGM" )
+set ( TGUI_FOLDER   "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/TGUI" )
 
 include_directories(
 	"${SFML_FOLDER}/include"
 	"${DGM_FOLDER}/include"
+	"${TGUI_FOLDER}/include"
 )
 
 link_directories(
 	"${SFML_FOLDER}/lib"
 	"${DGM_FOLDER}/lib"
+	"${TGUI_FOLDER}/lib"
 )
 
 ### Find libraries
@@ -48,6 +51,27 @@ set ( LIB_DGM
 		${LIB_DGM_D}
 )
 
+find_library ( LIB_TGUI_D tgui-d 
+	NAMES
+		tgui-d.lib
+	HINTS
+		"${TGUI_FOLDER}/lib"
+)
+
+find_library ( LIB_TGUI_R tgui 
+	NAMES
+		tgui.lib
+	HINTS
+		"${TGUI_FOLDER}/lib"
+)
+
+set ( LIB_TGUI
+	optimized
+		${LIB_TGUI_R}
+	debug
+		${LIB_TGUI_D}
+)
+
 set ( SOURCE_FILES
 	src/Main.cpp
 	src/AppStateMainMenu.cpp
@@ -66,5 +90,5 @@ add_executable ( ${PROJECT_NAME} WIN32
 	${SOURCE_FILES}
 	${HEADER_FILES}
 )
-target_link_libraries( ${PROJECT_NAME} ${LIB_DGM} )
+target_link_libraries( ${PROJECT_NAME} ${LIB_DGM} ${LIB_TGUI} )
 target_compile_features( ${PROJECT_NAME} INTERFACE ${MY_CXX_COMPILE_FEATURES} )
