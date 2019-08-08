@@ -1,25 +1,18 @@
 #pragma once
 
 #include <DGM\dgm.hpp>
-#include "Gui.hpp"
+#include <TGUI\TGUI.hpp>
 
 class AppStateMainMenu : public dgm::AppState {
 private:
 	sf::Text text;
 	dgm::ResourceManager resmgr;
 	std::string rootDir;
-	std::vector<gui::Button> buttons;
-	sf::Vector2i mousePos;
+	tgui::Gui gui;
 
-	void processButtonClick(int id);
+	void buildLayout();
 
 public:
-	enum {
-		Play,
-		Options,
-		Quit
-	};
-
 	virtual void input() override;
 	virtual void update() override;
 	virtual void draw() override;

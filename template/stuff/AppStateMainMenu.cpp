@@ -2,65 +2,54 @@
 #include "AppStateMenuOptions.hpp"
 #include "AppStateIngame.hpp"
 
-void AppStateMainMenu::processButtonClick(int id) {
-	switch (id) {
-	case Play:
-		app->pushState(new AppStateIngame(resmgr));
-		break;
+void AppStateMainMenu::buildLayout() {
+	tgui::Label::Ptr label = tgui::Label::create("Project Name");
+	label->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+	label->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+	label->setTextSize(72);
+	label->setSize("50%", "25%");
+	label->setPosition("25%", "5%");
+	gui.add(label, "LabelGameTitle");
 
-	case Options:
-		app->pushState(new AppStateMenuOptions(resmgr));
-		break;
+	tgui::Button::Ptr playButton = tgui::Button::create("Play");
+	playButton->setSize("15%", "5%");
+	playButton->setPosition("42.5%", "35%");
+	playButton->connect("pressed", [this]() { app->pushState(new AppStateIngame(resmgr)); });
+	gui.add(playButton, "ButtonPlay");
 
-	case Quit:
-		app->popState();
-		break;
-	}
+	tgui::Button::Ptr optionsButton = tgui::Button::create("Options");
+	optionsButton->setSize("15%", "5%");
+	optionsButton->setPosition("42.5%", "41%");
+	optionsButton->connect("pressed", [this]() { app->pushState(new AppStateMenuOptions(resmgr)); });
+	gui.add(optionsButton, "ButtonOptions");
+
+	tgui::Button::Ptr exitButton = tgui::Button::create("Exit");
+	exitButton->setSize("15%", "5%");
+	exitButton->setPosition("42.5%", "47%");
+	exitButton->connect("pressed", [this]() { app->popState(); });
+	gui.add(exitButton, "ButtonExit");
 }
 
 void AppStateMainMenu::input() {
-	mousePos = sf::Mouse::getPosition(app->window.getWindowContext());
-
 	sf::Event event;
 	while (app->window.pollEvent(event)) {
-		if (event.type == sf::Event::MouseButtonPressed) {
-			for (auto &button : buttons) {
-				if (button.isHighlighted(mousePos)) {
-					processButtonClick(button.getId());
-				}
-			}
-		}
+		gui.handleEvent(event);
 	}
 }
 
-void AppStateMainMenu::update() {
-	for (auto &button : buttons) {
-		button.update(mousePos);
-	}
-}
+void AppStateMainMenu::update() {}
 
 void AppStateMainMenu::draw() {
-	text.setString("Project Title");
-	text.setCharacterSize(72);
-	text.setFillColor(sf::Color::White);
-
-	auto bounds = text.getGlobalBounds();
-	sf::Vector2f textSize = { bounds.width, bounds.height };
-	auto windowSize = app->window.getSize();
-	text.setPosition((sf::Vector2f(windowSize / 2u) - (textSize / 2.f)).x, 20);
-
 	app->window.beginDraw();
 
-	app->window.draw(text);
-
-	for (auto &button : buttons) {
-		button.draw(app->window);
-	}
+	gui.draw();
 
 	app->window.endDraw();
 }
 
 bool AppStateMainMenu::init() {
+	gui.setTarget(app->window.getWindowContext());
+
 	try {
 		resmgr.loadResourceDir<sf::Texture>(rootDir + "/graphics/textures");
 		resmgr.loadResourceDir<sf::Font>(rootDir + "/graphics/fonts");
@@ -72,18 +61,9 @@ bool AppStateMainMenu::init() {
 		return false;
 	}
 
-	sf::Font &font = resmgr.get<sf::Font>("cruft.ttf");
-	text.setFont(font);
+	gui.setFont(resmgr.get<sf::Font>("cruft.ttf"));
 
-	buttons.push_back(gui::Button(
-		{ 550, 360 }, { 180, 40 }, "Play", font, Play
-	));
-	buttons.push_back(gui::Button(
-		{ 550, 420 }, { 180, 40 }, "Options", font, Options
-	));
-	buttons.push_back(gui::Button(
-		{ 550, 480 }, { 180, 40 }, "Quit", font, Quit
-	));
+	buildLayout();
 
 	return true;
 }
