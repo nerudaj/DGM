@@ -3,13 +3,13 @@
 #include "AppStateIngame.hpp"
 
 void AppStateMainMenu::buildLayout() {
-	tgui::Label::Ptr label = tgui::Label::create("Project Name");
-	label->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
-	label->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
-	label->setTextSize(72);
-	label->setSize("50%", "25%");
-	label->setPosition("25%", "5%");
-	gui.add(label, "LabelGameTitle");
+	tgui::Label::Ptr title = tgui::Label::create("Project Name");
+	title->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+	title->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+	title->setTextSize(72);
+	title->setSize("50%", "25%");
+	title->setPosition("25%", "5%");
+	gui.add(title, "LabelGameTitle");
 
 	tgui::Button::Ptr playButton = tgui::Button::create("Play");
 	playButton->setSize("15%", "5%");
@@ -40,7 +40,7 @@ void AppStateMainMenu::input() {
 void AppStateMainMenu::update() {}
 
 void AppStateMainMenu::draw() {
-	app->window.beginDraw();
+	app->window.beginDraw(sf::Color::White);
 
 	gui.draw();
 
