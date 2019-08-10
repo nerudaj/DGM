@@ -2,13 +2,14 @@
 
 #include <DGM\dgm.hpp>
 #include <TGUI\TGUI.hpp>
+#include "Globals.hpp"
 
 class AppStateMainMenu : public dgm::AppState {
 private:
-	sf::Text text;
 	dgm::ResourceManager resmgr;
 	std::string rootDir;
 	tgui::Gui gui;
+	Settings settings;
 
 	void buildLayout();
 

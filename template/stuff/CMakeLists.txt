@@ -80,10 +80,10 @@ set ( SOURCE_FILES
 )
 
 set ( HEADER_FILES
+	src/Globals.hpp
 	src/AppStateMainMenu.hpp
 	src/AppStateMenuOptions.hpp
 	src/AppStateIngame.hpp
-	src/Gui.hpp
 )
 
 add_executable ( ${PROJECT_NAME} WIN32

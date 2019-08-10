@@ -20,7 +20,7 @@ void AppStateMainMenu::buildLayout() {
 	tgui::Button::Ptr optionsButton = tgui::Button::create("Options");
 	optionsButton->setSize("15%", "5%");
 	optionsButton->setPosition("42.5%", "41%");
-	optionsButton->connect("pressed", [this]() { app->pushState(new AppStateMenuOptions(resmgr)); });
+	optionsButton->connect("pressed", [this]() { app->pushState(new AppStateMenuOptions(resmgr, settings)); });
 	gui.add(optionsButton, "ButtonOptions");
 
 	tgui::Button::Ptr exitButton = tgui::Button::create("Exit");
@@ -48,8 +48,6 @@ void AppStateMainMenu::draw() {
 }
 
 bool AppStateMainMenu::init() {
-	gui.setTarget(app->window.getWindowContext());
-
 	try {
 		resmgr.loadResourceDir<sf::Texture>(rootDir + "/graphics/textures");
 		resmgr.loadResourceDir<sf::Font>(rootDir + "/graphics/fonts");
@@ -61,7 +59,11 @@ bool AppStateMainMenu::init() {
 		return false;
 	}
 
+	settings.soundVolume = 50.f;
+	settings.musicVolume = 50.f;
+
 	gui.setFont(resmgr.get<sf::Font>("cruft.ttf"));
+	gui.setTarget(app->window.getWindowContext());
 
 	buildLayout();
 
