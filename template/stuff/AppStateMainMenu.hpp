@@ -10,6 +10,7 @@ private:
 	std::string rootDir;
 	tgui::Gui gui;
 	Settings settings;
+	bool viewShouldBeUpdated;
 
 	void buildLayout();
 

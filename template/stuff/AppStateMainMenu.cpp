@@ -7,8 +7,8 @@ void AppStateMainMenu::buildLayout() {
 	title->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
 	title->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
 	title->setTextSize(72);
-	title->setSize("50%", "25%");
-	title->setPosition("25%", "5%");
+	title->setSize("100%", "25%");
+	title->setPosition("0%", "5%");
 	gui.add(title, "LabelGameTitle");
 
 	tgui::Button::Ptr playButton = tgui::Button::create("Play");
@@ -20,7 +20,10 @@ void AppStateMainMenu::buildLayout() {
 	tgui::Button::Ptr optionsButton = tgui::Button::create("Options");
 	optionsButton->setSize("15%", "5%");
 	optionsButton->setPosition("42.5%", "41%");
-	optionsButton->connect("pressed", [this]() { app->pushState(new AppStateMenuOptions(resmgr, settings)); });
+	optionsButton->connect("pressed", [this]() {
+		app->pushState(new AppStateMenuOptions(resmgr, settings)); 
+		viewShouldBeUpdated = true; // In case resolution had changed in options
+	});
 	gui.add(optionsButton, "ButtonOptions");
 
 	tgui::Button::Ptr exitButton = tgui::Button::create("Exit");
@@ -37,7 +40,12 @@ void AppStateMainMenu::input() {
 	}
 }
 
-void AppStateMainMenu::update() {}
+void AppStateMainMenu::update() {
+	if (viewShouldBeUpdated) {
+		gui.setView(app->window.getWindowContext().getView());
+		viewShouldBeUpdated = false;
+	}
+}
 
 void AppStateMainMenu::draw() {
 	app->window.beginDraw(sf::Color::White);
@@ -48,6 +56,8 @@ void AppStateMainMenu::draw() {
 }
 
 bool AppStateMainMenu::init() {
+	viewShouldBeUpdated = true;
+
 	try {
 		resmgr.loadResourceDir<sf::Texture>(rootDir + "/graphics/textures");
 		resmgr.loadResourceDir<sf::Font>(rootDir + "/graphics/fonts");
