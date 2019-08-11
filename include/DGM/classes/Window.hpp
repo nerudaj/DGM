@@ -61,6 +61,7 @@ namespace dgm {
 		sf::Vector2u getSize() const { return window.getSize(); }
 		sf::RenderWindow &getWindowContext() { return window; }
 		const sf::RenderWindow &getWindowContext() const { return window; }
+		const std::string& getTitle() const { return title; }
 
 		void beginDraw(const sf::Color &color = sf::Color::Black) { window.clear(color); }
 		void draw(sf::Drawable &drawable) { window.draw(drawable); }
