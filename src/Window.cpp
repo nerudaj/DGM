@@ -34,3 +34,8 @@ void dgm::Window::toggleFullscreen() {
 	fullscreen = !fullscreen;
 	open(size, title, fullscreen);
 }
+
+void dgm::Window::changeResolution(const sf::Vector2u& newResolution) {
+	close();
+	open(newResolution, title, fullscreen);
+}
