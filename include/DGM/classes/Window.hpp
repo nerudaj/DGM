@@ -47,6 +47,13 @@ namespace dgm {
 		bool pollEvent(sf::Event &event) { return window.pollEvent(event); }
 		
 		void toggleFullscreen();
+
+		/**
+		 *  \brief Change resolution of a Window
+		 *
+		 *  \warn  This will close and re-open the Window!
+		 */
+		void changeResolution(const sf::Vector2u& newResolution);
 		
 		bool isOpen() const { return window.isOpen(); }
 		bool isFullscreen() const { return fullscreen; }
