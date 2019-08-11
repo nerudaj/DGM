@@ -16,11 +16,36 @@ namespace dgm {
 		int style;
 
 	public:
+		/**
+		 *  \brief Open Window using a Ini config object
+		 *
+		 *  The \p config object should contain a [Window] section
+		 *  and defined keys 'fullscreen', 'width', 'height' and 'title'.
+		 *  If [Window] section is not defined, defaults will be used.
+		 *  Defaults are: 1280x720, no title, no fullscreen.
+		 */
 		void open(const cfg::Ini &config);
+
+		/**
+		 *  \brief Open a window
+		 *
+		 *  \param[in]  resolution  Target window resolution
+		 *  \param[in]  title       Caption in systray
+		 *  \param[in]  fullscreen  Whether to start in fullscreen
+		 */
 		void open(const sf::Vector2u &resolution, const std::string &title, bool fullscreen);
+
+		/**
+		 *  \brief Close the window
+		 */
 		void close() { window.close(); }
+
+		/**
+		 *  \brief Close the Window and write configuration to Ini config object
+		 */
 		void close(cfg::Ini &config);
 		bool pollEvent(sf::Event &event) { return window.pollEvent(event); }
+		
 		void toggleFullscreen();
 		
 		bool isOpen() const { return window.isOpen(); }
