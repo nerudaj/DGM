@@ -14,10 +14,35 @@ namespace dgm {
 			dgm::Clip clip;
 		
 		public:
+			/**
+			 *  \brief Get array of four vertices for given particle
+			 *  
+			 *  \param[in] index  Index of particle
+			 *  \return Pointer to array of four vertices
+			 */
 			sf::Vertex *getParticleVertices(const std::size_t index);
-					
+			
+			/**
+			 *  \brief Initialize the object
+			 *  
+			 *  \param[in]  particleCount  How many particles will renderer hold
+			 *  \param[in]  clip           Clipping information for particles
+			 *  \return TRUE on success
+			 *  
+			 *  Clipping information are only relevant if you plan on binding texture
+			 *  to the object. If you only need white squares, you can pass in empty 
+			 *  clip object.
+			 */
 			bool init(const std::size_t particleCount, const dgm::Clip &clip);
 			
+			/**
+			 *  \brief Bind texture to the object
+			 *  
+			 *  \param[in]  texture  Texture that will be used for particle rendering
+			 *  
+			 *  Particle system does not interface directly with bound texture, it only
+			 *  has access to clipping data.
+			 */
 			void setTexture(sf::Texture *texture);
 
 			const dgm::Clip &getClip() const { return clip; }
