@@ -1,3 +1,6 @@
+DGM vX.X.X changelog:
+ * Changed tileSize and dataSize parameters of dgm::Tileset::build to sf::Vector2u
+
 DGM v1.3.6 changelog:
  * Template was rewritten using TGUI library
  * Template generator was forced to x64
