@@ -49,7 +49,7 @@ public:
 			clip, 
 			{ int(TILE_SIZE), int(TILE_SIZE) },
 			std::vector<int>(lvld.mesh.tiles.begin(), lvld.mesh.tiles.end()), 
-			{ int(lvld.mesh.width), int(lvld.mesh.height) }
+			{ lvld.mesh.width, lvld.mesh.height }
 		);
 	}
 

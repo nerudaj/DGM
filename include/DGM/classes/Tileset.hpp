@@ -15,7 +15,7 @@ namespace dgm {
 		sf::Texture *texturePtr;
 		sf::VertexArray vertices;
 		sf::Vector2f tileSize;
-		sf::Vector2i dataSize;
+		sf::Vector2u dataSize;
 		dgm::Clip clip;
 
 		void changeTile(float x, float y, uint32_t tileIndex, uint32_t tileValue);
@@ -46,7 +46,6 @@ namespace dgm {
 		 *  \param [in] clip Initialized clip object
 		 *  \param [in] tileSize Dimensions of a tile (can differ from clip frame size)
 		 *  \param [in] imageData Array of tile frame indices
-		 *  \param [in] collisionData Array of collision (mesh) data
 		 *  \param [in] dataSize Size of the map [Width, Height]
 		 *  \return TRUE on success, FALSE otherwise
 		 *  
@@ -56,7 +55,7 @@ namespace dgm {
 		 *
 		 *  \see changeTile
 		 */
-		void build(const dgm::Clip &clip, const sf::Vector2i tileSize, const std::vector<int> &imageData, const sf::Vector2i &dataSize);
+		void build(const dgm::Clip &clip, const sf::Vector2u tileSize, const std::vector<int> &imageData, const sf::Vector2u &dataSize);
 
 		/**
 		 *  \brief Set tileset texture
@@ -69,7 +68,9 @@ namespace dgm {
 		 */
 		void setTexture(sf::Texture &texture);
 
-		const dgm::Clip &getClip() const { return clip; }
+		const dgm::Clip &getClip() const {
+			return clip;
+		}
 
 		Tileset();
 		~Tileset();
