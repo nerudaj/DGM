@@ -1,4 +1,5 @@
 DGM vX.X.X changelog:
+ * Added html docs generated from doxygen
  * Changed tileSize and dataSize parameters of dgm::Tileset::build to sf::Vector2u
 
 DGM v1.3.6 changelog:

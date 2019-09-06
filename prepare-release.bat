@@ -42,6 +42,12 @@ echo Phase 6 - Project template
 mkdir RELEASE\DGM-Project-Template-%version%
 robocopy /S template RELEASE\DGM-Project-Template-%version%
 
+echo Phase 7 - Generating doxydocs
+cd docs
+doxygen
+move html ..\RELEASE\DGM-%version%\docs
+cd ..
+
 echo Done!
 
 cd RELEASE
