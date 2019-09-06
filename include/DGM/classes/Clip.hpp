@@ -4,6 +4,11 @@
 #include <vector>
 
 namespace dgm {
+	/**
+	 *  \brief Class representing array of sf::IntRect (frames) for purpose of clipping textures
+	 *  
+	 *  This class is base building block for animations or tilesets.
+	 */
 	class Clip {
 	protected:
 		std::vector<sf::IntRect> frames;
@@ -11,7 +16,7 @@ namespace dgm {
 
 	public:
 		/**
-		 *  \brief Get reference to Nth frame
+		 *  \brief Get reference to selected frame frame
 		 *
 		 *  \param [in] index Index of the frame
 		 */
