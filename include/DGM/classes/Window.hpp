@@ -63,8 +63,23 @@ namespace dgm {
 		const sf::RenderWindow &getWindowContext() const { return window; }
 		const std::string& getTitle() const { return title; }
 
+		/**
+		 *  \brief Prepare for drawing by clearing the Window with color
+		 *  
+		 *  \param[in]  color  Color to clear window to (Default: Black)
+		 */
 		void beginDraw(const sf::Color &color = sf::Color::Black) { window.clear(color); }
+		
+		/**
+		 *  \brief Draw object on the Window
+		 *  
+		 *  \param[in]  drawable  Reference to drawable object
+		 */
 		void draw(sf::Drawable &drawable) { window.draw(drawable); }
+		
+		/**
+		 *  \brief Finish drawing by rendering Window to screen
+		 */
 		void endDraw() { window.display(); }
 
 		Window() : fullscreen(false) {}
