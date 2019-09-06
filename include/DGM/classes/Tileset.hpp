@@ -32,8 +32,8 @@ namespace dgm {
 		 *  value of tileValue. tileX and tileY must lie within the tileset and tileValue
 		 *  must index valid clip frame. New value is stored and will be exported by
 		 *  SaveToFile() method.
-		 *
-		 *  \pre loadFromFile or LoadFromParameters was successfully called.
+         *
+		 *  \pre build was called
 		 */
 		void changeTile(uint32_t tileX, uint32_t tileY, uint32_t tileValue) {
 			assert(tileX < uint32_t(dataSize.x) && tileY < uint32_t(dataSize.y));
