@@ -1,9 +1,9 @@
 @echo off
 
 echo Downloading dshlibs
-cscript C:\tools\bin\wget.js "https://github.com/nerudaj/dsh/releases/download/v0.5.3/dshlibs-0.5.3-vs2019-x64.zip" dshlibs.zip
+cscript C:\tools\bin\wget.js "https://github.com/nerudaj/dsh/releases/download/v0.6.2/dshlibs-0.6.2-vs2019-x64.zip" dshlibs.zip
 cscript C:\tools\bin\unzip.vbs dshlibs.zip
-move dshlibs-0.5.3-vs2019-x64 dshlibs
+move dshlibs-0.6.2-vs2019-x64 dshlibs
 
 echo Downloading SFML
 cscript C:\tools\bin\wget.js "https://www.sfml-dev.org/files/SFML-2.5.1-windows-vc15-32-bit.zip" sfml.zip

@@ -1,6 +1,8 @@
 DGM vX.X.X changelog:
  * Added html docs generated from doxygen
  * Changed tileSize and dataSize parameters of dgm::Tileset::build to sf::Vector2u
+ * Bumped dshlibs to version 0.6.2
+ * ParticleSystem(Renderer)::setTexture now accepts reference to sf::Texture instead of pointer
 
 DGM v1.3.6 changelog:
  * Template was rewritten using TGUI library
