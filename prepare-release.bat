@@ -42,6 +42,16 @@ echo Phase 6 - Project template
 mkdir RELEASE\DGM-Project-Template-%version%
 robocopy /S template RELEASE\DGM-Project-Template-%version%
 
+rem Cleanup auxiliary template files
+cd RELEASE\DGM-Project-Template-%version%
+rmdir /s /q vsbuild
+rmdir /s /q 3rdParty/TGUI
+rmdir /s /q 3rdParty/DGM
+rmdir /s /q 3rdParty/SFML
+rmdir /s /q RELEASE
+del app.ini
+cd ../..
+
 echo Phase 7 - Generating doxydocs
 cd docs
 doxygen
