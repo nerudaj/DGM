@@ -3,7 +3,7 @@
 3rdParty/DGM
 3rdParty/TGUI
 
-## Include solution file
+## Ignore build folder
 vsbuild
 
 ## Ignore release folders
