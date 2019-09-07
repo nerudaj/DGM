@@ -34,6 +34,6 @@ bool dgm::ps::ParticleSystemRenderer::init(const std::size_t particleCount, cons
 	return true;
 }
 
-void dgm::ps::ParticleSystemRenderer::setTexture(sf::Texture * texture) {
-	ParticleSystemRenderer::texture = texture;
+void dgm::ps::ParticleSystemRenderer::setTexture(sf::Texture& texture) {
+	ParticleSystemRenderer::texture = &texture;
 }

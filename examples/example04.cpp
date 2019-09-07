@@ -55,7 +55,6 @@ int main() {
 	SimpleParticleSystem particleSystem;
 
 	if (!particleSystem.init(512, dgm::Clip(), &particleFactory)) return 1;
-	particleSystem.setTexture(NULL);
 
 	// Setup properties of particle system
 	particleSystem.averageLifespan = sf::seconds(3.f).asSeconds();

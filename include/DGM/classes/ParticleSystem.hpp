@@ -58,7 +58,7 @@ namespace dgm {
 			 *  If you only need white rectangles, you don't have to bind texture to
 			 *  this object.
 			 */
-			void setTexture(sf::Texture *texture) { renderer.setTexture(texture); }
+			void setTexture(sf::Texture &texture) { renderer.setTexture(texture); }
 
 			/**
 			 *  \brief Initialize the ParticleSystem

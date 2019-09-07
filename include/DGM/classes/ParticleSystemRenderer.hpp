@@ -43,9 +43,13 @@ namespace dgm {
 			 *  Particle system does not interface directly with bound texture, it only
 			 *  has access to clipping data.
 			 */
-			void setTexture(sf::Texture *texture);
+			void setTexture(sf::Texture &texture);
 
 			const dgm::Clip &getClip() const { return clip; }
+
+			ParticleSystemRenderer() {
+				texture = nullptr;
+			}
 		};
 	};
 };
