@@ -45,10 +45,17 @@ namespace dgm {
 			 */
 			void setTexture(sf::Texture &texture);
 
+			/**
+			 *  \brief Clear texture previously bound to this object
+			 */
+			void unbindTexture() {
+				texture = nullptr;
+			}
+
 			const dgm::Clip &getClip() const { return clip; }
 
 			ParticleSystemRenderer() {
-				texture = nullptr;
+				unbindTexture();
 			}
 		};
 	};
