@@ -4,6 +4,8 @@ DGM vX.X.X changelog:
  * Bumped dshlibs to version 0.6.2
  * ParticleSystem(Renderer)::setTexture now accepts reference to sf::Texture instead of pointer
  * Added ParticleSystemRenderer::unbindTexture
+ * Removed bootstrap.sh from Template
+ * Added sample resources to Template directories
 
 DGM v1.3.6 changelog:
  * Template was rewritten using TGUI library
