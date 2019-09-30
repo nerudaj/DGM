@@ -1,4 +1,22 @@
 #include <DGM\dgm.hpp>
+#include <cstdio>
+
+class AppEnvironment {
+private:
+	int status;
+
+public:
+	bool isLoggingEnabled() const {
+		return status;
+	}
+
+	AppEnvironment() {
+		status = bool(freopen("stdout.txt", "w", stdout));
+		status &= bool(freopen("stderr.txt", "w", stderr));
+	}
+};
+
+const AppEnvironment ENVIRONMENT;
 
 void dgm::App::pushState(dgm::AppState * state) {
 	states.push(state);
@@ -41,6 +59,10 @@ void dgm::App::run() {
 }
 
 dgm::App::App() {
+	if (!ENVIRONMENT.isLoggingEnabled()) {
+		exit(1);
+	}
+
 	init();
 	time.reset();
 }

@@ -1,3 +1,6 @@
+DGM vX.X.X changelog:
+ * Cout and Cerr now log to stdout.txt and stderr.txt respectively
+
 DGM v1.4.6 changelog:
  * Added html docs generated from doxygen
  * Changed tileSize and dataSize parameters of dgm::Tileset::build to sf::Vector2u

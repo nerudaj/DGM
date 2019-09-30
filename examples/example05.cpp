@@ -189,6 +189,7 @@ public:
 	
 	GameBoard(const std::string &imagePath) {
 		if (not texture.loadFromFile(imagePath)) {
+			std::cerr << "Image could not be loaded\n" << std::endl;
 			throw std::runtime_error("Image could not be loaded\n");
 		}
 	}
