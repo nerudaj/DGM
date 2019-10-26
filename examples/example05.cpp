@@ -177,9 +177,9 @@ public:
 		}
 	}
 
-	void init(int level) {
-		sf::Vector2i texSize(texture.getSize());
-		dgm::Clip clip(texSize / level, { 0, 0, texSize.x, texSize.y });
+	void init(unsigned level) {
+		sf::Vector2u texSize(texture.getSize());
+		dgm::Clip clip(texSize / level, { 0, 0, int(texSize.x), int(texSize.y) });
 
 		initTiles(level, clip);
 		initIndices(level);

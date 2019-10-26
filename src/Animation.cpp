@@ -93,7 +93,7 @@ Animation::Animation(const std::shared_ptr<AnimationStates> &states, int framesP
 	setLooping(false);
 }
 
-sf::Vector2i getVec2iFromJsonArray(const nlohmann::json &json) {
+sf::Vector2u getVec2iFromJsonArray(const nlohmann::json &json) {
 	return { json[0], json[1] };
 }
 
@@ -111,8 +111,8 @@ std::shared_ptr<AnimationStates> Animation::loadStatesFromFile(const std::string
 	AnimationStates result;
 
 	// Parse defaults from file
-	sf::Vector2i defaultFrameSize = { 8, 8 };
-	sf::Vector2i defaultFrameOffset = { 0, 0 };
+	sf::Vector2u defaultFrameSize = { 8, 8 };
+	sf::Vector2u defaultFrameOffset = { 0, 0 };
 	if (file.contains("defaults")) {
 		if (file["defaults"].contains("frame")) {
 			auto frame = file["defaults"]["frame"];
@@ -127,8 +127,8 @@ std::shared_ptr<AnimationStates> Animation::loadStatesFromFile(const std::string
 
 	// Parse through states
 	for (auto& state : file["states"].items()) {
-		sf::Vector2i frameSize = defaultFrameSize;
-		sf::Vector2i frameOffset = defaultFrameOffset;
+		sf::Vector2u frameSize = defaultFrameSize;
+		sf::Vector2u frameOffset = defaultFrameOffset;
 		unsigned frameCount = 0;
 
 		std::string name = state.key();

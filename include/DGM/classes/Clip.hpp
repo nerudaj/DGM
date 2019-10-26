@@ -12,7 +12,7 @@ namespace dgm {
 	class Clip {
 	protected:
 		std::vector<sf::IntRect> frames;
-		sf::Vector2i size;
+		sf::Vector2u size;
 
 	public:
 		/**
@@ -30,7 +30,7 @@ namespace dgm {
 		/**
 		 *  \brief Get resolution of every frame in object
 		 */
-		const sf::Vector2i &getFrameSize() const { return size; }
+		const sf::Vector2u &getFrameSize() const { return size; }
 
 		/**
 		 *  \brief Initialize the object
@@ -43,10 +43,10 @@ namespace dgm {
 		 *  \details This method must be called prior to any other method.
 		 *  If frameCount is 0, maximum number of frames is loaded within bounding box
 		 */
-		bool init(const sf::Vector2i &frameSize, const sf::IntRect &boundaries, std::size_t frameCount = 0, const sf::Vector2i &frameOffset = sf::Vector2i(0, 0));
+		bool init(const sf::Vector2u &frameSize, const sf::IntRect &boundaries, std::size_t frameCount = 0, const sf::Vector2u &frameOffset = sf::Vector2u(0, 0));
 
 		Clip();
-		Clip(const sf::Vector2i &frameSize, const sf::IntRect &boundaries, std::size_t frameCount = 0, const sf::Vector2i &frameOffset = sf::Vector2i(0, 0));
+		Clip(const sf::Vector2u &frameSize, const sf::IntRect &boundaries, std::size_t frameCount = 0, const sf::Vector2u &frameOffset = sf::Vector2u(0, 0));
 		~Clip();
 	};
 }
