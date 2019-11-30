@@ -3,7 +3,7 @@
 
 class AppEnvironment {
 private:
-	int status;
+	bool status;
 
 public:
 	bool isLoggingEnabled() const {
