@@ -15,6 +15,7 @@ endif()
 # Project setup
 #----------------------------------------------------------
 project (dgm)
+include ( version.cmake )
 string ( TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER )
 
 # Dependencies
