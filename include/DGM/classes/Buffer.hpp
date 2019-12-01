@@ -14,7 +14,7 @@ namespace dgm {
 	* \details This class is useful for cases where you need
 	* constant-sized memory block (dynamically allocated),
 	* which has O(1) for addition/deletion of items and where
-	* order of items can change.
+	* order of items doesn't matter.
 	*
 	* In addition, constructor of each item is called only
 	* once when the container is allocated. This way, you

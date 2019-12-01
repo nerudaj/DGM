@@ -60,12 +60,12 @@ namespace dgm {
 		bool keyPressed(const int code);
 
 		/**
-		 * \brief Tests whether keyboard key or X360 input is pressed for action with code id
+		 * \brief Tests whether keyboard key or X360 input is pressed for action with code id,
 		 * also returns intensity of the press
 		 *
 		 * \details This function is not affected by releaseKey() call. Function will return
 		 * TRUE/FALSE if input is pressed. For keys and buttons, intensity will be either 0.f/100.f.
-		 * For axii, intensity will return actual intensity of press (0.f,deadzone - 100.f)
+		 * For axii, intensity will return actual intensity of press from interval (0.f,deadzone - 100.f)
 		 */
 		bool keyPressed(const int code, float &intensity) const;
 
