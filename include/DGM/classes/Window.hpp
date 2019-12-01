@@ -44,8 +44,22 @@ namespace dgm {
 		 *  \brief Close the Window and write configuration to Ini config object
 		 */
 		void close(cfg::Ini &config);
+
+		/**
+		 *  \brief Poll next event from SFML
+		 *  
+		 *  \param[in]  event  Destination variable for polled event
+		 *  \return TRUE if event was stored, FALSE if there were no more events.
+		 *  
+		 *  This function mimicks the behaviour of sf::RenderWindow::pollEvent
+		 */
 		bool pollEvent(sf::Event &event) { return window.pollEvent(event); }
-		
+
+		/**
+		 *  \brief Toggle window between fullscreen and windowed mode
+		 *  
+		 *  \note Call to this function will close and re-open the window!
+		 */
 		void toggleFullscreen();
 
 		/**
@@ -54,13 +68,43 @@ namespace dgm {
 		 *  \warn  This will close and re-open the Window!
 		 */
 		void changeResolution(const sf::Vector2u& newResolution);
-		
+
+		/**
+		 *  \brief Test whether window is still open
+		 */
 		bool isOpen() const { return window.isOpen(); }
+
+		/**
+		 *  \brief Test whether window is in fullscreen mode
+		 */
 		bool isFullscreen() const { return fullscreen; }
 
+		/**
+		 *  \brief Get dimensions of the window
+		 *  
+		 *  \return Width and height of window render area in pixels
+		 */
 		sf::Vector2u getSize() const { return window.getSize(); }
+
+		/**
+		 *  \brief Get handle to internal instance of sf::RenderWindow
+		 *  
+		 *  Use this method whether you need something from sf::RenderWindow API
+		 *  not supported directly by this class
+		 */
 		sf::RenderWindow &getWindowContext() { return window; }
+
+		/**
+		 *  \brief Get handle to internal instance of sf::RenderWindow
+		 *  
+		 *  Use this method whether you need something from sf::RenderWindow API
+		 *  not supported directly by this class
+		 */
 		const sf::RenderWindow &getWindowContext() const { return window; }
+
+		/**
+		 *  \brief Get title text of the window
+		 */
 		const std::string& getTitle() const { return title; }
 
 		/**
