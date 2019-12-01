@@ -1,3 +1,8 @@
+DGM vX.X.X changelog:
+ * Moved to better build system
+ * Added quickstart guide
+ * Updated doxygen documentation
+
 DGM v1.5.1 changelog:
  * dgm::Clip frameSize and frameOffset were changed to sf::Vector2u
  * Cout and Cerr now log to stdout.txt and stderr.txt respectively
