@@ -2,21 +2,46 @@
 
 DGM is C++ library meant for faster and more convenient 2D game development with popular library SFML. Among other features there is animation engine and particle system engine.
 
-## Setting up
+## Building from source
 
-If you want to build the DGM from source you'll need to do this:
+### Prerequisities
 
- * Install Visual Studio 2017
- * Download proper dependencies into 3rdParty folder. For more details refer to readme in that folder
- * Create a directory called `vsbuild` and run command `cmake ..` in it
- * Now you can fire up newly created solution file and start compiling
+ * Visual Studio version 15 (2017 and above)
+ * cmake 3.16
+ * doxygen
 
-## Packaging
+### Manual build
 
-First off, check that changelog.txt reflects all changes made to the project, then determine new version and write this version to the `VERSION` file.
+```
+mkdir vsbuild
+cd vsbuild
+cmake ..
+```
 
-Next, run the `prepare-release.bat` and wait until the script finishes (there's a `pause` at the end of the script, you need to check for that.
+This will generate project file `dgm.sln` which you can boot up and compile. All dependencies are automatically downloaded during configure step. Since you will probably need SFML's dlls, you can find them under `vsbuild/_deps/sfml-src/bin`.
 
-Now, in the `RELEASE` folder you can find folders `DGM-<version>` and `DGM-Project-Template-<version>`. Zip each of these folders separately. These zips are your release.
+### Automated build
 
-*NOTE:* DGM is using something called dshlibs. Since it is stuff from my personal repo, headers of dshlibs are bundled with DGM and code is statically compiled *into* DGM itself. SFML, on the other hand is not mine and user have to download it separately.
+As long as you have [dsh suite](https://github.com/nerudaj/dsh) installed (or you have cmake and doxygen in your PATH), you can run `prepare-release.bat` script. It will build everything - debug version, release version and documentation and package it.
+
+Results of this script will be placed into `RELEASE/dgm-<version>-vc15x64.zip` file. This archive is deployment ready.
+
+## Creating new release
+
+When creating new release, follow these steps:
+
+ 1. Review `changelog.txt`. Check whether it lists all relevant changes for the new version. Pick a new version number and log it to changelog.
+ 2. Open `version.cmake` and write down new version number.
+ 3. Run `prepare-release.bat` and wait until new release is produced.
+
+## Bumping dependencies
+
+Edit file `dependencies.cmake` and update version numbers in appropriate variables. Also check that `*_URL` variables are valid.
+
+### Using DGM
+
+When looking for tutorials for this library please refer to:
+
+ * Examples in `examples` folder
+ * Generated html docs from doxygen (bundled with each release)
+ * `quickstart.md` in `docs` folder (also bundled with each release)
