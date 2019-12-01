@@ -16,10 +16,6 @@ endif()
 #----------------------------------------------------------
 project (dgm)
 string ( TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER )
-set ( PROJECT_VERSION_MAJOR "1" )
-set ( PROJECT_VERSION_MINOR "4" )
-set ( PROJECT_VERSION_PATCH "6" )
-set ( PROJECT_VERSION       "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}" )
 
 # Dependencies
 #----------------------------------------------------------
