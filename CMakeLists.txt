@@ -26,10 +26,10 @@ include ( dependencies.cmake )
 ## Add dependencies
 ##---------------------------------------------------------
 FetchContent_Declare ( dsh
-	URL "${DSH_URL}" 
+	URL "${DSH_URL}"
 )
 FetchContent_GetProperties(dsh)
-if(NOT dsh_POPULATED)
+if (NOT dsh_POPULATED)
 	FetchContent_Populate(dsh)
 endif()
 
@@ -37,17 +37,17 @@ FetchContent_Declare ( sfml
 	URL "${SFML_URL}"
 )
 FetchContent_GetProperties(sfml)
-if(NOT sfml_POPULATED)
+if (NOT sfml_POPULATED)
 	FetchContent_Populate(sfml)
 endif()
 
-FetchContent_Declare ( json 
+FetchContent_Declare ( json
 	URL                   "${JSON_URL}"
 	DOWNLOAD_NO_PROGRESS  TRUE
 	DOWNLOAD_NO_EXTRACT   TRUE
 )
 FetchContent_GetProperties(json)
-if(NOT json_POPULATED)
+if (NOT json_POPULATED)
 	FetchContent_Populate(json)
 endif()
 
@@ -119,7 +119,7 @@ add_library( ${PROJECT_NAME} STATIC
 	${DGM_SOURCES} ${DGM_HEADERS}
 )
 
-target_compile_features( ${PROJECT_NAME} 
+target_compile_features( ${PROJECT_NAME}
 	INTERFACE ${MY_CXX_COMPILE_FEATURES}
 )
 
