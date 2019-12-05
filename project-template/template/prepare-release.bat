@@ -25,21 +25,14 @@ cd %BUILDDIR%
 devenv %SOLUTION% /Build Release
 cd ..
 
-echo Phase 4 - Release filesys
-set /p version=<VERSION
-mkdir %RELDIR%
-mkdir %RELDIR%\%PROJECT_NAME%-%version%
-mkdir %RELDIR%\%PROJECT_NAME%-%version%\bin
-mkdir %RELDIR%\%PROJECT_NAME%-%version%\graphics
-mkdir %RELDIR%\%PROJECT_NAME%-%version%\audio
+echo Phase 4 - Packaging
+cd %BUILDDIR%
+cpack.exe
+cd ..
 
-echo Phase 5 - Copying data
-copy changelog.txt %RELDIR%\%PROJECT_NAME%-%version%
-copy %BUILDDIR%\Release\*.exe %RELDIR%\%PROJECT_NAME%-%version%\bin
-robocopy 3rdParty\SFML\bin %RELDIR%\%PROJECT_NAME%-%version%\bin openal32.dll sfml-audio-2.dll sfml-graphics-2.dll sfml-system-2.dll sfml-window-2.dll
-robocopy 3rdParty\TGUI\bin %RELDIR%\%PROJECT_NAME%-%version%\bin tgui.dll
-robocopy /S graphics %RELDIR%\%PROJECT_NAME%-%version%\graphics
-robocopy /S audio %RELDIR%\%PROJECT_NAME%-%version%\audio
+echo Phase 5 - Finalizing
+mkdir RELEASE
+copy %BUILDDIR%\*.zip RELEASE
 
 echo Done!
 

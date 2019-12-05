@@ -1,7 +1,3 @@
-set ( DGM_VERSION  "1.5.1" )
+set ( DGM_VERSION  "${PROJECT_VERSION}" )
 set ( SFML_VERSION "${SFML_VERSION}" )
-set ( TGUI_VERSION "0.8.5" )
-
-set ( DSH_URL "https://github.com/nerudaj/dsh/releases/download/v${DSH_VERSION}/dsh-${DSH_VERSION}-VSx64.zip.zip" )
-set ( SFML_URL "https://github.com/SFML/SFML/releases/download/${SFML_VERSION}/SFML-${SFML_VERSION}-windows-vc15-64-bit.zip" )
-set ( JSON_URL "https://github.com/nlohmann/json/releases/download/v${JSON_VERSION}/json.hpp" )
+set ( TGUI_VERSION "0.8.6" )

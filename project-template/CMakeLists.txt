@@ -8,19 +8,19 @@ include ( ../version.cmake )
 include ( ../dependencies.cmake )
 
 configure_file (
-    ${CMAKE_CURRENT_SOURCE_DIR}/inputs/CMakeLists.txt.in
-    ${CMAKE_CURRENT_SOURCE_DIR}/template/CMakeLists.txt
-)
-
-configure_file (
     ${CMAKE_CURRENT_SOURCE_DIR}/inputs/dependencies.cmake.in
-    ${CMAKE_CURRENT_SOURCE_DIR}/template/dependencies.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/dependencies.cmake
 )
 
 # Installation
 #----------------------------------------------------------
 install (
-    DIRECTORY    ${CMAKE_CURRENT_SOURCE_DIR}/sources/
+    DIRECTORY    ${CMAKE_CURRENT_SOURCE_DIR}/template/
+    DESTINATION  .
+)
+
+install (
+    FILES        ${CMAKE_CURRENT_BINARY_DIR}/dependencies.cmake
     DESTINATION  .
 )
 

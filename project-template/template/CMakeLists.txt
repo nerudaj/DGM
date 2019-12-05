@@ -23,6 +23,10 @@ include ( dependencies.cmake )
 
 ## Add dependencies
 ##---------------------------------------------------------
+set ( DGM_URL  "https://github.com/nerudaj/DGM/releases/download/v${DGM_VERSION}/dgm-${DGM_VERSION}-windows-vc15-64-bit.zip" )
+set ( SFML_URL "https://github.com/SFML/SFML/releases/download/${SFML_VERSION}/SFML-${SFML_VERSION}-windows-vc15-64-bit.zip" )
+set ( TGUI_URL "https://github.com/texus/TGUI/releases/download/v${TGUI_VERSION}/TGUI-${TGUI_VERSION}-vc15-64bit-for-SFML-${SFML_VERSION}.zip" )
+
 FetchContent_Declare ( sfml
 	URL "${SFML_URL}"
 )
@@ -44,7 +48,7 @@ FetchContent_Declare ( tgui
 )
 FetchContent_GetProperties(tgui)
 if (NOT tgui_POPULATED)
-	FetchContent_Populate(sfml)
+	FetchContent_Populate(tgui)
 endif()
 
 ## Set paths to dependencies
@@ -78,7 +82,40 @@ find_library ( LIB_TGUI_R tgui   NAMES tgui.lib   HINTS "${TGUI_FOLDER}/lib" )
 
 set ( LIB_TGUI optimized ${LIB_TGUI_R} debug ${LIB_TGUI_D} )
 
-# TODO: configure_file(<input> <output> COPYONLY) for SFML and TGUI dlls
+
+### Copy DLLs to build folders
+###--------------------------------------------------------
+file (GLOB DEBUG_SFML_DLLS   ${CMAKE_CURRENT_BINARY_DIR}/_deps/sfml-src/bin/*-d-2.dll)
+file (GLOB RELEASE_SFML_DLLS ${CMAKE_CURRENT_BINARY_DIR}/_deps/sfml-src/bin/*[oskmw]-2.dll)
+set ( OPENAL_DLL ${CMAKE_CURRENT_BINARY_DIR}/_deps/sfml-src/bin/openal32.dll )
+
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Debug" "${CMAKE_CURRENT_BINARY_DIR}/Release" )
+
+configure_file (
+	${OPENAL_DLL} ${CMAKE_CURRENT_BINARY_DIR}/Debug/ COPYONLY
+)
+
+configure_file (
+	${OPENAL_DLL} ${CMAKE_CURRENT_BINARY_DIR}/Release/ COPYONLY
+)
+
+foreach ( DLL ${DEBUG_SFML_DLLS} )
+	configure_file ( ${DLL} ${CMAKE_CURRENT_BINARY_DIR}/Debug/ COPYONLY )
+endforeach ( DLL )
+
+foreach ( DLL ${RELEASE_SFML_DLLS} )
+	configure_file ( ${DLL} ${CMAKE_CURRENT_BINARY_DIR}/Release/ COPYONLY )
+endforeach ( DLL )
+
+configure_file (
+	${CMAKE_CURRENT_BINARY_DIR}/_deps/tgui-src/bin/tgui-d.dll
+	${CMAKE_CURRENT_BINARY_DIR}/Debug/ COPYONLY
+)
+
+configure_file (
+	${CMAKE_CURRENT_BINARY_DIR}/_deps/tgui-src/bin/tgui.dll
+	${CMAKE_CURRENT_BINARY_DIR}/Release/ COPYONLY
+)
 
 # Sources
 #----------------------------------------------------------
@@ -116,11 +153,24 @@ install (
 )
 
 install (
-    FILES        ${PROJECT_NAME}
+    FILES        ${CMAKE_CURRENT_BINARY_DIR}/Release/${PROJECT_NAME}.exe
     DESTINATION  bin
 )
 
-# TODO: dlls
+install (
+	FILES        ${RELEASE_SFML_DLLS}
+	DESTINATION  bin
+)
+
+install (
+	FILES        ${OPENAL_DLL}
+	DESTINATION  bin
+)
+
+install (
+	FILES        ${CMAKE_CURRENT_BINARY_DIR}/_deps/tgui-src/bin/tgui.dll
+	DESTINATION  bin
+)
 
 # Packaging
 #----------------------------------------------------------
