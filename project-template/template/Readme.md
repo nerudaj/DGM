@@ -2,29 +2,29 @@
 
 This is a project template to quickly get you on track when building new games with DGM.
 
-## How to use
+## Prerequisities
 
- 1. Run the `bootstrap.bat`. It will setup folder structure and copy appropriate files where they should be
-    a. You can delete `bootstrap.bat` after this
- 2. Go to `3rdParty` folder. Follow the steps outlined in the `Readme.md` placed there
- 3. Modify CMakeLists.txt and set your own project name
- 4. Create build folder for cmake and configure the project from there
- 5. You're good to go!
+ * Visual Studio 15 (2017) or newer
+ * CMake 3.14 or newer
+
+## How to start
+
+This project build system is governed by cmake. Simply type these commands to generate solution for Visual Studio:
+
+```sh
+mkdir build
+cd build
+cmake ..
+```
+
+This will produce solution file `build/Template.sln`, download all dependencies (DGM, SFML and TGUI by default), copy all DLLs to appropriate folders and link all dependencies.
+
+You can launch the solution file, build it and launch it immediately.
 
 ## Releasing
 
-After bootstrapping, one of the things that will appear is the `prepare-release.bat` script. You can use this for clean build of your project in the correct configuration and automated packaging. Running this script will:
+For your convenience, this template supports packaging whole project using ZIP cpack generator. Unless you need to add new files/dependencies to `CMakeLists.txt`, the release process is pretty straightforward:
 
- 1. Delete your build directory
- 2. Recreate your build directory and performing clean cmake configuration
- 3. Build your project in Release setup
- 4. Prepare release filestructure
- 5. Copy binaries, libraries and assets to release file structure
-
-For this to work, you either need to have cmake in path or have dsh suite. You also need to have VS 2017 or 2019. The last thing you have to do is to modify variables declared in the top of the script to match some of your settings (name of the builddir, name of solution, name of project, etc).
-
-If you consider the script to be useful, feel free to add whatever operations and files you fancy.
-
-## copy-dlls.bat
-
-This simple script only copies dlls from 3rdParty libraries and places them to `vsbuild\Release` and `vsbuild\Debug` folders.
+ 1. Bump version number in file `version.cmake`
+ 2. Run `prepare-release.bat`
+ 3. Wait until folder `RELEASE` is produced. It should contain ZIP file with complete release of your application
