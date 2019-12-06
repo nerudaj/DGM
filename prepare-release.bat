@@ -28,7 +28,7 @@ cd ..
 
 echo Phase 4 - Finalizing
 mkdir RELEASE
-move %BUILDDIR%/*.zip RELEASE
+move %BUILDDIR%\*.zip RELEASE
 
 echo Done!
 
