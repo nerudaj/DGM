@@ -7,6 +7,7 @@ call /tools/doomsh.cmd
 
 echo Phase 1 - Purging
 rd /s /q %BUILDDIR%
+rd /s /q project-template/%BUILDDIR%
 
 echo Phase 2 - Configuring
 mkdir %BUILDDIR%
@@ -26,9 +27,21 @@ devenv dgm.sln /Build Release /Project doxygen-docs
 cpack
 cd ..
 
+echo Phase 4 - Packaging project template
+cd project-template
+
+mkdir build
+cd build
+cmake.exe ..
+cpack
+cd ..
+
+cd ..
+
 echo Phase 4 - Finalizing
 mkdir RELEASE
-move %BUILDDIR%/*.zip RELEASE
+move %BUILDDIR%\*.zip RELEASE
+move project-template\build\*.zip RELEASE
 
 echo Done!
 
