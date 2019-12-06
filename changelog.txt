@@ -1,3 +1,6 @@
+DGM vX.X.X changelog:
+ * Fixed project-templates bug with packaging audio and graphics folders
+
 DGM v1.6.4 changelog:
  * Moved to better build system
  * Added quickstart guide
