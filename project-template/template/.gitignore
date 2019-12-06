@@ -1,0 +1,5 @@
+## Ignore build folder
+vsbuild
+
+## Ignore release folders
+RELEASE

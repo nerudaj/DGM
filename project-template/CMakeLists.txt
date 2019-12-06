@@ -1,95 +1,39 @@
-cmake_minimum_required ( VERSION 3.10 )
+cmake_minimum_required ( VERSION 3.14 )
 
-## Project setup
-project ( Template
-	LANGUAGES CXX
+# Project setup
+#----------------------------------------------------------
+project ( "DGM-Project-Template" NONE )
+
+include ( ../version.cmake )
+include ( ../dependencies.cmake )
+
+configure_file (
+    ${CMAKE_CURRENT_SOURCE_DIR}/inputs/dependencies.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/dependencies.cmake
 )
 
-## C++ standards
-set ( CMAKE_CXX_STANDARD           17 )
-set ( CMAKE_CXX_STANDARD_REQUIRED  ON )
-set ( CMAKE_CXX_EXTENSIONS         OFF )
-set ( MY_CXX_COMPILE_FEATURES      cxx_generic_lambdas cxx_range_for cxx_strong_enums )
-set ( CMAKE_GENERATOR_PLATFORM     x64)
-
-## Dependencies
-set ( SFML_FOLDER  "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/SFML" )
-set ( DGM_FOLDER   "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/DGM" )
-set ( TGUI_FOLDER   "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/TGUI" )
-
-include_directories(
-	"${SFML_FOLDER}/include"
-	"${DGM_FOLDER}/include"
-	"${TGUI_FOLDER}/include"
+# Installation
+#----------------------------------------------------------
+install (
+    DIRECTORY    ${CMAKE_CURRENT_SOURCE_DIR}/template/
+    DESTINATION  .
 )
 
-link_directories(
-	"${SFML_FOLDER}/lib"
-	"${DGM_FOLDER}/lib"
-	"${TGUI_FOLDER}/lib"
+install (
+    FILES        ${CMAKE_CURRENT_BINARY_DIR}/dependencies.cmake
+    DESTINATION  .
 )
 
-### Find libraries
-# NOTE: SFML is linked dynamically from DGM
-find_library ( LIB_DGM_D dgm-d
-	NAMES
-		dgm-d.lib
-	HINTS
-		"${DGM_FOLDER}/lib"
-)
+# Packaging
+#----------------------------------------------------------
+set ( CPACK_GENERATOR "ZIP" )
+set ( CPACK_CMAKE_GENERATOR "Ninja" )
 
-find_library ( LIB_DGM_R dgm
-	NAMES
-		dgm.lib
-	HINTS
-		"${DGM_FOLDER}/lib"
-)
+set ( CPACK_PACKAGE_DESCRIPTION_SUMMARY "C++ extension library for SFML" )
+set ( CPACK_PACKAGE_DESCRIPTION_FILE    "${CMAKE_CURRENT_SOURCE_DIR}/template/Readme.md" )
+set ( CPACK_PACKAGE_VERSION_MAJOR       "${PROJECT_VERSION_MAJOR}" )
+set ( CPACK_PACKAGE_VERSION_MINOR       "${PROJECT_VERSION_MINOR}" )
+set ( CPACK_PACKAGE_VERSION_PATCH       "${PROJECT_VERSION_PATCH}" )
+set ( CPACK_PACKAGE_FILE_NAME           "${PROJECT_NAME}-${PROJECT_VERSION}-vc15x64" )
 
-set ( LIB_DGM
-	optimized
-		${LIB_DGM_R}
-	debug
-		${LIB_DGM_D}
-)
-
-find_library ( LIB_TGUI_D tgui-d 
-	NAMES
-		tgui-d.lib
-	HINTS
-		"${TGUI_FOLDER}/lib"
-)
-
-find_library ( LIB_TGUI_R tgui 
-	NAMES
-		tgui.lib
-	HINTS
-		"${TGUI_FOLDER}/lib"
-)
-
-set ( LIB_TGUI
-	optimized
-		${LIB_TGUI_R}
-	debug
-		${LIB_TGUI_D}
-)
-
-set ( SOURCE_FILES
-	src/Main.cpp
-	src/AppStateMainMenu.cpp
-	src/AppStateMenuOptions.cpp
-	src/AppStateIngame.cpp
-)
-
-set ( HEADER_FILES
-	src/Globals.hpp
-	src/AppStateMainMenu.hpp
-	src/AppStateMenuOptions.hpp
-	src/AppStateIngame.hpp
-)
-
-add_executable ( ${PROJECT_NAME} WIN32
-	${SOURCE_FILES}
-	${HEADER_FILES}
-)
-target_link_libraries( ${PROJECT_NAME} ${LIB_DGM} ${LIB_TGUI} )
-target_compile_features( ${PROJECT_NAME} INTERFACE ${MY_CXX_COMPILE_FEATURES} )
+include ( CPack )
