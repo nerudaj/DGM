@@ -1,4 +1,4 @@
-DGM vX.X.X changelog:
+DGM v1.6.7 changelog:
  * Fixed project-template bug with packaging audio and graphics folders
  * Fixed crash when trying to load nonexistent directory (other half of project-template bug)
  * Fixed resource manager crash when Windows metadata file Thumbs.db is present
