@@ -144,12 +144,12 @@ target_compile_features( ${PROJECT_NAME} INTERFACE ${MY_CXX_COMPILE_FEATURES} )
 #----------------------------------------------------------
 install (
     DIRECTORY    audio
-    DESTINATION  audio
+    DESTINATION  .
 )
 
 install (
     DIRECTORY    graphics
-    DESTINATION  graphics
+    DESTINATION  .
 )
 
 install (

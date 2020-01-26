@@ -1,7 +1,9 @@
 #include <DGM/dgm.hpp>
 #include <stdexcept>
+#include <filesystem>
 
 using dgm::ResourceManager;
+namespace fs = std::filesystem;
 
 void ResourceManager::loadResourceFromFile(const std::string &filename, sf::Texture &texture) {
 	if (not texture.loadFromFile(filename)) {
@@ -67,10 +69,10 @@ template void ResourceManager::loadResource<std::shared_ptr<dgm::AnimationStates
 
 template<typename T>
 void ResourceManager::loadResourceDir(const std::string &folder, bool recursive) {
-	namespace fs = std::experimental::filesystem::v1;
-
 	fs::path path(folder);
-	if (not fs::is_directory(path)) {}
+	if (not fs::is_directory(path)) {
+		throw dgm::ResourceException("Path '" folder + "' does not exist!");
+	}
 
 	fs::directory_iterator itr(path);
 	for (auto item : itr) {
@@ -81,6 +83,9 @@ void ResourceManager::loadResourceDir(const std::string &folder, bool recursive)
 		}
 
 		try {
+			// FIX: Skip Thumbs.db file on Windows
+			if (itemPath.generic_string() == "Thumbs.db") continue;
+
 			loadResource<T>(itemPath.generic_string());
 		}
 		catch (dgm::GeneralException &e) {

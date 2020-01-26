@@ -1,3 +1,11 @@
+DGM v1.6.7 changelog:
+ * Fixed project-template bug with packaging audio and graphics folders
+ * Fixed crash when trying to load nonexistent directory (other half of project-template bug)
+ * Fixed resource manager crash when Windows metadata file Thumbs.db is present
+	 * File is explicitly ignored and skipped
+
+---
+
 DGM v1.6.4 changelog:
  * Moved to better build system
  * Added quickstart guide
@@ -5,9 +13,13 @@ DGM v1.6.4 changelog:
  * Project template automatically downloads dependencies
  * Streamlined project template
 
+---
+
 DGM v1.5.1 changelog:
  * dgm::Clip frameSize and frameOffset were changed to sf::Vector2u
  * Cout and Cerr now log to stdout.txt and stderr.txt respectively
+
+---
 
 DGM v1.4.6 changelog:
  * Added html docs generated from doxygen
@@ -18,6 +30,8 @@ DGM v1.4.6 changelog:
  * Removed bootstrap.sh from Template
  * Added sample resources to Template directories
 
+---
+
 DGM v1.3.6 changelog:
  * Template was rewritten using TGUI library
  * Template generator was forced to x64
@@ -27,11 +41,15 @@ DGM v1.3.6 changelog:
  * Added dgm::Window::changeResolution
  * Added some doxydocs for dgm::Window
 
+---
+
 DGM v1.2.9 changelog:
  * Bumped to dshlibs 0.5.3
  * Switched from x86 to x64
  * Examples are part of release now
  * Implement Options for template project
+
+--
 
 DGM v1.1.6 changelog:
  * Fix rootDir of template project
@@ -41,6 +59,8 @@ DGM v1.1.6 changelog:
  * Add prepare-release.bat to template project
  * Update appropriate readmes
  * Fix broken dgm::Window open on empty ini file
+
+---
 
 DGM v1.0.0 changelog:
  * initial release
