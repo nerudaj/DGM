@@ -71,7 +71,7 @@ template<typename T>
 void ResourceManager::loadResourceDir(const std::string &folder, bool recursive) {
 	fs::path path(folder);
 	if (not fs::is_directory(path)) {
-		throw dgm::ResourceException("Path '" folder + "' does not exist!");
+		throw dgm::ResourceException("Path '" + folder + "' does not exist!");
 	}
 
 	fs::directory_iterator itr(path);
