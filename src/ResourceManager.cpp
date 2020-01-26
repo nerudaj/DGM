@@ -83,6 +83,9 @@ void ResourceManager::loadResourceDir(const std::string &folder, bool recursive)
 		}
 
 		try {
+			// FIX: Skip Thumbs.db file on Windows
+			if (itemPath.generic_string() == "Thumbs.db") continue;
+
 			loadResource<T>(itemPath.generic_string());
 		}
 		catch (dgm::GeneralException &e) {
