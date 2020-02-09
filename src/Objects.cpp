@@ -114,3 +114,9 @@ dgm::Mesh::Mesh() {
 	dataSize = sf::Vector2u(0, 0);
 	voxelSize= sf::Vector2u(0, 0);
 }
+
+dgm::Mesh::Mesh(const LevelD& lvd) {
+	voxelSize = sf::Vector2u(lvd.mesh.tileWidth, lvd.mesh.tileHeight);
+	dataSize = sf::Vector2u(lvd.mesh.width, lvd.mesh.height);
+	data = std::vector<int>(lvd.mesh.blocks.begin(), lvd.mesh.blocks.end());
+}

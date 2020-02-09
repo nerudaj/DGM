@@ -255,5 +255,14 @@ namespace dgm {
 		void move(const sf::Vector2f &forward);
 		
 		Mesh();
+
+		/**
+		 *  \brief Construct mesh object from LevelD
+         *
+		 *  This method uses LevelD::Mesh::tileWidth and tileHeight as voxelSize,
+		 *  LevelD::Mesh::width and height as dataSize and
+		 *  LevelD::Mesh::blocks as data (collision information)
+		 */
+		Mesh(const LevelD& lvd);
 	};
 }
