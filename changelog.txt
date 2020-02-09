@@ -1,5 +1,6 @@
-DGM vX.X.X changelog:
+DGM v1.7.1 changelog:
  * Bumped to dsh v1.1.1
+ * Added constructor to dgm::Mesh which accepts LevelD object and uses LevelD::Mesh to initialize itself
  * Added dgm::Math::approxEqual method for comparing floats
 
 ---
