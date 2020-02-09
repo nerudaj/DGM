@@ -36,12 +36,7 @@ public:
 		lvld.loadFromFile(filename);
 
 		// Extract collision data from lvld
-		mesh.setVoxelSize({ TILE_SIZE, TILE_SIZE });
-		mesh.setDataSize(lvld.mesh.width, lvld.mesh.height);
-		
-		for (unsigned i = 0; i < lvld.mesh.width * lvld.mesh.height; i++) {
-			mesh[i] = lvld.mesh.blocks[i];
-		}
+		mesh = dgm::Mesh(lvld);
 
 		// Extract render data from lvld
 		dgm::Clip clip({ int(TILE_SIZE), int(TILE_SIZE) }, { 0, 0, 64, 64 });
@@ -127,6 +122,8 @@ void exportLevel() {
 	lvld.metadata.id = "EXAMPLE_10";
 	lvld.metadata.name = "Example Level";
 
+	lvld.mesh.tileWidth = 32;
+	lvld.mesh.tileHeight = 32;
 	lvld.mesh.width = 10;
 	lvld.mesh.height = 10;
 	// Indices of tiles in tileset
