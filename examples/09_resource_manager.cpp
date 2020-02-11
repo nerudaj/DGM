@@ -1,5 +1,5 @@
 /**
- *  \file example09.cpp
+ *  \file 09_resource_manager.cpp
  *
  *  \details This example showcases loading resources via ResourceManager
  *  and binding those resources to objects in dgm::Buffer, effectively

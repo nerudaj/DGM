@@ -180,53 +180,53 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 ## Example 01
 ##---------------------------------------------------------
-add_executable(Example01 WIN32 examples/example01.cpp)
-target_link_libraries(Example01 ${PROJECT_NAME})
+add_executable(01_polar_cartesian WIN32 examples/01_polar_cartesian.cpp)
+target_link_libraries(01_polar_cartesian ${PROJECT_NAME})
 
 ## Example 02
 ##---------------------------------------------------------
-add_executable(Example02 WIN32 examples/example02.cpp)
-target_link_libraries(Example02 ${PROJECT_NAME})
+add_executable(02_controller WIN32 examples/02_controller.cpp)
+target_link_libraries(02_controller ${PROJECT_NAME})
 
 ## Example 03
 ##---------------------------------------------------------
-add_executable(Example03 WIN32 examples/example03.cpp)
-target_link_libraries(Example03 ${PROJECT_NAME})
+add_executable(03_app_state WIN32 examples/03_app_state.cpp)
+target_link_libraries(03_app_state ${PROJECT_NAME})
 
 ## Example 04
 ##---------------------------------------------------------
-add_executable(Example04 WIN32 examples/example04.cpp)
-target_link_libraries(Example04 ${PROJECT_NAME})
+add_executable(04_particle_system WIN32 examples/04_particle_system.cpp)
+target_link_libraries(04_particle_system ${PROJECT_NAME})
 
 ## Example 05
 ##---------------------------------------------------------
-add_executable(Example05 WIN32 examples/example05.cpp)
-target_link_libraries(Example05 ${PROJECT_NAME})
+add_executable(05_game_fifteen WIN32 examples/05_game_fifteen.cpp)
+target_link_libraries(05_game_fifteen ${PROJECT_NAME})
 
 ## Example 06
 ##---------------------------------------------------------
-add_executable(Example06 WIN32 examples/example06.cpp)
-target_link_libraries(Example06 ${PROJECT_NAME})
+add_executable(06_animation WIN32 examples/06_animation.cpp)
+target_link_libraries(06_animation ${PROJECT_NAME})
 
 ## Example 07
 ##---------------------------------------------------------
-add_executable(Example07 WIN32 examples/example07.cpp)
-target_link_libraries(Example07 ${PROJECT_NAME})
+add_executable(07_collisions WIN32 examples/07_collisions.cpp)
+target_link_libraries(07_collisions ${PROJECT_NAME})
 
 ## Example 08
 ##---------------------------------------------------------
-add_executable(Example08 WIN32 examples/example08.cpp)
-target_link_libraries(Example08 ${PROJECT_NAME})
+add_executable(08_buffer_mesh WIN32 examples/08_buffer_mesh.cpp)
+target_link_libraries(08_buffer_mesh ${PROJECT_NAME})
 
 ## Example 09
 ##---------------------------------------------------------
-add_executable(Example09 WIN32 examples/example09.cpp)
-target_link_libraries(Example09 ${PROJECT_NAME})
+add_executable(09_resource_manager WIN32 examples/09_resource_manager.cpp)
+target_link_libraries(09_resource_manager ${PROJECT_NAME})
 
 ## Example 10
 ##---------------------------------------------------------
-add_executable(Example10 WIN32 examples/example10.cpp)
-target_link_libraries(Example10 ${PROJECT_NAME})
+add_executable(10_tileset WIN32 examples/10_tileset.cpp)
+target_link_libraries(10_tileset ${PROJECT_NAME})
 
 # Install directives
 #----------------------------------------------------------

@@ -1,5 +1,5 @@
 /**
- *  \file example08.cpp
+ *  \file 08_buffer_mesh.cpp
  *
  *  \details This example showcases dgm::Buffer and advanced collisions.
  *  dgm::Mesh is used to define solid borders for edges of the screen.
