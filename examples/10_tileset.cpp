@@ -1,5 +1,5 @@
 /**
- *  \file example10.cpp
+ *  \file 10_tileset.cpp
  *
  *  \details This example showcases dgm::Tileset as a way of drawing tileset based levels.
  *  Since dshlibs are included into DGM installation, it also showcases how to use LevelD

@@ -1,5 +1,5 @@
 /**
- *  \file example02.cpp
+ *  \file 02_controller.cpp
  *
  *  \details This example shows how to work with input
  *  dgm::Controller object and dgm::Time objects for

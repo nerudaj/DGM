@@ -1,5 +1,5 @@
 /**
- *  \file example01.cpp
+ *  \file 01_polar_cartesian.cpp
  *  
  *  \details This example shows basic workflow with both SFML and DGM.
  *  It opens up a window which can be closed with close button and tracks

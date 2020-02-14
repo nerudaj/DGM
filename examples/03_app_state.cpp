@@ -1,5 +1,5 @@
 /**
- *  \file example03.cpp
+ *  \file 03_app_state.cpp
  *
  *  \details This example builds off previous one,
  *  using AppState pattern and AbstractController.
