@@ -1,3 +1,8 @@
+DGM vX.X.X changelog:
+ * Renamed examples to more descriptive names
+
+---
+
 DGM v1.7.1 changelog:
  * Bumped to dsh v1.1.1
  * Added constructor to dgm::Mesh which accepts LevelD object and uses LevelD::Mesh to initialize itself
