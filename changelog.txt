@@ -1,5 +1,6 @@
 DGM vX.X.X changelog:
  * Renamed examples to more descriptive names
+ * Updated Quickstart.md guide
 
 ---
 
