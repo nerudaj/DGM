@@ -1,4 +1,4 @@
-set ( DSH_VERSION  "1.1.1" )
+set ( DSH_VERSION  "1.3.2" )
 set ( SFML_VERSION "2.5.1" )
 set ( JSON_VERSION "3.7.3" )
 
