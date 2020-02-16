@@ -1,6 +1,8 @@
 DGM vX.X.X changelog:
  * Renamed examples to more descriptive names
  * Updated Quickstart.md guide
+ * Bumped to dsh v1.3.2 (critical fixes for LevelD file format)
+	* Fixed examples/level.lvd
 
 ---
 
