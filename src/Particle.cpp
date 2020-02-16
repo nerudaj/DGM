@@ -20,18 +20,12 @@ void Particle::spawn(const sf::Vector2f &position) {
 	for (int i = 0; i < 4; i++) {
 		quad[i].position = position + offsets[i];
 	}
-	
-	Particle::lifespan = lifespan;
 }
 
 void Particle::move(const sf::Vector2f &forward) {
 	for (int i = 0; i < 4; i++) {
 		quad[i].position += forward;
 	}
-}
-
-void Particle::setRotation(const float angle) {
-	// TODO
 }
 
 void Particle::destroy() {
