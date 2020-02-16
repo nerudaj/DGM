@@ -58,7 +58,7 @@ namespace dgm {
 		 *   * sf::Texture
 		 *   * sf::SoundBuffer
 		 *   * sf::Font
-		 *   * std::shared_ptr<dgm::AnimationData>
+		 *   * std::shared_ptr<dgm::AnimationStates>
 		 */
 		template<typename T>
 		T &get(const std::string &id) const {
@@ -78,7 +78,7 @@ namespace dgm {
 		 *   * sf::Texture
 		 *   * sf::SoundBuffer
 		 *   * sf::Font
-		 *   * std::shared_ptr<dgm::AnimationData>
+		 *   * std::shared_ptr<dgm::AnimationStates>
 		 */
 		template<typename T>
 		void loadResource(const std::string &filename);
@@ -93,7 +93,7 @@ namespace dgm {
 		 *   * sf::Texture
 		 *   * sf::SoundBuffer
 		 *   * sf::Font
-		 *   * std::shared_ptr<dgm::AnimationData>
+		 *   * std::shared_ptr<dgm::AnimationStates>
 		 * 
 		 *  \see setPedantic
 		 */
