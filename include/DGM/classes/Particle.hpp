@@ -19,8 +19,11 @@ namespace dgm {
 		public:
 			float lifespan; ///< How long till dead
 			sf::Vector2f forward; ///< Direction of particle movement
-			sf::Vector2f size; ///< Particle render size
+			sf::Vector2f size; ///< Particle render size. Must be set before calling spawn()
 
+			/**
+			 *  \brief Get position of particle (center of the particle)
+			 */
 			sf::Vector2f getPosition() const { return quad[0].position + size / 2.f; }
 
 			/**
@@ -31,30 +34,24 @@ namespace dgm {
 			bool alive() const { return (lifespan > 0.f); }
 
 			/**
-			 *  \brief Change amination frame displayed on particle
+			 *  \brief Change animation frame displayed on particle
 			 *  
 			 *  \details Change textCoords of each quads vertex
 			 */
 			void changeFrame(const sf::IntRect &frame);
 
 			/**
-			 *  \brief Spawns the particle
+			 *  \brief Spawns the particle at given position
 			 *  
-			 *  \pre setSize()
+			 *  Size of the particle must be set prior to calling
+			 *  this method.
 			 */
-			void spawn(const sf::Vector2f &position);
+			virtual void spawn(const sf::Vector2f &position);
 
 			/**
 			 *  \brief Move the particle in direction of forward
 			 */
-			void move(const sf::Vector2f &forward);
-
-			/**
-			 *  \brief Set rotation of the particle
-			 *
-			 *  \param [in] angle Angle of rotation
-			 */
-			void setRotation(const float angle);
+			virtual void move(const sf::Vector2f &forward);
 
 			/**
 			 *  \brief Destroys the particle
@@ -62,7 +59,7 @@ namespace dgm {
 			 *  \details Until next call to spawn(), particle will not be visible
 			 *  and will not be updated in any way. Frame still can be changed.
 			 */
-			void destroy();
+			virtual void destroy();
 
 			/**
 			 *  \brief Initialize the object with pointer to its vertices
@@ -73,7 +70,7 @@ namespace dgm {
 			 *  you use the ParticleSystem template, particles are properly
 			 *  initialized already.
 			 */
-			void init(sf::Vertex *vertices);
+			virtual void init(sf::Vertex *vertices);
 
 			Particle() {}
 			~Particle() {}
