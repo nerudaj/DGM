@@ -124,6 +124,7 @@ set ( SOURCE_FILES
 	src/AppStateMainMenu.cpp
 	src/AppStateMenuOptions.cpp
 	src/AppStateIngame.cpp
+	src/Soundbox.cpp
 )
 
 set ( HEADER_FILES
@@ -131,6 +132,7 @@ set ( HEADER_FILES
 	src/AppStateMainMenu.hpp
 	src/AppStateMenuOptions.hpp
 	src/AppStateIngame.hpp
+	src/Soundbox.hpp
 )
 
 add_executable ( ${PROJECT_NAME} WIN32

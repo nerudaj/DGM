@@ -85,7 +85,6 @@ void AppStateMenuOptions::buildLayout() {
 		auto index = item->getSelectedItemIndex();
 		if (index == -1) return;
 		bool fs = app->window.isFullscreen();
-		//auto title = app->window.getTitle();
 
 		// Restart window with new resolution
 		app->window.close();

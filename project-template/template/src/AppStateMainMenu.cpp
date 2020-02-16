@@ -14,7 +14,7 @@ void AppStateMainMenu::buildLayout() {
 	tgui::Button::Ptr playButton = tgui::Button::create("Play");
 	playButton->setSize("15%", "5%");
 	playButton->setPosition("42.5%", "35%");
-	playButton->connect("pressed", [this]() { app->pushState(new AppStateIngame(resmgr)); });
+	playButton->connect("pressed", [this]() { app->pushState(new AppStateIngame(resmgr, settings)); });
 	gui.add(playButton, "ButtonPlay");
 
 	tgui::Button::Ptr optionsButton = tgui::Button::create("Options");

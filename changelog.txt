@@ -3,6 +3,7 @@ DGM vX.X.X changelog:
  * Updated Quickstart.md guide
  * Bumped to dsh v1.3.2 (critical fixes for LevelD file format)
 	* Fixed examples/level.lvd
+ * Updated project-template with demonstration of usage of ResourceManager, Animation and added Soundbox class
 
 ---
 
