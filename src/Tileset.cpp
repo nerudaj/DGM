@@ -35,7 +35,7 @@ void dgm::Tileset::changeTile(float x, float y, uint32_t tileIndex, uint32_t til
 	quad[3].texCoords = sf::Vector2f(float(frame.left), float(frame.top + frame.height));
 }
 
-void dgm::Tileset::build(const dgm::Clip &clip, const sf::Vector2u tileSize, const std::vector<int> &imageData, const sf::Vector2u &dataSize) {
+void dgm::Tileset::rebuild(const dgm::Clip &clip, const sf::Vector2u tileSize, const std::vector<int> &imageData, const sf::Vector2u &dataSize) {
 	assert(imageData.size() == size_t(dataSize.x) * dataSize.y);
 
 	Tileset::clip = clip;

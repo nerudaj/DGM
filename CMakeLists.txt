@@ -251,6 +251,11 @@ target_link_libraries(09_resource_manager ${PROJECT_NAME})
 add_executable(10_tileset WIN32 examples/10_tileset.cpp)
 target_link_libraries(10_tileset ${PROJECT_NAME})
 
+## Example 10
+##---------------------------------------------------------
+add_executable(11_sand_simulation WIN32 examples/11_sand_simulation.cpp)
+target_link_libraries(11_sand_simulation ${PROJECT_NAME})
+
 # Install directives
 #----------------------------------------------------------
 
