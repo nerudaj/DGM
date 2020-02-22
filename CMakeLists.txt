@@ -253,8 +253,8 @@ target_link_libraries(10_tileset ${PROJECT_NAME})
 
 ## Example 10
 ##---------------------------------------------------------
-add_executable(11_sand_simulation WIN32 examples/11_sand_simulation.cpp)
-target_link_libraries(11_sand_simulation ${PROJECT_NAME})
+add_executable(11_advanced_particle_system WIN32 examples/11_advanced_particle_system.cpp)
+target_link_libraries(11_advanced_particle_system ${PROJECT_NAME})
 
 # Install directives
 #----------------------------------------------------------

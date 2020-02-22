@@ -18,6 +18,11 @@ public:
 		return mesh;
 	}
 
+	void changeTileToVoid(unsigned x, unsigned y) {
+		tileset.changeTile(x, y, 0);
+		mesh[y * mesh.getDataSize().x + x] = 0;
+	}
+
 	void loadFromFile(const std::string &filename) {
 		dgm::Clip clip({ TILE_SIZE, TILE_SIZE }, { 0, 0, 64, 64 });
 
