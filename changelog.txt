@@ -1,4 +1,5 @@
 DGM vX.X.X changelog:
+ * Fixed interfaces for particles and particle systems
  * Renamed examples to more descriptive names
  * Updated Quickstart.md guide
  * Bumped to dsh v1.3.2 (critical fixes for LevelD file format)
