@@ -13,45 +13,9 @@
 #define NO_NETWORK
 
 #include <DGM/dgm.hpp>
+#include "Level.hpp"
 
-const unsigned TILE_SIZE = 32;
 const float SPEED = 64.f;
-
-class Level {
-protected:
-	dgm::Mesh mesh;
-	dgm::Tileset tileset;
-
-public:
-	void draw(dgm::Window &window) {
-		window.draw(tileset);
-	}
-
-	const dgm::Mesh &getMesh() const {
-		return mesh;
-	}
-
-	void loadFromFile(const std::string &filename) {
-		LevelD lvld;
-		lvld.loadFromFile(filename);
-
-		// Extract collision data from lvld
-		mesh = dgm::Mesh(lvld);
-
-		// Extract render data from lvld
-		dgm::Clip clip({ int(TILE_SIZE), int(TILE_SIZE) }, { 0, 0, 64, 64 });
-		tileset.build(
-			clip, 
-			{ int(TILE_SIZE), int(TILE_SIZE) },
-			std::vector<int>(lvld.mesh.tiles.begin(), lvld.mesh.tiles.end()), 
-			{ lvld.mesh.width, lvld.mesh.height }
-		);
-	}
-
-	Level(sf::Texture &texture) {
-		tileset.setTexture(texture);
-	}
-};
 
 class Player {
 private:

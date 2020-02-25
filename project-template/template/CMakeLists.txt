@@ -23,7 +23,7 @@ include ( dependencies.cmake )
 
 ## Add dependencies
 ##---------------------------------------------------------
-set ( DGM_URL  "https://github.com/nerudaj/DGM/releases/download/v${DGM_VERSION}/dgm-${DGM_VERSION}-windows-vc15-64-bit.zip" )
+set ( DGM_URL  "https://github.com/nerudaj/DGM/releases/download/v${DGM_VERSION}/dgm-${DGM_VERSION}-windows-vc16-64-bit.zip" )
 set ( SFML_URL "https://github.com/SFML/SFML/releases/download/${SFML_VERSION}/SFML-${SFML_VERSION}-windows-vc15-64-bit.zip" )
 set ( TGUI_URL "https://github.com/texus/TGUI/releases/download/v${TGUI_VERSION}/TGUI-${TGUI_VERSION}-vc15-64bit-for-SFML-${SFML_VERSION}.zip" )
 

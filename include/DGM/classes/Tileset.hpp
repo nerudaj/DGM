@@ -5,7 +5,11 @@
 
 namespace dgm {
 	/**
-	 *  \brief Class for rendering tileset based maps
+	 *  \brief Class for rendering tile based maps which has only one texture (so-called tileset)
+	 *
+	 *  In order for object to work, you need a sf::Texture (tileset), dgm::Clip (which contains
+	 *  coordinates for each tile in the texture) and an array of data (your map, where each cell
+	 *  is an index of a tile).
 	 */
 	class Tileset : public sf::Drawable, public sf::Transformable {
 	private:
@@ -55,16 +59,24 @@ namespace dgm {
 		 *
 		 *  \see changeTile
 		 */
-		void build(const dgm::Clip &clip, const sf::Vector2u tileSize, const std::vector<int> &imageData, const sf::Vector2u &dataSize);
+		void rebuild(const dgm::Clip &clip, const sf::Vector2u tileSize, const std::vector<int> &imageData, const sf::Vector2u &dataSize);
+
+
+		void rebuild(const dgm::Clip &clip, const LevelD &lvd) {
+			rebuild(
+				clip, 
+				{ lvd.mesh.tileWidth, lvd.mesh.tileHeight }, 
+				std::vector<int>(lvd.mesh.tiles.begin(), lvd.mesh.tiles.end()), 
+				{lvd.mesh.width, lvd.mesh.height}
+			);
+		}
 
 		/**
 		 *  \brief Set tileset texture
 		 *  
-		 *  \param [in] texture Pointer to valid texture object
+		 *  \param[in]  texture  Texture object
 		 *  
 		 *  \details You should call this prior to any draw call on this object.
-		 *  Pointers retrieved from ResourceManager can be directly passed to
-		 *  this function.
 		 */
 		void setTexture(sf::Texture &texture);
 

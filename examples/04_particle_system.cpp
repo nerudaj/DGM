@@ -11,7 +11,7 @@
 class SimpleParticleFactory : public dgm::ps::ParticleFactoryInterface {
 public:
 	virtual void reset() override {}
-	virtual dgm::ps::Particle * create() const override { return new dgm::ps::Particle; }
+	virtual dgm::ps::Particle * create() override { return new dgm::ps::Particle; }
 };
 
 /**

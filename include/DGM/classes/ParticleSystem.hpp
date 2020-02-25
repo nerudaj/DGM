@@ -20,7 +20,7 @@ namespace dgm {
 			/**
 			 *  \brief Returns new \ref Particle instance
 			 */
-			virtual dgm::ps::Particle* create() const = 0;
+			virtual dgm::ps::Particle* create() = 0;
 		};
 
 		/**
@@ -72,7 +72,7 @@ namespace dgm {
 			 *  this object and thus you don't need any clipping data. In that case, pass
 			 *  empty clip object to this function.
 			 */
-			bool init(const std::size_t particleCount, const dgm::Clip &clip, dgm::ps::ParticleFactoryInterface *factory);
+			virtual bool init(const std::size_t particleCount, const dgm::Clip &clip, dgm::ps::ParticleFactoryInterface *factory);
 			
 			/**
 			 *  \brief Update particle system

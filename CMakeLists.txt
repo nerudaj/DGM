@@ -251,6 +251,11 @@ target_link_libraries(09_resource_manager ${PROJECT_NAME})
 add_executable(10_tileset WIN32 examples/10_tileset.cpp)
 target_link_libraries(10_tileset ${PROJECT_NAME})
 
+## Example 10
+##---------------------------------------------------------
+add_executable(11_advanced_particle_system WIN32 examples/11_advanced_particle_system.cpp)
+target_link_libraries(11_advanced_particle_system ${PROJECT_NAME})
+
 # Install directives
 #----------------------------------------------------------
 
@@ -295,6 +300,6 @@ set ( CPACK_PACKAGE_DESCRIPTION_FILE    "${CMAKE_CURRENT_SOURCE_DIR}/Readme.md" 
 set ( CPACK_PACKAGE_VERSION_MAJOR       "${PROJECT_VERSION_MAJOR}" )
 set ( CPACK_PACKAGE_VERSION_MINOR       "${PROJECT_VERSION_MINOR}" )
 set ( CPACK_PACKAGE_VERSION_PATCH       "${PROJECT_VERSION_PATCH}" )
-set ( CPACK_PACKAGE_FILE_NAME           "${PROJECT_NAME}-${PROJECT_VERSION}-windows-vc15-64-bit" )
+set ( CPACK_PACKAGE_FILE_NAME           "${PROJECT_NAME}-${PROJECT_VERSION}-windows-vc16-64-bit" )
 
 include ( CPack )
