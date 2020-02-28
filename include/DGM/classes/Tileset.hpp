@@ -51,7 +51,6 @@ namespace dgm {
 		 *  \param [in] tileSize Dimensions of a tile (can differ from clip frame size)
 		 *  \param [in] imageData Array of tile frame indices
 		 *  \param [in] dataSize Size of the map [Width, Height]
-		 *  \return TRUE on success, FALSE otherwise
 		 *  
 		 *  \details You can call this function repeatedly without need to deinitialize this
 		 *  object. If you only need to change appearance of a couple of tiles, use changeTile()
@@ -61,13 +60,24 @@ namespace dgm {
 		 */
 		void rebuild(const dgm::Clip &clip, const sf::Vector2u tileSize, const std::vector<int> &imageData, const sf::Vector2u &dataSize);
 
-
+		/**
+		 *  \brief Build the internal vertex array
+		 *  
+		 *  \param [in] clip Initialized clip object
+		 *  \param [in] lvd  Initialized LevelD object
+		 *  
+		 *  \details You can call this function repeatedly without need to deinitialize this
+		 *  object. If you only need to change appearance of a couple of tiles, use changeTile()
+		 *  instead.
+		 *
+		 *  \see changeTile
+		 */
 		void rebuild(const dgm::Clip &clip, const LevelD &lvd) {
 			rebuild(
 				clip, 
 				{ lvd.mesh.tileWidth, lvd.mesh.tileHeight }, 
 				std::vector<int>(lvd.mesh.tiles.begin(), lvd.mesh.tiles.end()), 
-				{lvd.mesh.width, lvd.mesh.height}
+				{ lvd.mesh.width, lvd.mesh.height }
 			);
 		}
 

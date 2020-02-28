@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	std::string cwd = "../examples"; // Debugger will use this path
+	std::string cwd = "../examples/resources"; // Debugger will use this path
 	if (args.isSet('d')) { // use -d to specify your own path when running binary manually
 		cwd = args.getArgumentValue('d').asString();
 	}

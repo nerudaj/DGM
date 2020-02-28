@@ -117,7 +117,7 @@ void exportLevel() {
 		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 	};
 
-	lvld.saveToFile("../examples/level.lvd");
+	lvld.saveToFile("../examples/resources/level.lvd");
 }
 
 int main() {
@@ -128,10 +128,10 @@ int main() {
 
 	dgm::ResourceManager resmgr;
 	resmgr.setPedantic(false);
-	resmgr.loadResourceDir<sf::Texture>("../examples");
+	resmgr.loadResourceDir<sf::Texture>("../resources/examples");
 
 	Level level(resmgr.get<sf::Texture>("tileset.png"));
-	level.loadFromFile("../examples/level.lvd");
+	level.loadFromFile("../resources/examples/level.lvd");
 
 	Player player;
 	player.spawn({ 64.f, 64.f });

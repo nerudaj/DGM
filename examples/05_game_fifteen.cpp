@@ -208,7 +208,7 @@ int main(int argc, char *argv[]) {
 	dgm::Time time;
 
 	// You can also try a different image, but it has to be 768x768
-	GameBoard board("../../examples/image.png");
+	GameBoard board("../../examples/resources/image.png");
 	board.init(level);
 
 	// Main loop

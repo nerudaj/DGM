@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
 
-# Compiler setup
+# C++ standards
 #----------------------------------------------------------
-set (CMAKE_GENERATOR_PLATFORM "x64")
-set (CMAKE_CXX_STANDARD 17)
-set (CMAKE_CXX_STANDARD_REQUIRED ON)
-set (CMAKE_CXX_EXTENSIONS OFF)
-set (MY_CXX_COMPILE_FEATURES cxx_generic_lambdas cxx_range_for cxx_strong_enums)
+set ( CMAKE_GENERATOR_PLATFORM     x64)
+set ( CMAKE_CXX_STANDARD           17 )
+set ( CMAKE_CXX_STANDARD_REQUIRED  ON )
+set ( CMAKE_CXX_EXTENSIONS         OFF )
+set ( MY_CXX_COMPILE_FEATURES      cxx_generic_lambdas cxx_range_for cxx_strong_enums )
 
 if (NOT CMAKE_DEBUG_POSTFIX)
 	set(CMAKE_DEBUG_POSTFIX "-d")
@@ -251,7 +251,7 @@ target_link_libraries(09_resource_manager ${PROJECT_NAME})
 add_executable(10_tileset WIN32 examples/10_tileset.cpp)
 target_link_libraries(10_tileset ${PROJECT_NAME})
 
-## Example 10
+## Example 11
 ##---------------------------------------------------------
 add_executable(11_advanced_particle_system WIN32 examples/11_advanced_particle_system.cpp)
 target_link_libraries(11_advanced_particle_system ${PROJECT_NAME})

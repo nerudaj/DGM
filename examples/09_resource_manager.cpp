@@ -55,7 +55,7 @@ public:
 int main(int argc, char *argv[]) {
 	srand(unsigned(time(NULL)));
 
-	std::string resourceDir = "../examples";
+	std::string resourceDir = "../examples/resources";
 	if (argc == 2) {
 		resourceDir = argv[1];
 	}
