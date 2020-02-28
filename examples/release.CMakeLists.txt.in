@@ -1,0 +1,70 @@
+cmake_minimum_required ( VERSION 3.14 )
+
+# C++ standards
+#----------------------------------------------------------
+set ( CMAKE_GENERATOR_PLATFORM     x64)
+set ( CMAKE_CXX_STANDARD           17 )
+set ( CMAKE_CXX_STANDARD_REQUIRED  ON )
+set ( CMAKE_CXX_EXTENSIONS         OFF )
+set ( MY_CXX_COMPILE_FEATURES      cxx_generic_lambdas cxx_range_for cxx_strong_enums )
+
+# Project
+#----------------------------------------------------------
+project ( dgm-examples )
+
+# Dependencies
+#----------------------------------------------------------
+include ( FetchContent )
+
+## Add dependencies
+##---------------------------------------------------------
+# Fetch and link SFML
+FetchContent_Declare ( sfml
+	URL "@SFML_URL@"
+)
+FetchContent_GetProperties(sfml)
+if(NOT sfml_POPULATED)
+	FetchContent_Populate(sfml)
+endif()
+
+set (SFML_FOLDER "${sfml_SOURCE_DIR}")
+include_directories("${SFML_FOLDER}/include")
+link_directories("${SFML_FOLDER}/lib")
+
+### Copy DLLs to build folders
+###--------------------------------------------------------
+file (GLOB DEBUG_SFML_DLLS   ${CMAKE_CURRENT_BINARY_DIR}/_deps/sfml-src/bin/*-d-2.dll)
+file (GLOB RELEASE_SFML_DLLS ${CMAKE_CURRENT_BINARY_DIR}/_deps/sfml-src/bin/*[oskmw]-2.dll)
+set ( OPENAL_DLL ${CMAKE_CURRENT_BINARY_DIR}/_deps/sfml-src/bin/openal32.dll )
+
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Debug" "${CMAKE_CURRENT_BINARY_DIR}/Release" )
+
+configure_file (
+	${OPENAL_DLL} ${CMAKE_CURRENT_BINARY_DIR}/Debug/ COPYONLY
+)
+
+configure_file (
+	${OPENAL_DLL} ${CMAKE_CURRENT_BINARY_DIR}/Release/ COPYONLY
+)
+
+foreach ( DLL ${DEBUG_SFML_DLLS} )
+	configure_file ( ${DLL} ${CMAKE_CURRENT_BINARY_DIR}/Debug/ COPYONLY )
+endforeach ( DLL )
+
+foreach ( DLL ${RELEASE_SFML_DLLS} )
+	configure_file ( ${DLL} ${CMAKE_CURRENT_BINARY_DIR}/Release/ COPYONLY )
+endforeach ( DLL )
+
+## Link DGM
+##---------------------------------------------------------
+# NOTE: SFML is linked dynamically from DGM
+set ( DGM_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/.." )
+include_directories ( "${DGM_FOLDER}/include" )
+link_directories("${DGM_FOLDER}/lib")
+find_library ( LIB_DGM_D dgm-d NAMES dgm-d.lib PATHS "${DGM_FOLDER}/lib" )
+find_library ( LIB_DGM_R dgm   NAMES dgm.lib   PATHS "${DGM_FOLDER}/lib" )
+
+set ( DGM_LIB optimized ${LIB_DGM_R} debug ${LIB_DGM_D} )
+
+# Examples
+#----------------------------------------------------------
