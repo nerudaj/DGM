@@ -13,6 +13,8 @@
 
 #include <DGM\dgm.hpp>
 
+#include "RootDir.hpp"
+
 const unsigned SOLDIER_COUNT = 10;
 
 class Soldier {
@@ -55,19 +57,14 @@ public:
 int main(int argc, char *argv[]) {
 	srand(unsigned(time(NULL)));
 
-	std::string resourceDir = "../examples/resources";
-	if (argc == 2) {
-		resourceDir = argv[1];
-	}
-
 	dgm::Window window({1280, 720}, "Example 09", false);
 	dgm::Time time;
-	
+
 	dgm::ResourceManager resmgr;
 	resmgr.setPedantic(false); // loadResourceDir will only load compatible files and ignore everything else
-	resmgr.loadResourceDir<sf::Texture>(resourceDir); // will load soldier.png, image.png and tileset.png
-	resmgr.loadResourceDir<std::shared_ptr<dgm::AnimationStates>>(resourceDir); // will load soldier.json
-	
+	resmgr.loadResourceDir<sf::Texture>(rootDir); // will load soldier.png, image.png and tileset.png
+	resmgr.loadResourceDir<std::shared_ptr<dgm::AnimationStates>>(rootDir); // will load soldier.json
+
 	dgm::Buffer<Soldier> soldiers(SOLDIER_COUNT);
 	for (unsigned i = 0; i < soldiers.capacity(); i++) {
 		// Each soldier will have their own Animation, but will share Texture and AnimationData
@@ -75,7 +72,7 @@ int main(int argc, char *argv[]) {
 		soldiers.expand();
 		soldiers[i].spawn();
 	}
-	
+
 	sf::Event event;
 	while (window.isOpen()) {
 		while (window.pollEvent(event)) {
@@ -83,23 +80,23 @@ int main(int argc, char *argv[]) {
 				window.close();
 			}
 		}
-		
+
 		/* LOGIC */
 		time.reset();
 		
 		for (auto &soldier : soldiers) {
 			soldier.update(time);
 		}
-		
+
 		/* RENDER */
 		window.beginDraw();
 		
 		for (auto &soldier : soldiers) {
 			soldier.draw(window);
 		}
-		
+
 		window.endDraw();
 	}
-	
+
 	return 0;
 }

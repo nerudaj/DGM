@@ -19,6 +19,8 @@
 
 #include <DGM/dgm.hpp>
 
+#include "RootDir.hpp"
+
 class Player {
 private:
 	sf::Texture texture;
@@ -93,15 +95,10 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	std::string cwd = "../examples/resources"; // Debugger will use this path
-	if (args.isSet('d')) { // use -d to specify your own path when running binary manually
-		cwd = args.getArgumentValue('d').asString();
-	}
-
 	dgm::Window window({ 1280, 720 }, "Animation example", false);
 	dgm::Time time;
 	
-	Player player(cwd + "/soldier.png", cwd + "/soldier.json");
+	Player player(rootDir + "/soldier.png", rootDir + "/soldier.json");
 	player.spawn({ 1280 / 2.f, 720 / 2.f });
 
 	// Main loop

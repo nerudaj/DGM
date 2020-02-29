@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <thread>
 
+#include "RootDir.hpp"
 #include "Level.hpp"
 #include "SandParticleSystem.hpp"
 #include "GasParticleSystem.hpp"
@@ -23,7 +24,7 @@ int main(int argc, char *argv[]) {
 	dgm::ResourceManager resmgr = getInitializedResourceMgr();
 
 	Level level(resmgr.get<sf::Texture>("tileset.png"));
-	level.loadFromFile("../resources/examples/11_advanced_particle_system.lvd");
+	level.loadFromFile(rootDir + "/11_advanced_particle_system.lvd");
 
 	SandSystem sandSystem;
 	if (!sandSystem.init(250, dgm::Clip(), new SandParticleFactory())) return 1;
@@ -85,7 +86,7 @@ int main(int argc, char *argv[]) {
 dgm::ResourceManager getInitializedResourceMgr() {
 	dgm::ResourceManager resmgr;
 	resmgr.setPedantic(false);
-	resmgr.loadResourceDir<sf::Texture>("../resources/examples");
+	resmgr.loadResourceDir<sf::Texture>(rootDir);
 	return resmgr;
 }
 
@@ -152,5 +153,5 @@ void exportLevel() {
 		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 	};
 
-	lvld.saveToFile("../resources/examples/11_advanced_particle_system.lvd");
+	lvld.saveToFile(rootDir + "/11_advanced_particle_system.lvd");
 }

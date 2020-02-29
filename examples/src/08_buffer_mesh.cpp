@@ -137,9 +137,9 @@ int main(int argc, char *argv[]) {
 	level.setDataSize({ 3, 3 });
 	level.setVoxelSize(windowSize);
 	level.setPosition(-sf::Vector2f(windowSize));
-	std::vector<int> levelData = { 1, 1, 1, 
-					               1, 0, 1, 
-		                           1, 1, 1 };
+	std::vector<int> levelData = {  1, 1, 1, 
+									1, 0, 1, 
+									1, 1, 1 };
 
 	for (unsigned i = 0; i < levelData.size(); i++) {
 		level[i] = levelData[i];
