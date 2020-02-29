@@ -193,6 +193,8 @@ install (
 	DESTINATION  include
 )
 
+## Examples
+##---------------------------------------------------------
 install (
 	DIRECTORY    ${CMAKE_CURRENT_SOURCE_DIR}/examples/src
 	DESTINATION  examples
@@ -205,6 +207,11 @@ install (
 
 install (
 	FILES        ${CMAKE_CURRENT_BINARY_DIR}/examples/CMakeLists.txt
+	DESTINATION  examples
+)
+
+install (
+	FILES        ${CMAKE_CURRENT_SOURCE_DIR}/examples/Readme.md
 	DESTINATION  examples
 )
 
