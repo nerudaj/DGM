@@ -1,11 +1,12 @@
 DGM vX.X.X changelog:
- * Fixed interfaces for particles and particle systems
+ * Added examples to release
  * Renamed examples to more descriptive names
  * Updated Quickstart.md guide
+ * Updated project-template with demonstration of usage of ResourceManager, Animation and added Soundbox class
  * Bumped to dsh v1.3.2 (critical fixes for LevelD file format)
 	* Fixed examples/level.lvd
- * Updated project-template with demonstration of usage of ResourceManager, Animation and added Soundbox class
  * Fixed documentation of ResourceManager
+ * Fixed interfaces for particles and particle systems
 
 ---
 
