@@ -19,6 +19,8 @@
 #include <DGM/dgm.hpp>
 #include <random>
 
+#include "RootDir.hpp"
+
 float power(float val, int exp) {
 	float result = 1.f;
 	while (exp-- > 0) result *= val;
@@ -200,15 +202,14 @@ int main(int argc, char *argv[]) {
 	cfg::Args args("l:"); // start binary with -l <number> argument to have grid numberXnumber
 	args.parse(argc, argv);
 
-	int level = 3;
-
+	int level = 4;
 	if (args.isSet('l')) level = args.getArgumentValue('l').asInt();
 
 	dgm::Window window({ 768, 768 }, "Sandbox", false);
 	dgm::Time time;
 
 	// You can also try a different image, but it has to be 768x768
-	GameBoard board("../../examples/image.png");
+	GameBoard board(rootDir + "/image.png");
 	board.init(level);
 
 	// Main loop

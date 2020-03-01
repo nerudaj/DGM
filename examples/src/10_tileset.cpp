@@ -14,6 +14,7 @@
 
 #include <DGM/dgm.hpp>
 #include "Level.hpp"
+#include "RootDir.hpp"
 
 const float SPEED = 64.f;
 
@@ -117,7 +118,7 @@ void exportLevel() {
 		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 	};
 
-	lvld.saveToFile("../examples/level.lvd");
+	lvld.saveToFile(rootDir + "/level.lvd");
 }
 
 int main() {
@@ -128,10 +129,10 @@ int main() {
 
 	dgm::ResourceManager resmgr;
 	resmgr.setPedantic(false);
-	resmgr.loadResourceDir<sf::Texture>("../examples");
+	resmgr.loadResourceDir<sf::Texture>(rootDir);
 
 	Level level(resmgr.get<sf::Texture>("tileset.png"));
-	level.loadFromFile("../examples/level.lvd");
+	level.loadFromFile(rootDir + "/level.lvd");
 
 	Player player;
 	player.spawn({ 64.f, 64.f });

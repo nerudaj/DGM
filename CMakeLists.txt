@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
 
-# Compiler setup
+# C++ standards
 #----------------------------------------------------------
-set (CMAKE_GENERATOR_PLATFORM "x64")
-set (CMAKE_CXX_STANDARD 17)
-set (CMAKE_CXX_STANDARD_REQUIRED ON)
-set (CMAKE_CXX_EXTENSIONS OFF)
-set (MY_CXX_COMPILE_FEATURES cxx_generic_lambdas cxx_range_for cxx_strong_enums)
+set ( CMAKE_GENERATOR_PLATFORM     x64)
+set ( CMAKE_CXX_STANDARD           17 )
+set ( CMAKE_CXX_STANDARD_REQUIRED  ON )
+set ( CMAKE_CXX_EXTENSIONS         OFF )
+set ( MY_CXX_COMPILE_FEATURES      cxx_generic_lambdas cxx_range_for cxx_strong_enums )
 
 if (NOT CMAKE_DEBUG_POSTFIX)
 	set(CMAKE_DEBUG_POSTFIX "-d")
@@ -20,60 +20,11 @@ string ( TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER )
 
 # Dependencies
 #----------------------------------------------------------
-include ( FetchContent )
 include ( dependencies.cmake )
+include ( utils.cmake )
 
-## Add dependencies
-##---------------------------------------------------------
-FetchContent_Declare ( dsh
-	URL "${DSH_URL}"
-)
-FetchContent_GetProperties(dsh)
-if (NOT dsh_POPULATED)
-	FetchContent_Populate(dsh)
-endif()
-
-FetchContent_Declare ( sfml
-	URL "${SFML_URL}"
-)
-FetchContent_GetProperties(sfml)
-if (NOT sfml_POPULATED)
-	FetchContent_Populate(sfml)
-endif()
-
-FetchContent_Declare ( json
-	URL                   "${JSON_URL}"
-	DOWNLOAD_NO_PROGRESS  TRUE
-	DOWNLOAD_NO_EXTRACT   TRUE
-)
-FetchContent_GetProperties(json)
-if (NOT json_POPULATED)
-	FetchContent_Populate(json)
-endif()
-
-### Copy DLLs to build folders
-###--------------------------------------------------------
-file (GLOB DEBUG_SFML_DLLS   ${CMAKE_CURRENT_BINARY_DIR}/_deps/sfml-src/bin/*-d-2.dll)
-file (GLOB RELEASE_SFML_DLLS ${CMAKE_CURRENT_BINARY_DIR}/_deps/sfml-src/bin/*[oskmw]-2.dll)
-set ( OPENAL_DLL ${CMAKE_CURRENT_BINARY_DIR}/_deps/sfml-src/bin/openal32.dll )
-
-file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Debug" "${CMAKE_CURRENT_BINARY_DIR}/Release" )
-
-configure_file (
-	${OPENAL_DLL} ${CMAKE_CURRENT_BINARY_DIR}/Debug/ COPYONLY
-)
-
-configure_file (
-	${OPENAL_DLL} ${CMAKE_CURRENT_BINARY_DIR}/Release/ COPYONLY
-)
-
-foreach ( DLL ${DEBUG_SFML_DLLS} )
-	configure_file ( ${DLL} ${CMAKE_CURRENT_BINARY_DIR}/Debug/ COPYONLY )
-endforeach ( DLL )
-
-foreach ( DLL ${RELEASE_SFML_DLLS} )
-	configure_file ( ${DLL} ${CMAKE_CURRENT_BINARY_DIR}/Release/ COPYONLY )
-endforeach ( DLL )
+#fetch_dependencies()
+copy_dlls_to_build_folders()
 
 ## Set paths to dependencies
 ##---------------------------------------------------------
@@ -200,61 +151,24 @@ add_custom_target ( doxygen-docs
 # Examples
 #----------------------------------------------------------
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
+set ( DGM_LIB "${PROJECT_NAME}" )
+set ( SOURCE_DIR_BACKUP "${CMAKE_CURRENT_SOURCE_DIR}" )
+set ( CMAKE_CURRENT_SOURCE_DIR "${SOURCE_DIR_BACKUP}/examples" )
 
-## Example 01
-##---------------------------------------------------------
-add_executable(01_polar_cartesian WIN32 examples/01_polar_cartesian.cpp)
-target_link_libraries(01_polar_cartesian ${PROJECT_NAME})
+include ( examples/CMakeLists.txt )
 
-## Example 02
-##---------------------------------------------------------
-add_executable(02_controller WIN32 examples/02_controller.cpp)
-target_link_libraries(02_controller ${PROJECT_NAME})
+set ( CMAKE_CURRENT_SOURCE_DIR "${SOURCE_DIR_BACKUP}" )
 
-## Example 03
-##---------------------------------------------------------
-add_executable(03_app_state WIN32 examples/03_app_state.cpp)
-target_link_libraries(03_app_state ${PROJECT_NAME})
+configure_file (
+	${CMAKE_CURRENT_SOURCE_DIR}/examples/release.CMakeLists.txt.in
+	${CMAKE_CURRENT_BINARY_DIR}/examples/CMakeLists.txt
+	@ONLY
+)
 
-## Example 04
-##---------------------------------------------------------
-add_executable(04_particle_system WIN32 examples/04_particle_system.cpp)
-target_link_libraries(04_particle_system ${PROJECT_NAME})
-
-## Example 05
-##---------------------------------------------------------
-add_executable(05_game_fifteen WIN32 examples/05_game_fifteen.cpp)
-target_link_libraries(05_game_fifteen ${PROJECT_NAME})
-
-## Example 06
-##---------------------------------------------------------
-add_executable(06_animation WIN32 examples/06_animation.cpp)
-target_link_libraries(06_animation ${PROJECT_NAME})
-
-## Example 07
-##---------------------------------------------------------
-add_executable(07_collisions WIN32 examples/07_collisions.cpp)
-target_link_libraries(07_collisions ${PROJECT_NAME})
-
-## Example 08
-##---------------------------------------------------------
-add_executable(08_buffer_mesh WIN32 examples/08_buffer_mesh.cpp)
-target_link_libraries(08_buffer_mesh ${PROJECT_NAME})
-
-## Example 09
-##---------------------------------------------------------
-add_executable(09_resource_manager WIN32 examples/09_resource_manager.cpp)
-target_link_libraries(09_resource_manager ${PROJECT_NAME})
-
-## Example 10
-##---------------------------------------------------------
-add_executable(10_tileset WIN32 examples/10_tileset.cpp)
-target_link_libraries(10_tileset ${PROJECT_NAME})
-
-## Example 10
-##---------------------------------------------------------
-add_executable(11_advanced_particle_system WIN32 examples/11_advanced_particle_system.cpp)
-target_link_libraries(11_advanced_particle_system ${PROJECT_NAME})
+append_infile_to_outfile (
+	${CMAKE_CURRENT_SOURCE_DIR}/examples/CMakeLists.txt
+	${CMAKE_CURRENT_BINARY_DIR}/examples/CMakeLists.txt
+)
 
 # Install directives
 #----------------------------------------------------------
@@ -277,6 +191,28 @@ install (
 install (
 	DIRECTORY    ${DSH_FOLDER}/include/
 	DESTINATION  include
+)
+
+## Examples
+##---------------------------------------------------------
+install (
+	DIRECTORY    ${CMAKE_CURRENT_SOURCE_DIR}/examples/src
+	DESTINATION  examples
+)
+
+install (
+	DIRECTORY    ${CMAKE_CURRENT_SOURCE_DIR}/examples/resources
+	DESTINATION  examples
+)
+
+install (
+	FILES        ${CMAKE_CURRENT_BINARY_DIR}/examples/CMakeLists.txt
+	DESTINATION  examples
+)
+
+install (
+	FILES        ${CMAKE_CURRENT_SOURCE_DIR}/examples/Readme.md
+	DESTINATION  examples
 )
 
 ## Documentation
