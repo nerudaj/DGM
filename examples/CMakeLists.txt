@@ -52,3 +52,8 @@ target_link_libraries(10_tileset ${DGM_LIB})
 ##---------------------------------------------------------
 add_executable(11_advanced_particle_system WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/src/11_advanced_particle_system.cpp)
 target_link_libraries(11_advanced_particle_system ${DGM_LIB})
+
+## Example 12
+##---------------------------------------------------------
+add_executable(12_simple_lights WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/src/12_simple_lights.cpp)
+target_link_libraries(12_simple_lights ${DGM_LIB})
