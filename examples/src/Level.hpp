@@ -7,11 +7,11 @@ const unsigned TILE_SIZE = 32;
 class Level {
 protected:
 	dgm::Mesh mesh;
-	dgm::Tileset tileset;
+	dgm::TileMap tilemap;
 
 public:
 	void draw(dgm::Window &window) {
-		window.draw(tileset);
+		window.draw(tilemap);
 	}
 
 	const dgm::Mesh &getMesh() const {
@@ -19,21 +19,24 @@ public:
 	}
 
 	void changeTileToVoid(unsigned x, unsigned y) {
-		tileset.changeTile(x, y, 0);
+		tilemap.changeTile(x, y, 0);
 		mesh[y * mesh.getDataSize().x + x] = 0;
 	}
 
 	void loadFromFile(const std::string &filename) {
-		dgm::Clip clip({ TILE_SIZE, TILE_SIZE }, { 0, 0, 64, 64 });
-
 		LevelD lvld;
 		lvld.loadFromFile(filename);
 
 		mesh = dgm::Mesh(lvld);
-		tileset.rebuild(clip, lvld);
+		tilemap.build(lvld);
 	}
 
-	Level(sf::Texture &texture) {
-		tileset.setTexture(texture);
+	Level(sf::Texture& texture) {
+		dgm::Clip clip(
+			{ TILE_SIZE, TILE_SIZE },
+			{ 0, 0, int(texture.getSize().x), int(texture.getSize().y) }
+		);
+
+		tilemap.init(texture, clip);
 	}
 };
