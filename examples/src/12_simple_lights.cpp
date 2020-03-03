@@ -15,11 +15,11 @@ struct Light {
 	uint8_t intensity;
 };
 
-class LightedTileset : public dgm::Tileset {
+class IlluminatedTileMap : public dgm::TileMap {
 public:
 	void setTileLight(unsigned x, unsigned y, uint8_t intensity) {
 		sf::Vertex* quad = &vertices[(y * dataSize.x + x) * size_t(4)];
-		
+
 		for (unsigned i = 0; i < 4; i++) {
 			quad[i].color = sf::Color(255, 255, 255, intensity);
 		}
@@ -36,13 +36,13 @@ public:
 
 class LightedLevel {
 private:
-	LightedTileset tileset;
+	IlluminatedTileMap tilemap;
 	dgm::Mesh mesh;
 	std::vector<Light*> lights;
 
 public:
 	void draw(dgm::Window &window) {
-		window.draw(tileset);
+		window.draw(tilemap);
 	}
 
 	void update() {
@@ -53,7 +53,7 @@ public:
 		lvd.loadFromFile(filename);
 
 		dgm::Clip clip({ lvd.mesh.tileWidth, lvd.mesh.tileHeight }, { 0, 0, 64, 64 });
-		tileset.rebuild(clip, lvd);
+		tilemap.rebuild(clip, lvd);
 		mesh = dgm::Mesh(lvd);
 	}
 
@@ -66,7 +66,7 @@ public:
 	}
 
 	LightedLevel(sf::Texture &texture) {
-		tileset.setTexture(texture);
+		tilemap.setTexture(texture);
 	}
 };
 
@@ -137,7 +137,7 @@ int main() {
 	dgm::Time time;
 	dgm::ResourceManager resmgr = getInitializedResourceMgr();
 
-	LightedLevel level(resmgr.get<sf::Texture>("tileset.png"));
+	LightedLevel level(resmgr.get<sf::Texture>("tilemap.png"));
 	level.loadFromFile(rootDir + "/12_simple_lights.lvd");
 
 	Player player;
