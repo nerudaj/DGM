@@ -16,7 +16,7 @@ namespace dgm {
 		virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
 	protected:
-		sf::Texture *texturePtr;
+		sf::Texture *texturePtr = nullptr;
 		sf::VertexArray vertices;
 		sf::Vector2f tileSize;
 		sf::Vector2u dataSize;
@@ -40,7 +40,9 @@ namespace dgm {
 		 *  \pre build was called
 		 */
 		void changeTile(uint32_t tileX, uint32_t tileY, uint32_t tileValue) {
+			assert(texturePtr);
 			assert(tileX < uint32_t(dataSize.x) && tileY < uint32_t(dataSize.y));
+			assert(clip.getFrameCount() > tileValue);
 			changeTile(float(tileX), float(tileY), tileY * dataSize.x + tileX, tileValue);
 		}
 
@@ -50,7 +52,7 @@ namespace dgm {
 		 *  \param [in] tileSize Dimensions of a tile (can differ from clip frame size)
 		 *  \param [in] imageData Array of tile frame indices
 		 *  \param [in] dataSize Size of the map [Width, Height]
-		 *  
+		 *
 		 *  \details You can call this function repeatedly without need to deinitialize this
 		 *  object. If you only need to change appearance of a couple of tiles, use changeTile()
 		 *  instead.
@@ -63,9 +65,9 @@ namespace dgm {
 
 		/**
 		 *  \brief Build the internal vertex array
-		 *  
+		 *
 		 *  \param [in] lvd  Initialized LevelD object
-		 *  
+		 *
 		 *  \details You can call this function repeatedly without need to deinitialize this
 		 *  object. If you only need to change appearance of a couple of tiles, use changeTile()
 		 *  instead.
@@ -75,9 +77,9 @@ namespace dgm {
 		 *  \see changeTile
 		 */
 		void build(const LevelD &lvd) {
-			build( 
-				{ lvd.mesh.tileWidth, lvd.mesh.tileHeight }, 
-				std::vector<int>(lvd.mesh.tiles.begin(), lvd.mesh.tiles.end()), 
+			build(
+				{ lvd.mesh.tileWidth, lvd.mesh.tileHeight },
+				std::vector<int>(lvd.mesh.tiles.begin(), lvd.mesh.tiles.end()),
 				{ lvd.mesh.width, lvd.mesh.height }
 			);
 		}
