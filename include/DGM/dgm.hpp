@@ -52,7 +52,7 @@
 #include "classes/App.hpp"
 #include "classes/AppState.hpp"
 #include "classes/Animation.hpp"
-#include "classes/Tileset.hpp"
+#include "classes/TileMap.hpp"
 #include "classes/ResourceManager.hpp"
 
 // Particle Systems

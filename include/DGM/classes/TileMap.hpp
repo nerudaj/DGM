@@ -11,7 +11,7 @@ namespace dgm {
 	 *  coordinates for each tile in the texture) and an array of data (your map, where each cell
 	 *  is an index of a tile).
 	 */
-	class Tileset : public sf::Drawable, public sf::Transformable {
+	class TileMap : public sf::Drawable, public sf::Transformable {
 	private:
 		virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
@@ -46,8 +46,7 @@ namespace dgm {
 
 		/**
 		 *  \brief Build the internal vertex array
-		 *  
-		 *  \param [in] clip Initialized clip object
+		 *
 		 *  \param [in] tileSize Dimensions of a tile (can differ from clip frame size)
 		 *  \param [in] imageData Array of tile frame indices
 		 *  \param [in] dataSize Size of the map [Width, Height]
@@ -56,45 +55,43 @@ namespace dgm {
 		 *  object. If you only need to change appearance of a couple of tiles, use changeTile()
 		 *  instead.
 		 *
+		 *  \pre You have to call init method prior to calling this one!
+		 *
 		 *  \see changeTile
 		 */
-		void rebuild(const dgm::Clip &clip, const sf::Vector2u tileSize, const std::vector<int> &imageData, const sf::Vector2u &dataSize);
+		void build(const sf::Vector2u tileSize, const std::vector<int> &imageData, const sf::Vector2u &dataSize);
 
 		/**
 		 *  \brief Build the internal vertex array
 		 *  
-		 *  \param [in] clip Initialized clip object
 		 *  \param [in] lvd  Initialized LevelD object
 		 *  
 		 *  \details You can call this function repeatedly without need to deinitialize this
 		 *  object. If you only need to change appearance of a couple of tiles, use changeTile()
 		 *  instead.
 		 *
+		 *  \pre You have to call init method prior to calling this one!
+		 *
 		 *  \see changeTile
 		 */
-		void rebuild(const dgm::Clip &clip, const LevelD &lvd) {
-			rebuild(
-				clip, 
+		void build(const LevelD &lvd) {
+			build( 
 				{ lvd.mesh.tileWidth, lvd.mesh.tileHeight }, 
 				std::vector<int>(lvd.mesh.tiles.begin(), lvd.mesh.tiles.end()), 
 				{ lvd.mesh.width, lvd.mesh.height }
 			);
 		}
 
-		/**
-		 *  \brief Set tileset texture
-		 *  
-		 *  \param[in]  texture  Texture object
-		 *  
-		 *  \details You should call this prior to any draw call on this object.
-		 */
-		void setTexture(sf::Texture &texture);
+		void init(sf::Texture &texture, const dgm::Clip &clip) {
+			texturePtr = &texture;
+			TileMap::clip = clip;
+		}
 
-		const dgm::Clip &getClip() const {
+		const dgm::Clip& getClip() const {
 			return clip;
 		}
 
-		Tileset();
-		~Tileset();
+		TileMap();
+		~TileMap();
 	};
 }

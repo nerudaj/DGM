@@ -1,7 +1,7 @@
 #include <DGM\dgm.hpp>
 #include <cassert>
 
-void dgm::Tileset::draw(sf::RenderTarget & target, sf::RenderStates states) const {
+void dgm::TileMap::draw(sf::RenderTarget & target, sf::RenderStates states) const {
 	// apply the transform
 	states.transform *= getTransform();
 
@@ -12,7 +12,7 @@ void dgm::Tileset::draw(sf::RenderTarget & target, sf::RenderStates states) cons
 	target.draw(vertices, states);
 }
 
-void dgm::Tileset::changeTile(float x, float y, uint32_t tileIndex, uint32_t tileValue) {
+void dgm::TileMap::changeTile(float x, float y, uint32_t tileIndex, uint32_t tileValue) {
 	assert(tileValue < clip.getFrameCount());
 	assert(tileIndex * size_t(4) < vertices.getVertexCount());
 
@@ -35,12 +35,16 @@ void dgm::Tileset::changeTile(float x, float y, uint32_t tileIndex, uint32_t til
 	quad[3].texCoords = sf::Vector2f(float(frame.left), float(frame.top + frame.height));
 }
 
-void dgm::Tileset::rebuild(const dgm::Clip &clip, const sf::Vector2u tileSize, const std::vector<int> &imageData, const sf::Vector2u &dataSize) {
+void dgm::TileMap::build(const sf::Vector2u tileSize, const std::vector<int> &imageData, const sf::Vector2u &dataSize) {
+	if (!texturePtr) {
+		throw dgm::GeneralException("You have to call dgm::TileMap::init prior to dgm::TileMap::build!");
+	}
+		
 	assert(imageData.size() == size_t(dataSize.x) * dataSize.y);
 
-	Tileset::clip = clip;
-	Tileset::tileSize = sf::Vector2f(float(tileSize.x), float(tileSize.y));
-	Tileset::dataSize = dataSize;
+	TileMap::clip = clip;
+	TileMap::tileSize = sf::Vector2f(float(tileSize.x), float(tileSize.y));
+	TileMap::dataSize = dataSize;
 
 	// initialize vertex array
 	vertices.clear();
@@ -55,12 +59,8 @@ void dgm::Tileset::rebuild(const dgm::Clip &clip, const sf::Vector2u tileSize, c
 	}
 }
 
-void dgm::Tileset::setTexture(sf::Texture &texture) {
-	texturePtr = &texture;
+dgm::TileMap::TileMap() {
 }
 
-dgm::Tileset::Tileset() {
-}
-
-dgm::Tileset::~Tileset() {
+dgm::TileMap::~TileMap() {
 }
