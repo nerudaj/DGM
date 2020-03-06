@@ -1,4 +1,5 @@
 #include <DGM/dgm.hpp>
+#include <queue>
 #include "RootDir.hpp"
 
 dgm::ResourceManager getInitializedResourceMgr() {
@@ -38,7 +39,18 @@ class LightedLevel {
 private:
 	IlluminatedTileMap tilemap;
 	dgm::Mesh mesh;
-	std::vector<Light*> lights;
+	Light* light;
+
+	sf::Vector2u worldToTileCoord(const sf::Vector2f &position) const {
+		return sf::Vector2u(
+			unsigned(position.x) / mesh.getVoxelSize().x,
+			unsigned(position.y) / mesh.getVoxelSize().y
+		);
+	}
+
+	unsigned getMeshIndex(const sf::Vector2u &position) {
+		return unsigned(position.y * mesh.getDataSize().x + position.x);
+	}
 
 public:
 	void draw(dgm::Window &window) {
@@ -46,19 +58,54 @@ public:
 	}
 
 	void update() {
+		tilemap.clearLights();
+
+		struct TileLight {
+			sf::Vector2u position;
+			uint8_t intensity;
+
+			TileLight(const sf::Vector2u& position, uint8_t intensity) : position(position), intensity(intensity) {}
+		};
+
+		std::queue<TileLight> queue;
+		queue.push({ worldToTileCoord(light->position), light->intensity });
+
+		std::vector<bool> visited(mesh.getDataSize().x* mesh.getDataSize().y, false);
+
+		while (! queue.empty()) {
+			auto item = queue.front();
+			queue.pop();
+
+			unsigned i = getMeshIndex(item.position);
+
+			if (visited[i]) continue;
+			else visited[i] = true;
+
+			tilemap.setTileLight(item.position.x, item.position.y, item.intensity);
+
+			if (mesh[i] || item.intensity < 50) continue;
+
+			queue.push(TileLight({ item.position.x - 1, item.position.y }, item.intensity - 30));
+			queue.push(TileLight({ item.position.x + 1, item.position.y }, item.intensity - 30));
+			queue.push(TileLight({ item.position.x, item.position.y - 1 }, item.intensity - 30));
+			queue.push(TileLight({ item.position.x, item.position.y + 1 }, item.intensity - 30));
+			queue.push(TileLight({ item.position.x - 1, item.position.y - 1 }, item.intensity - 42));
+			queue.push(TileLight({ item.position.x + 1, item.position.y + 1 }, item.intensity - 42));
+			queue.push(TileLight({ item.position.x - 1, item.position.y + 1 }, item.intensity - 42));
+			queue.push(TileLight({ item.position.x + 1, item.position.y - 1 }, item.intensity - 42));
+		}
 	}
 
 	void loadFromFile(const std::string &filename) {
 		LevelD lvd;
 		lvd.loadFromFile(filename);
 
-		dgm::Clip clip({ lvd.mesh.tileWidth, lvd.mesh.tileHeight }, { 0, 0, 64, 64 });
-		tilemap.rebuild(clip, lvd);
+		tilemap.build(lvd);
 		mesh = dgm::Mesh(lvd);
 	}
 
-	void addLight(Light* light) {
-		lights.push_back(light);
+	void setLightSource(Light* light) {
+		LightedLevel::light = light;
 	}
 
 	const dgm::Mesh &getMesh() const {
@@ -66,7 +113,9 @@ public:
 	}
 
 	LightedLevel(sf::Texture &texture) {
-		tilemap.setTexture(texture);
+		dgm::Clip clip({ 32, 32 }, { 0, 0, int(texture.getSize().x), int(texture.getSize().y) });
+
+		tilemap.init(texture, clip);
 	}
 };
 
@@ -137,7 +186,7 @@ int main() {
 	dgm::Time time;
 	dgm::ResourceManager resmgr = getInitializedResourceMgr();
 
-	LightedLevel level(resmgr.get<sf::Texture>("tilemap.png"));
+	LightedLevel level(resmgr.get<sf::Texture>("tileset.png"));
 	level.loadFromFile(rootDir + "/12_simple_lights.lvd");
 
 	Player player;
@@ -147,10 +196,8 @@ int main() {
 	view.zoom(0.5f);
 	window.getWindowContext().setView(view);
 
-	Light light1 = { {64.f, 64.f}, 256.f, 255 };
-	Light light2 = { player.getPosition(), 128.f, 222 };
-	level.addLight(&light1);
-	level.addLight(&light2);
+	Light light = { player.getPosition(), 128.f, 255 };
+	level.setLightSource(&light);
 
 	sf::Event event;
 	while (window.isOpen()) {
@@ -162,7 +209,7 @@ int main() {
 
 		// LOGIC
 		player.update(time, level.getMesh());
-		light2.position = player.getPosition();
+		light.position = player.getPosition();
 		level.update();
 
 		auto view = window.getWindowContext().getView();
