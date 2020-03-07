@@ -59,3 +59,7 @@ This example showcases how tileset based maps can be rendered using dgm::Tileset
 ### 11_advanced_particle_system
 
 This example shows more complex particle systems, those that require to inherit from implicit data types, require texturing and such. Press P to start the simulation and Space to remove some blocks to further observe effect of falling sand particle system.
+
+### 12_simple_lights
+
+How to illuminate tiles of dgm::TileMap. This example allows you to move a green circle through textured maze rendered via TileMap, and surroundings of the player are illuminated by setting the transparent channel of each tile against black void. Use WASD to move and close the app by clicking close button.
