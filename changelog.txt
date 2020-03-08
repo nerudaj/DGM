@@ -1,4 +1,4 @@
-DGM vX.X.X changelog:
+DGM v2.0.0 changelog:
  * Added examples to release
 	* Added example 11_advanced_particle_systems
 	* Added example 12_simple lights
