@@ -126,6 +126,13 @@ namespace dgm {
 		 */
 		void endDraw() { window.display(); }
 
+		/**
+		 *  \brief Set the new dimentions of render window
+		 */
+		void resize(const sf::Vector2u& newResolution) {
+			window.setView(sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(newResolution.x), static_cast<float>(newResolution.y))));
+		}
+
 		Window() : fullscreen(false) {}
 		Window(const cfg::Ini &config) { open(config); }
 		Window(const sf::Vector2u &resolution, const std::string &title, bool fullscreen) { open(resolution, title, fullscreen); }

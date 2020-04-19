@@ -87,8 +87,7 @@ void AppStateMenuOptions::buildLayout() {
 		bool fs = app->window.isFullscreen();
 
 		// Restart window with new resolution
-		app->window.close();
-		app->window.open(RESOLUTIONS[index].first, "null", fs);
+		app->window.resize(RESOLUTIONS[index].first);
 
 		// Force gui to update viewport and resolution
 		gui.setView(app->window.getWindowContext().getView());
