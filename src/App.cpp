@@ -30,6 +30,7 @@ void dgm::App::pushState(dgm::AppState * state) {
 
 void dgm::App::popState() {
 	states.pop();
+	scheduleCleanup = true;
 }
 
 dgm::AppState * dgm::App::topState() {
@@ -39,10 +40,12 @@ dgm::AppState * dgm::App::topState() {
 }
 
 void dgm::App::init() {
+	scheduleCleanup = false;
 }
 
 void dgm::App::deinit() {
 	while (not states.empty()) {
+		delete topState();
 		popState();
 	}
 }
@@ -55,6 +58,11 @@ void dgm::App::run() {
 		top->update();
 		top->draw();
 		time.reset();
+
+		if (scheduleCleanup) {
+			delete top;
+			scheduleCleanup = false;
+		}
 	}
 }
 

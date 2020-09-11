@@ -10,6 +10,7 @@ namespace dgm {
 	class App {
 	protected:
 		std::stack<AppState*> states;
+		bool scheduleCleanup; // Schedule memory cleanup of state popped during current run
 
 	public:
 		Window window; ///< Window context of the app
