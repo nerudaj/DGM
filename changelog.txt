@@ -1,5 +1,7 @@
 DGM v2.X.X changelog:
  * Added Window::resize method
+ * Fixed memory deallocation in App
+ * Fixed resolution settings in template Options
 
 ---
 

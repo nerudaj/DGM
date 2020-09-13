@@ -23,6 +23,9 @@ void AppStateMainMenu::buildLayout() {
 	optionsButton->connect("pressed", [this]() {
 		app->pushState(new AppStateMenuOptions(resmgr, settings)); 
 		viewShouldBeUpdated = true; // In case resolution had changed in options
+		// Note that AppStateMainMenu::update will be triggered before options
+		// will be displayed. Thus, the view has to be updated at the beginning
+		// of AppStateMainMenu::input method
 	});
 	gui.add(optionsButton, "ButtonOptions");
 
@@ -34,18 +37,19 @@ void AppStateMainMenu::buildLayout() {
 }
 
 void AppStateMainMenu::input() {
+	// NOTE: Has to be here, not in update
+	if (viewShouldBeUpdated) {
+		gui.setView(app->window.getWindowContext().getView());
+		viewShouldBeUpdated = false;
+	}
+
 	sf::Event event;
 	while (app->window.pollEvent(event)) {
 		gui.handleEvent(event);
 	}
 }
 
-void AppStateMainMenu::update() {
-	if (viewShouldBeUpdated) {
-		gui.setView(app->window.getWindowContext().getView());
-		viewShouldBeUpdated = false;
-	}
-}
+void AppStateMainMenu::update() {}
 
 void AppStateMainMenu::draw() {
 	app->window.beginDraw(sf::Color::White);
