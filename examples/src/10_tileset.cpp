@@ -21,7 +21,6 @@ const float SPEED = 64.f;
 class Player {
 private:
 	dgm::Circle body;
-	sf::CircleShape sprite;
 	dgm::Controller input;
 
 public:
@@ -30,7 +29,9 @@ public:
 	};
 
 	void draw(dgm::Window &window) {
-		window.draw(sprite);
+		// Unless you have textured sprite, you
+		// can use debugRender to quicky get started
+		body.debugRender(window);
 	}
 
 	void update(const dgm::Time &time, const dgm::Mesh &level) {
@@ -55,19 +56,13 @@ public:
 		dgm::Collision::advanced(level, body, forward);
 
 		body.move(forward);
-		sprite.move(forward);
 	}
 
 	void spawn(const sf::Vector2f &pos) {
 		body.setPosition(pos);
-		sprite.setPosition(pos);
 	}
 
 	Player() {
-		sprite.setRadius(10.f);
-		sprite.setOrigin(10.f, 10.f);
-		sprite.setFillColor(sf::Color::Yellow);
-
 		body.setRadius(10.f);
 
 		input.setBinding(Up, sf::Keyboard::Up);

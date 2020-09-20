@@ -7,6 +7,8 @@
 #pragma once
 
 namespace dgm {
+	class Window;
+
 	/**
 	 *  \brief Abstract class with interface
 	 *  common to all objects
@@ -38,6 +40,13 @@ namespace dgm {
 		float radius; ///< Radius of circle
 		
 	public:
+		/**
+		 *  \brief Displays object in the window
+		 *
+		 *  This method is slow and is reserved for debug purposes
+		 */
+		void debugRender(dgm::Window &window, sf::Color color = sf::Color::Yellow) const;
+
 		/**
 		 *  \brief Returns position of circle
 		 */
@@ -91,6 +100,13 @@ namespace dgm {
 		sf::Vector2f size; ///< Dimensions of the rectangle
 		
 	public:
+		/**
+		 *  \brief Displays object in the window
+		 *
+		 *  This method is slow and is reserved for debug purposes
+		 */
+		void debugRender(dgm::Window& window, sf::Color color = sf::Color::Yellow) const;
+
 		/**
 		 *  \brief Returns position of topleft vertex of rectangle
 		 */

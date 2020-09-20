@@ -1,5 +1,6 @@
 DGM v2.X.X changelog:
  * Added Window::resize method
+ * Added Circle::debugRender and Rect::debugRender
  * Fixed memory deallocation in App
  * Fixed resolution settings in template Options
 

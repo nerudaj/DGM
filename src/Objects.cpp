@@ -8,6 +8,15 @@
 // **************
 // *** CIRCLE ***
 // **************
+void dgm::Circle::debugRender(dgm::Window& window, sf::Color color) const {
+	sf::CircleShape shape;
+	shape.setRadius(radius);
+	shape.setOrigin(radius, radius);
+	shape.setPosition(position);
+	shape.setFillColor(color);
+	window.draw(shape);
+}
+
 const sf::Vector2f &dgm::Circle::getPosition() const { return position; }
 
 const float dgm::Circle::getRadius() const { return radius; }
@@ -43,6 +52,14 @@ dgm::Circle::~Circle() {}
 // ************
 // *** RECT ***
 // ************
+void dgm::Rect::debugRender(dgm::Window& window, sf::Color color) const {
+	sf::RectangleShape shape;
+	shape.setSize(size);
+	shape.setPosition(position);
+	shape.setFillColor(color);
+	window.draw(shape);
+}
+
 const sf::Vector2f &dgm::Rect::getPosition() const { return position; }
 
 const sf::Vector2f &dgm::Rect::getSize() const { return size; }
