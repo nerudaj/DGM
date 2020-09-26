@@ -83,7 +83,9 @@ public:
 
 			tilemap.setTileLight(item.position.x, item.position.y, item.intensity);
 
-			if (mesh[i] || item.intensity < 50) continue;
+			// Skip everything that is impassable, but not water tiles
+			// also skip if intensity is too low
+			if ((mesh[i] && mesh[i] != 2) || item.intensity < 50) continue;
 
 			queue.push(TileLight({ item.position.x - 1, item.position.y }, item.intensity - 30));
 			queue.push(TileLight({ item.position.x + 1, item.position.y }, item.intensity - 30));
@@ -102,6 +104,13 @@ public:
 
 		tilemap.build(lvd);
 		mesh = dgm::Mesh(lvd);
+
+		// Mark water tiles, they are treated specially
+		unsigned i = 0;
+		for (const auto& tile : lvd.mesh.tiles) {
+			if (tile == 2) mesh[i] = 2;
+			i++;
+		}
 	}
 
 	void setLightSource(Light* light) {
