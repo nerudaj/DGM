@@ -12,7 +12,7 @@ void dgm::Window::open(const cfg::Ini & config) {
 
 void dgm::Window::open(const sf::Vector2u & resolution, const std::string & title, const bool fullscreen) {
 	Window::title = title;
-	Window::style = fullscreen ? sf::Style::Fullscreen : sf::Style::Default;
+	Window::style = fullscreen ? sf::Style::Fullscreen : (sf::Style::Titlebar | sf::Style::Close);
 	Window::fullscreen = fullscreen;
 
 	window.create({ resolution.x, resolution.y, 32 }, title, style);
