@@ -10,7 +10,10 @@ protected:
 	const dgm::ResourceManager &resmgr;
 	Settings &settings;
 
-	void createOptionLabel(tgui::Layout x, tgui::Layout y, const std::string& text);
+	tgui::Label::Ptr createOptionLabel(tgui::Layout2d position, tgui::Layout2d size, const std::string& text);
+	void createCheckbox(const std::string &label, tgui::Layout2d position, tgui::Layout2d size, bool checked, std::function<void(bool)> onChecked, const std::string &name);
+	void createSlider(const std::string &label, tgui::Layout2d position, tgui::Layout2d size, float value, std::function<void(void)> onChange, const std::string& name, float lo = 0.f, float hi = 100.f, float step = 1.f);
+	void createDropdown(const std::string& label, tgui::Layout2d position, tgui::Layout2d size, const std::vector<std::string>& items, const std::string& selected, std::function<void(void)> onSelect, const std::string& name);
 	void buildLayout();
 
 public:
