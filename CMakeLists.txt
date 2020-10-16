@@ -60,6 +60,7 @@ set (DGM_SOURCES
 	src/ParticleSystem.cpp
 	src/ParticleSystemRenderer.cpp
 	src/ResourceManager.cpp
+	src/Shell.cpp
 	src/TileMap.cpp
 	src/Window.cpp
 )
@@ -81,6 +82,7 @@ set (DGM_HEADERS
 	include/DGM/classes/ParticleSystem.hpp
 	include/DGM/classes/ParticleSystemRenderer.hpp
 	include/DGM/classes/ResourceManager.hpp
+	include/DGM/classes/Shell.hpp
 	include/DGM/classes/TileMap.hpp
 	include/DGM/classes/Time.hpp
 	include/DGM/classes/Window.hpp
