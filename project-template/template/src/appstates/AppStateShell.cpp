@@ -104,7 +104,7 @@ bool AppStateShell::init() {
 
 std::string ShellModuleTutorial::getDescription() const {
 	// NOTE: This text will be displayed when you type 'help' and overview of installed modules pops up
-	return "Tutorial for creating user shell modules. Type 'tutorial help'.";
+	return "How to create shell modules. Type 'tutorial help'.";
 }
 
 ShellModuleTutorial::ShellModuleTutorial() : ShellModule("tutorial") {
@@ -116,6 +116,21 @@ ShellModuleTutorial::ShellModuleTutorial() : ShellModule("tutorial") {
 	// that is specified in the argc parameter.
 	// Callback is supposed to throw ShellException on error and return any stdout in a form of a string.
 	addAction("lesson1", { 0, "lesson1: First lesson of the tutorial. Type 'tutorial lesson1'", [this](const Arguments& args) {
-		return "text";
+		return "To create new module, you first have to subclass ShellModule.";
+	} });
+
+	addAction("lesson2", { 0, "lesson2: How to write ctor", [this](const Arguments &args) {
+		return "In ctor, you need to call ShellModule(<name>) where <name> will identify your "
+			"module in the shell (e.g.: tutorial)";
+	} });
+
+	addAction("lesson3", { 0, "lesson3: What to do in ctor", [this](const Arguments& args) {
+		return "In ctor, you also have to call addAction and add all actions your module should "
+			"have as an interface with the user.";
+	} });
+
+	addAction("lesson4", { 0, "lesson4: getDescription()", [this](const Arguments& args) {
+		return "You also need to override getDescription method and provide description that "
+			"will be displayed as a part of help text";
 	} });
 }
