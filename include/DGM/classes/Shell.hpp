@@ -7,6 +7,15 @@
 #include <string>
 
 namespace dgm {
+	/**
+	 *  \brief Base class for creating shell modules.
+	 *
+	 *  To implement a shell module, one has to subclass this
+	 *  class, implement `getDescription` method and in ctor
+	 *  call ctor of this class (providing name of new module
+	 *  as a parameter) and also add all supported actions
+	 *  using addAction method.
+	 */
 	class ShellModule {
 	public:
 		using Arguments = std::vector<std::string>;
@@ -49,12 +58,22 @@ namespace dgm {
 			return name;
 		}
 
+		/**
+		 *  \brief Description method for help dialoague
+		 */
 		virtual std::string getDescription() const = 0;
 
 		ShellModule(const std::string &name);
 		virtual ~ShellModule() {}
 	};
 
+	/**
+	 *  \brief Module for manipulating variables at runtime.
+	 *
+	 *  Each variable has to be added via bindVariable method.
+	 *  Currently only int, float and string variables are
+	 *  supported.
+	 */
 	class ShellModuleVars : public ShellModule {
 	public:
 		class Variable {
@@ -95,8 +114,21 @@ namespace dgm {
 		 */
 		std::string execute(const std::string &command);
 
+		/**
+		 *  \brief Add a module to Shell
+		 *
+		 *  Name of the module (provided as parameter to ShellModule
+		 *  ctor) will be used to access the module in the shell.
+		 */
 		void install(ShellModule& module);
 
+		/**
+		 *  \brief Getter for the shell history
+		 *
+		 *  History last N commands, where N is up to 'size'.
+		 *  front() element of history is oldest remembered item,
+		 *  last() is the most recent command.
+		 */
 		const RingBuffer<std::string, 10>& getHistory() const {
 			return history;
 		}
