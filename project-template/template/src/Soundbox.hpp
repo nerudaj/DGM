@@ -21,7 +21,9 @@ public:
 
     void setVolume(float volume);
 
-    Soundbox(const dgm::ResourceManager &resmgr) : resmgr(resmgr) {}
+    Soundbox(const dgm::ResourceManager &resmgr) : resmgr(resmgr) {
+        channels.resize(1);
+    }
 
     ~Soundbox();
 };

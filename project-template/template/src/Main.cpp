@@ -1,8 +1,6 @@
 #include <DGM/dgm.hpp>
 
-#include "AppStateMainMenu.hpp"
-#include "AppStateMenuOptions.hpp"
-#include "AppStateIngame.hpp"
+#include "appstates/AppStateBootstrap.hpp"
 
 int main(int argc, char *argv[]) {
 	std::string rootDir = "..";
@@ -18,7 +16,7 @@ int main(int argc, char *argv[]) {
 	dgm::App app;
 	app.window.open(ini);
 	
-	app.pushState(new AppStateMainMenu(rootDir));
+	app.pushState(new AppStateBootstrap(rootDir));
 	app.run();
 
 	app.window.close(ini);
