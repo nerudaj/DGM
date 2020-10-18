@@ -1,8 +1,10 @@
 DGM v2.X.X changelog:
  * Added Circle::debugRender and Rect::debugRender
+ * Added dgm::Shell and integrated with template
+ * Added clicking sound when button is clicked in Template
+ * Refactored Template to allow easier layout modifications
  * Fixed memory deallocation in App
  * Fixed resolution settings in template Options
- * Refactored template Options
  * Disabled resize button in windowed mode
 
 ---
