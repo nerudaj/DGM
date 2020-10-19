@@ -17,4 +17,9 @@ namespace dgm {
 	public:
 		EnvironmentException(const std::string &message) : std::runtime_error(message) {}
 	};
+
+	class ShellException : public std::runtime_error {
+	public:
+		ShellException(const std::string& msg) : std::runtime_error(msg) {}
+	};
 }
