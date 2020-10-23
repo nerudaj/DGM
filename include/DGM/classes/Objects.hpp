@@ -189,6 +189,22 @@ namespace dgm {
 		const int &operator[] (std::size_t index) const {
 			return data[index];
 		}
+
+		int& at(unsigned x, unsigned y) {
+			return (*this)[y * dataSize.x + x];
+		}
+
+		const int &at(unsigned x, unsigned y) const {
+			return (*this)[y * dataSize.x + x];
+		}
+
+		int &at(const sf::Vector2u &position) {
+			return at(position.x, position.y);
+		}
+
+		const int &at(const sf::Vector2u &position) const {
+			return at(position.x, position.y);
+		}
 	
 		/**
 		 *  \brief get position of top-left corner
