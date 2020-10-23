@@ -18,7 +18,7 @@ sf::Vertex * dgm::ps::ParticleSystemRenderer::getParticleVertices(const std::siz
 	return &vertices[index * 4];
 }
 
-bool dgm::ps::ParticleSystemRenderer::init(const std::size_t particleCount, const dgm::Clip & clip) {
+bool dgm::ps::ParticleSystemRenderer::init(const std::size_t particleCount) {
 	try {
 		vertices.clear();
 		vertices.setPrimitiveType(sf::Quads);
@@ -28,8 +28,6 @@ bool dgm::ps::ParticleSystemRenderer::init(const std::size_t particleCount, cons
 		std::cerr << "ParticleSystemRenderer::init(...) - Could not allocate memory\n";
 		return false;
 	}
-
-	ParticleSystemRenderer::clip = clip;
 
 	return true;
 }

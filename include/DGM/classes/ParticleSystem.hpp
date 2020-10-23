@@ -5,25 +5,6 @@
 namespace dgm {
 	namespace ps {
 		/**
-		 * \brief Interface for creating ParticleFactories
-		 */
-		class ParticleFactoryInterface {
-		public:
-			/**
-			 * \brief Reset ther inner state of a factory
-			 *
-			 *  \details This method is the first thing that is
-			 *  called in ParticleSystem::init()
-			 */
-			virtual void reset() = 0;
-
-			/**
-			 *  \brief Returns new \ref Particle instance
-			 */
-			virtual dgm::ps::Particle* create() = 0;
-		};
-
-		/**
 		 *  \brief Interface and base implementation of ParticleSystem
 		 *
 		 *  \details Always inherit from this class when creating new
@@ -33,6 +14,24 @@ namespace dgm {
 		protected:
 			dgm::ps::ParticleSystemRenderer renderer;
 			Buffer<dgm::ps::Particle*> particles;
+
+			float randomFloat(float min, float max);
+
+			/**
+			 *  \brief Method for creating particle objects
+			 *
+			 *  This method is called automatically during init() and
+			 *  serves the purpose of allocating memory for particles.
+			 *  If you can work with dgm::ps::Particle, you can ignore
+			 *  it, if you need ParticleSystem to work with your custom
+			 *  particle type, then override this method.
+			 *
+			 *  Index denotes the index in particles buffer.
+			 *
+			 *  \warn Do not call this method by yourself! It is only
+			 *  supposed to be called during init() to populate particles array.
+			 */
+			virtual dgm::ps::Particle* createParticle(unsigned index) const;
 		
 		public:
 			/**
@@ -64,15 +63,10 @@ namespace dgm {
 			 *  \brief Initialize the ParticleSystem
 			 *  
 			 *  \param[in]  particleCount  Maximum number of particles in the system
-			 *  \param[in]  clip           Clipping data for the texture
 			 *  \param[in]  factory        Factor for creating new particles
 			 *  \return TRUE on success
-			 *  
-			 *  If you only need white rectangles, you don't need to bind any texture to
-			 *  this object and thus you don't need any clipping data. In that case, pass
-			 *  empty clip object to this function.
 			 */
-			virtual bool init(const std::size_t particleCount, const dgm::Clip &clip, dgm::ps::ParticleFactoryInterface *factory);
+			virtual bool init(const std::size_t particleCount);
 			
 			/**
 			 *  \brief Update particle system

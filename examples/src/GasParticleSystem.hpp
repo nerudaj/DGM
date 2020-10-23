@@ -8,23 +8,17 @@ public:
 	GasParticle(unsigned i) : i(i) {}
 };
 
-class GasParticleFactory : public dgm::ps::ParticleFactoryInterface {
-private:
-	unsigned i = 0;
-
-public:
-	virtual void reset() override { i = 0; }
-	virtual dgm::ps::Particle* create() override { return new GasParticle(i++); }
-};
-
 class GasSystem : public dgm::ps::ParticleSystemInterface {
 private:
 	void initParticle(GasParticle* particle) {
-		auto clip = this->getRenderer().getClip();
 		particle->size = sf::Vector2f(clip.getFrameSize());
 		particle->spawn(emitterPosition);
 		particle->changeFrame(clip.getFrame(particle->i % clip.getFrameCount()));
 		particle->forward = { 0.f, 0.f };
+	}
+
+	virtual dgm::ps::Particle* createParticle(unsigned index) const override {
+		return new GasParticle(index);
 	}
 
 public:
@@ -32,6 +26,7 @@ public:
 	const dgm::Mesh* level;
 	float MAX_VELOCITY = 256.f;
 	float angle = 0.f;
+	dgm::Clip clip;
 
 	virtual void update(const dgm::Time& time) override {
 		// Compute new forwards for each particle
@@ -70,8 +65,8 @@ public:
 		}
 	}
 
-	virtual bool init(const std::size_t particleCount, const dgm::Clip& clip, dgm::ps::ParticleFactoryInterface* factory) override {
-		if (not dgm::ps::ParticleSystemInterface::init(particleCount, clip, factory)) return false;
+	virtual bool init(const std::size_t particleCount) override {
+		if (not dgm::ps::ParticleSystemInterface::init(particleCount)) return false;
 
 		while (particles.expand()) {
 			initParticle(dynamic_cast<GasParticle*>(particles.last()));

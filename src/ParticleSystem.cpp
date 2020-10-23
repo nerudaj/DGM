@@ -2,16 +2,24 @@
 
 using dgm::ps::ParticleSystemInterface;
 
+float dgm::ps::ParticleSystemInterface::randomFloat(float min, float max) {
+	return static_cast <float> (rand()) / (static_cast <float> (RAND_MAX) / (max - min)) + min;
+}
+
+dgm::ps::Particle* dgm::ps::ParticleSystemInterface::createParticle(unsigned i) const {
+	(void)i;
+	return new dgm::ps::Particle;
+}
+
 // *** PARTICLE SYSTEM ***
-bool ParticleSystemInterface::init(const std::size_t particleCount, const dgm::Clip &clip, dgm::ps::ParticleFactoryInterface *factory) {
-	if (not renderer.init(particleCount, clip)) return false;
-	factory->reset();
+bool ParticleSystemInterface::init(const std::size_t particleCount) {
+	if (not renderer.init(particleCount)) return false;
 	
 	try {
 		particles.resize(particleCount);
 
 		for (unsigned i = 0; i < particles.capacity(); i++) {
-			particles[i] = factory->create();
+			particles[i] = createParticle(i);
 			particles[i]->init(renderer.getParticleVertices(i));
 		}
 	}

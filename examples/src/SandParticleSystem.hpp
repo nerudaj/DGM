@@ -17,16 +17,8 @@ public:
 		body.setPosition(position + size / 2.f);
 		Particle::spawn(position);
 
-		for (unsigned i = 0; i < 4; i++) {
-			quad[i].color = sf::Color::Yellow;
-		}
+		setColor(sf::Color::Yellow);
 	}
-};
-
-class SandParticleFactory : public dgm::ps::ParticleFactoryInterface {
-public:
-	virtual void reset() override {}
-	virtual dgm::ps::Particle* create() override { return new SandParticle; }
 };
 
 static float relativeVectorSize(const sf::Vector2f& vec) {
@@ -121,6 +113,10 @@ private:
 		particle->forward.x = sign * dgm::Math::clamp(sign * particle->forward.x - 20.f * deltaTime, 0.f, X_VELOCITY);
 	}
 
+	virtual dgm::ps::Particle* createParticle(unsigned i) const override {
+		return new SandParticle;
+	}
+
 public:
 	sf::Vector2f emitterPosition;
 	sf::Vector2f gravity;
@@ -148,8 +144,8 @@ public:
 		}
 	}
 
-	virtual bool init(const std::size_t particleCount, const dgm::Clip& clip, dgm::ps::ParticleFactoryInterface* factory) override {
+	virtual bool init(const std::size_t particleCount) override {
 		nearestNeighbours.resize(particleCount);
-		return ParticleSystemInterface::init(particleCount, clip, factory);
+		return ParticleSystemInterface::init(particleCount);
 	}
 };

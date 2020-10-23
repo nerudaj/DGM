@@ -2,17 +2,7 @@
 #define NO_NETWORK
 
 #include <DGM/dgm.hpp>
-
-/**
-*  \brief Example usage of \ref ParticleFactoryInterface
-*
-*  \details Simply generates instances of \ref Particle
-*/
-class SimpleParticleFactory : public dgm::ps::ParticleFactoryInterface {
-public:
-	virtual void reset() override {}
-	virtual dgm::ps::Particle * create() override { return new dgm::ps::Particle; }
-};
+#include <array>
 
 /**
 *  \brief Example usage of \ref ParticleSystem
@@ -50,11 +40,9 @@ int main() {
 	//  Center of the window
 	sf::Vector2f windowCenter(640.f, 360.f);
 
-	dgm::Clip clip;
-	SimpleParticleFactory particleFactory;
 	SimpleParticleSystem particleSystem;
 
-	if (!particleSystem.init(512, dgm::Clip(), &particleFactory)) return 1;
+	if (!particleSystem.init(512)) return 1;
 
 	// Setup properties of particle system
 	particleSystem.averageLifespan = sf::seconds(3.f).asSeconds();
@@ -101,22 +89,24 @@ int main() {
 }
 
 // PARTICLE SYSTEM IMPLEMENTATION
-float randomFloat(const float range) {
-	return static_cast <float> (rand()) / (static_cast <float> (RAND_MAX) / range);
-}
-
 void SimpleParticleSystem::spawnParticle() {
 	if (not particles.expand()) return;
 
+	const std::array<sf::Color, 6> RAINBOW = {
+		sf::Color::Red, sf::Color::Yellow, sf::Color::Green, sf::Color::Cyan, sf::Color::Magenta, sf::Color::Blue
+	};
+
+	// NOTE: randomFloat is implemented in SimpleParticleSystem
+
 	dgm::ps::Particle *particle = particles.last();
-	particle->size = { 5.f, 5.f };
-	float force = emitForce + randomFloat(emitForceDelta) - emitForceDelta / 2.f;
-	float angle = emitAngle + randomFloat(emitRange) - emitRange / 2.f;
+	particle->size = sf::Vector2f(1.f, 1.f) * randomFloat(1.f, 5.f);
+	float force = emitForce + randomFloat(emitForceDelta / 2.f, emitForceDelta);
+	float angle = randomFloat(emitAngle - emitRange / 2.f, emitAngle + emitRange / 2.f);
 	particle->forward = dgm::Conversion::polarToCartesian(angle, force);
-	float lifespan = averageLifespan + randomFloat(lifespanDelta) - lifespanDelta / 2.f;
+	float lifespan = averageLifespan + randomFloat(lifespanDelta / 2.f, lifespanDelta);
 	particle->spawn(emitPosition);
 	particle->lifespan = lifespan;
-	particle->changeFrame(sf::IntRect(0, 0, 10, 10));
+	particle->setColor(RAINBOW[rand() % RAINBOW.size()]);
 }
 
 void SimpleParticleSystem::update(const dgm::Time &time) {

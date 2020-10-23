@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 	level.loadFromFile(rootDir + "/11_advanced_particle_system.lvd");
 
 	SandSystem sandSystem;
-	if (!sandSystem.init(250, dgm::Clip(), new SandParticleFactory())) return 1;
+	if (!sandSystem.init(250)) return 1;
 	sandSystem.gravity = { 0.f, 100.f };
 	sandSystem.emitterPosition = { 150.f, 40.f };
 	sandSystem.level = &(level.getMesh());
@@ -36,8 +36,9 @@ int main(int argc, char *argv[]) {
 	GasSystem gasSystem;
 	gasSystem.emitterPosition = sf::Vector2f(16.f, 14.f) * float(TILE_SIZE);
 	gasSystem.level = &(level.getMesh());
+	gasSystem.clip = dgm::Clip({ 16, 16 }, { 0, 0, 48, 16 });
 	gasSystem.setTexture(resmgr.get<sf::Texture>("gas.png"));
-	if (!gasSystem.init(250, dgm::Clip({ 16, 16 }, {0, 0, 48, 16}), new GasParticleFactory())) return 2;
+	if (!gasSystem.init(250)) return 2;
 
 	bool logicActive = false;
 	sf::Event event;

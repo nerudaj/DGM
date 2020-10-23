@@ -11,7 +11,6 @@ namespace dgm {
 		protected:
 			sf::VertexArray vertices;
 			sf::Texture *texture;
-			dgm::Clip clip;
 		
 		public:
 			/**
@@ -26,14 +25,9 @@ namespace dgm {
 			 *  \brief Initialize the object
 			 *  
 			 *  \param[in]  particleCount  How many particles will renderer hold
-			 *  \param[in]  clip           Clipping information for particles
 			 *  \return TRUE on success
-			 *  
-			 *  Clipping information are only relevant if you plan on binding texture
-			 *  to the object. If you only need white squares, you can pass in empty 
-			 *  clip object.
 			 */
-			bool init(const std::size_t particleCount, const dgm::Clip &clip);
+			bool init(const std::size_t particleCount);
 			
 			/**
 			 *  \brief Bind texture to the object
@@ -51,8 +45,6 @@ namespace dgm {
 			void unbindTexture() {
 				texture = nullptr;
 			}
-
-			const dgm::Clip &getClip() const { return clip; }
 
 			ParticleSystemRenderer() {
 				unbindTexture();

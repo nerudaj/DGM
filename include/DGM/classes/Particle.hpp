@@ -41,6 +41,11 @@ namespace dgm {
 			void changeFrame(const sf::IntRect &frame);
 
 			/**
+			 *  \brief Sets the color of the particle
+			 */
+			void setColor(const sf::Color &color);
+
+			/**
 			 *  \brief Spawns the particle at given position
 			 *  
 			 *  Size of the particle must be set prior to calling

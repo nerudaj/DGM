@@ -4,6 +4,11 @@ DGM v2.X.X changelog:
  * Added clicking sound when button is clicked in Template
  * Added dgm::Mesh::at
  * Refactored Template to allow easier layout modifications
+ * Refactored particle systems
+	* Added Particle::setColor
+	* Added ParticleSystem::randomFloat
+	* Removed particle factory (replaced by ParticleSystem::createParticle)
+	* Removed dgm::Clip parameter of ParticleSystem and ParticleSystemRenderer
  * Fixed memory deallocation in App
  * Fixed resolution settings in template Options
  * Disabled resize button in windowed mode

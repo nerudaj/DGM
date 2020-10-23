@@ -9,6 +9,12 @@ void Particle::changeFrame(const sf::IntRect &frame) {
 	quad[3].texCoords = sf::Vector2f(float(frame.left), float(frame.top + frame.height));
 }
 
+void dgm::ps::Particle::setColor(const sf::Color& color) {
+	for (int i = 0; i < 4; i++) {
+		quad[i].color = color;
+	}
+}
+
 void Particle::spawn(const sf::Vector2f &position) {
 	sf::Vector2f offsets[] = {
 		{0.f, 0.f},
