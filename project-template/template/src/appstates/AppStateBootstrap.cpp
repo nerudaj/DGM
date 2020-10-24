@@ -5,7 +5,7 @@ void AppStateBootstrap::input() {}
 
 void AppStateBootstrap::update() {
 	if (state == State::Enter) {
-		app->pushState(new AppStateMainMenu(resmgr));
+		app->pushState(new AppStateMainMenu(resmgr, settings));
 		state = State::Exit;
 	} else if (state == State::Exit) {
 		app->popState();

@@ -3,6 +3,7 @@ DGM v2.X.X changelog:
  * Added dgm::Shell and integrated with template
  * Added clicking sound when button is clicked in Template
  * Added dgm::Mesh::at
+ * Enabled template to export/import settings with cfg::Ini
  * Refactored Template to allow easier layout modifications
  * Refactored particle systems
 	* Added Particle::setColor

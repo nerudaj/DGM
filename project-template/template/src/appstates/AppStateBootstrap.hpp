@@ -1,11 +1,13 @@
 #pragma once
 
 #include <DGM/dgm.hpp>
+#include "../Globals.hpp"
 
 class AppStateBootstrap : public dgm::AppState {
 private:
 	dgm::ResourceManager resmgr;
 	std::string rootDir;
+	Settings& settings;
 
 	enum class State {
 		Enter, Exit
@@ -19,5 +21,5 @@ public:
 	virtual void draw() override;
 	virtual bool init() override;
 
-	AppStateBootstrap(const std::string root) : rootDir(root) {}
+	AppStateBootstrap(const std::string root, Settings &settings) : rootDir(root), settings(settings) {}
 };

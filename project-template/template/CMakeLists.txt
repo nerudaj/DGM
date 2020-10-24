@@ -121,17 +121,23 @@ configure_file (
 #----------------------------------------------------------
 set ( SOURCE_FILES
 	src/Main.cpp
-	src/AppStateMainMenu.cpp
-	src/AppStateMenuOptions.cpp
-	src/AppStateIngame.cpp
+	src/appstates/AppStateBootstrap.cpp
+	src/appstates/AppStateMainMenu.cpp
+	src/appstates/AppStateMenuOptions.cpp
+	src/appstates/AppStateIngame.cpp
+	src/appstates/AppStateShell.cpp
+	src/appstates/GuiState.cpp
 	src/Soundbox.cpp
 )
 
 set ( HEADER_FILES
 	src/Globals.hpp
-	src/AppStateMainMenu.hpp
-	src/AppStateMenuOptions.hpp
-	src/AppStateIngame.hpp
+	src/appstates/AppStateBootstrap.hpp
+	src/appstates/AppStateMainMenu.hpp
+	src/appstates/AppStateMenuOptions.hpp
+	src/appstates/AppStateIngame.hpp
+	src/appstates/AppStateShell.hpp
+	src/appstates/GuiState.hpp
 	src/Soundbox.hpp
 )
 

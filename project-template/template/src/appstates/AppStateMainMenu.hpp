@@ -5,7 +5,7 @@
 
 class AppStateMainMenu : public dgm::AppState, public GuiState {
 private:
-	Settings settings = { 50.f, 50.f };
+	Settings &settings;
 	bool viewShouldBeUpdated = true;
 
 	void buildLayout();
@@ -16,5 +16,5 @@ public:
 	virtual void draw() override;
 	virtual bool init() override;
 
-	AppStateMainMenu(const dgm::ResourceManager &resmgr) : GuiState(resmgr) {}
+	AppStateMainMenu(const dgm::ResourceManager &resmgr, Settings &settings) : GuiState(resmgr), settings(settings) {}
 };
