@@ -229,6 +229,11 @@ install (
 	DESTINATION  docs
 )
 
+install (
+	FILES        ${CMAKE_CURRENT_SOURCE_DIR}/docs/buffer.md
+	DESTINATION  docs
+)
+
 # Packaging
 #----------------------------------------------------------
 set ( CPACK_GENERATOR "ZIP" )
