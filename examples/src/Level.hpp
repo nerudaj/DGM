@@ -27,8 +27,8 @@ public:
 		LevelD lvld;
 		lvld.loadFromFile(filename);
 
-		mesh = dgm::Mesh(lvld);
-		tilemap.build(lvld);
+		mesh = dgm::Mesh(lvld.mesh);
+		tilemap.build(lvld.mesh);
 	}
 
 	Level(sf::Texture& texture) {
