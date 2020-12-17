@@ -1,18 +1,21 @@
 #include <DGM\dgm.hpp>
-#include <cstdio>
+#include <fstream>
 
 class AppEnvironment {
 private:
-	bool status;
+	bool status = false;
+	std::ofstream outbuf;
+	std::ofstream errbuf;
 
 public:
 	bool isLoggingEnabled() const {
 		return status;
 	}
 
-	AppEnvironment() {
-		status = bool(freopen("stdout.txt", "w", stdout));
-		status &= bool(freopen("stderr.txt", "w", stderr));
+	AppEnvironment() : outbuf("stdout.txt"), errbuf("stderr.txt") {
+		status = outbuf.rdbuf() != nullptr && errbuf.rdbuf() != nullptr;
+		std::cout.rdbuf(outbuf.rdbuf());
+		std::cerr.rdbuf(errbuf.rdbuf());
 	}
 };
 

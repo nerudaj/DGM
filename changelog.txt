@@ -3,6 +3,7 @@ DGM vX.X.X changelog:
 	* Added example 13_camera
  * Updated dshlibs to 1.6.1
 	* Updated constructors for dgm::Mesh and dgm::Tileset
+ * Fixed compiler warning on the usage of freopen (replaced with rdbuf)
 
 ---
 
