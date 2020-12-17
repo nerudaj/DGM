@@ -51,6 +51,7 @@ include_directories("${JSON_FOLDER}") # only header file, no library
 set (DGM_SOURCES
 	src/Animation.cpp
 	src/App.cpp
+	src/Camera.cpp
 	src/Clip.cpp
 	src/Collision.cpp
 	src/Controller.cpp
@@ -71,6 +72,7 @@ set (DGM_HEADERS
 	include/DGM/classes/App.hpp
 	include/DGM/classes/AppState.hpp
 	include/DGM/classes/Buffer.hpp
+	include/DGM/classes/Camera.hpp
 	include/DGM/classes/Clip.hpp
 	include/DGM/classes/Collision.hpp
 	include/DGM/classes/Controller.hpp
