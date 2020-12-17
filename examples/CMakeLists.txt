@@ -57,3 +57,8 @@ target_link_libraries(11_advanced_particle_system ${DGM_LIB})
 ##---------------------------------------------------------
 add_executable(12_simple_lights WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/src/12_simple_lights.cpp)
 target_link_libraries(12_simple_lights ${DGM_LIB})
+
+## Example 13
+##---------------------------------------------------------
+add_executable(13_camera WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/src/13_camera.cpp)
+target_link_libraries(13_camera ${DGM_LIB})

@@ -1,3 +1,9 @@
+DGM vX.X.X changelog:
+ * Added dgm::Camera - tool for animating sf::View transitions
+	* Added example 13_camera
+
+---
+
 DGM v2.4.6 changelog:
  * Added Circle::debugRender and Rect::debugRender
  * Added dgm::Shell and integrated with template

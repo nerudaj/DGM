@@ -56,6 +56,7 @@
 #include "classes/TileMap.hpp"
 #include "classes/ResourceManager.hpp"
 #include "classes/Shell.hpp"
+#include "classes/Camera.hpp"
 
 // Particle Systems
 #include "classes/ParticleSystemRenderer.hpp"
