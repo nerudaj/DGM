@@ -84,10 +84,11 @@ void exportLevel() {
 
 	lvld.mesh.tileWidth = 32;
 	lvld.mesh.tileHeight = 32;
-	lvld.mesh.width = 10;
-	lvld.mesh.height = 10;
+	lvld.mesh.layerWidth = 10;
+	lvld.mesh.layerHeight = 10;
 	// Indices of tiles in tileset
-	lvld.mesh.tiles = {
+	LevelD::TileLayer layer;
+	layer.tiles = {
 		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 		1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 		1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -100,7 +101,7 @@ void exportLevel() {
 		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 	};
 	// Collision information
-	lvld.mesh.blocks = {
+	layer.blocks = {
 		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 		1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 		1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -112,6 +113,7 @@ void exportLevel() {
 		1, 0, 0, 0, 0, 0, 0, 1, 1, 1,
 		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 	};
+	lvld.mesh.layers.push_back(layer);
 
 	lvld.saveToFile(rootDir + "/level.lvd");
 }

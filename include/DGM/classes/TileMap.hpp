@@ -76,11 +76,16 @@ namespace dgm {
 		 *
 		 *  \see changeTile
 		 */
-		void build(const LevelD &lvd) {
+		void build(const LevelD::Mesh &mesh, unsigned layerIndex = 0) {
+			if (mesh.layers.size() <= layerIndex) {
+				throw dgm::EnvironmentException("Requesting layer " + std::to_string(layerIndex) +
+					" in mesh which has only " + std::to_string(mesh.layers.size()) + " layers");
+			}
+
 			build(
-				{ lvd.mesh.tileWidth, lvd.mesh.tileHeight },
-				std::vector<int>(lvd.mesh.tiles.begin(), lvd.mesh.tiles.end()),
-				{ lvd.mesh.width, lvd.mesh.height }
+				{ mesh.tileWidth, mesh.tileHeight },
+				std::vector<int>(mesh.layers[layerIndex].tiles.begin(), mesh.layers[layerIndex].tiles.end()),
+				{ mesh.layerWidth, mesh.layerHeight }
 			);
 		}
 
