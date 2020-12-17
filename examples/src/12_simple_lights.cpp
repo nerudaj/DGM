@@ -102,12 +102,13 @@ public:
 		LevelD lvd;
 		lvd.loadFromFile(filename);
 
-		tilemap.build(lvd);
-		mesh = dgm::Mesh(lvd);
+		tilemap.build(lvd.mesh);
+		mesh = dgm::Mesh(lvd.mesh);
 
 		// Mark water tiles, they are treated specially
+		// We only have 1 layer
 		unsigned i = 0;
-		for (const auto& tile : lvd.mesh.tiles) {
+		for (const auto& tile : lvd.mesh.layers[0].tiles) {
 			if (tile == 2) mesh[i] = 2;
 			i++;
 		}
