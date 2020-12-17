@@ -1,3 +1,9 @@
+DGM vX.X.X changelog:
+ * Updated dshlibs to 1.6.1
+	* Updated constructors for dgm::Mesh and dgm::Tileset
+
+---
+
 DGM v2.4.6 changelog:
  * Added Circle::debugRender and Rect::debugRender
  * Added dgm::Shell and integrated with template
