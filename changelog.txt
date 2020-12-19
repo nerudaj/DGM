@@ -1,4 +1,4 @@
-DGM vX.X.X changelog:
+DGM v2.6.1 changelog:
  * Added dgm::Camera - tool for animating sf::View transitions
 	* Added example 13_camera
  * Updated dshlibs to 1.6.1
