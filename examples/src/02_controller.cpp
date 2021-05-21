@@ -92,11 +92,10 @@ public:
 		car.setFillColor(sf::Color::Green);
 
 		// This will bind control codes to keyboard keys
-		// Third argument for X360 controller is optional, but recommended
-		ctrl.setBinding(GAS,   sf::Keyboard::W, dgm::X360::RTrigger);
-		ctrl.setBinding(BRAKE, sf::Keyboard::S, dgm::X360::LTrigger);
-		ctrl.setBinding(LEFT,  sf::Keyboard::A, dgm::X360::LStick_Left);
-		ctrl.setBinding(RIGHT, sf::Keyboard::D, dgm::X360::LStick_Right);
+		ctrl.bindKeyboardKey(GAS,   sf::Keyboard::W);
+		ctrl.bindKeyboardKey(BRAKE, sf::Keyboard::S);
+		ctrl.bindKeyboardKey(LEFT,  sf::Keyboard::A);
+		ctrl.bindKeyboardKey(RIGHT, sf::Keyboard::D);
 	}
 };
 

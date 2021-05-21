@@ -138,10 +138,10 @@ public:
 	virtual bool init() override {
 		// This will bind control codes to keyboard keys
 		// Third argument for X360 controller is optional, but recommended
-		carInput.setBinding(GAS, sf::Keyboard::W, dgm::X360::RTrigger);
-		carInput.setBinding(BRAKE, sf::Keyboard::S, dgm::X360::LTrigger);
-		carInput.setBinding(LEFT, sf::Keyboard::A, dgm::X360::LStick_Left);
-		carInput.setBinding(RIGHT, sf::Keyboard::D, dgm::X360::LStick_Right);
+		carInput.bindKeyboardKey(GAS, sf::Keyboard::W);
+		carInput.bindKeyboardKey(BRAKE, sf::Keyboard::S);
+		carInput.bindKeyboardKey(LEFT, sf::Keyboard::A);
+		carInput.bindKeyboardKey(RIGHT, sf::Keyboard::D);
 
 		car.setup(32.f, 24.f, 128.f, 45.f, &carInput);
 		auto wsize = app->window.getSize();

@@ -1,3 +1,10 @@
+DGM v2.7.0
+ * Reworked dgm::Controller
+	* Dropped support for X360 gamepad  (and gamepad in general)
+	* Added support for mouse bindings
+
+---
+
 DGM v2.6.1 changelog:
  * Added dgm::Camera - tool for animating sf::View transitions
 	* Added example 13_camera

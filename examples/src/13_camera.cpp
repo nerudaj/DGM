@@ -54,10 +54,10 @@ public:
 	}
 
 	Player(dgm::Camera& camera) : camera(camera) {
-		input.setBinding(Up, sf::Keyboard::Up);
-		input.setBinding(Down, sf::Keyboard::Down);
-		input.setBinding(Left, sf::Keyboard::Left);
-		input.setBinding(Right, sf::Keyboard::Right);
+		input.bindKeyboardKey(Up, sf::Keyboard::Up);
+		input.bindKeyboardKey(Down, sf::Keyboard::Down);
+		input.bindKeyboardKey(Left, sf::Keyboard::Left);
+		input.bindKeyboardKey(Right, sf::Keyboard::Right);
 	}
 };
 

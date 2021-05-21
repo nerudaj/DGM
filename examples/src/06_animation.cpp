@@ -81,8 +81,8 @@ public:
 		animation.setState("idle-left");
 		direction = Left;
 
-		input.setBinding(Left, sf::Keyboard::Left, dgm::X360::LStick_Left);
-		input.setBinding(Right, sf::Keyboard::Right, dgm::X360::LStick_Right);
+		input.bindKeyboardKey(Left, sf::Keyboard::Left);
+		input.bindKeyboardKey(Right, sf::Keyboard::Right);
 	}
 };
 

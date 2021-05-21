@@ -11,63 +11,36 @@
 namespace dgm {
 	class AbstractController {
 	public:
-		virtual bool keyPressed(const int code) =0;
+		virtual bool keyPressed(const int code) = 0;
 		
-		virtual bool keyPressed(const int code, float &intensity) const =0;
-		
-		virtual void releaseKey(const int code) =0;
-	};
-
-	/**
-	 * \brief Class with enumerator object for X360 inputs
-	 */
-	enum class X360 {
-		Empty = -1,
-		A = 0, B = 1, X = 2, Y = 3,
-		LBumper = 4, RBumper = 5,
-		Select = 6, Start = 7,
-		LStick = 8, RStick = 9,
-		LTrigger = 100, RTrigger,
-		LStick_Left = 200, LStick_Up, LStick_Right, LStick_Down,
-		RStick_Left = 300, RStick_Up, RStick_Right, RStick_Down,
-		POV_Left = 400, POV_Up, POV_Right, POV_Down,
+		virtual void releaseKey(const int code) = 0;
 	};
 
 	class Binding {
 	public:
 		bool released;
+		bool isKey;
 		sf::Keyboard::Key key;
-		dgm::X360 joy;
+		sf::Mouse::Button btn;
 	};
 
 	class Controller : public AbstractController {
 	protected:
-		std::vector<Binding> bindings;
-		float deadzone;
-		int index;
+		std::map<int, Binding> bindings;
 
-		float getJoystickAxis(const dgm::X360 joy) const;
+		void bindCode(const int code, sf::Keyboard::Key key, sf::Mouse::Button btn);
 
 	public:
 
 		/**
-		 * \brief Tests whether keyboard key or X360 input is pressed for action with code id
-		 *
-		 * \details This function only returns TRUE/FALSE based on whether input
-		 * is pressed, disregarding intensity any axii can be pressed with. Also this
-		 * function is affected by releaseKey() call.
+		 * \brief Test whether particular input code is pressed
+		 * 
+		 * Input code might be mapped to keyboard key XOR mouse button.
+		 * If input code was previously released using releaseKey then
+		 * physical key/button must first be released, this function called
+		 * and only then will this function return TRUE again.
 		 */
 		bool keyPressed(const int code);
-
-		/**
-		 * \brief Tests whether keyboard key or X360 input is pressed for action with code id,
-		 * also returns intensity of the press
-		 *
-		 * \details This function is not affected by releaseKey() call. Function will return
-		 * TRUE/FALSE if input is pressed. For keys and buttons, intensity will be either 0.f/100.f.
-		 * For axii, intensity will return actual intensity of press from interval (0.f,deadzone - 100.f)
-		 */
-		bool keyPressed(const int code, float &intensity) const;
 
 		/**
 		 * \brief Marks input as released
@@ -84,24 +57,20 @@ namespace dgm {
 		void releaseKey(const int code);
 
 		/**
-		 * \brief Bind the keyboard key and X360 input to an action
-		 *
-		 * \note Key is required, joy can be dgm::X360::Empty
+		 *  Bind numerical input code to keyboard key
+		 * 
+		 *  \warn There must not be binding of the same input code to both
+		 *  keyboard key and mouse button. Exception is thrown in such case.
 		 */
-		void setBinding(const int code, sf::Keyboard::Key key, dgm::X360 joy = dgm::X360::Empty);
+		void bindKeyboardKey(const int code, sf::Keyboard::Key key);
 
 		/**
-		 * \brief Sets the threshold for X360 axii
+		 *  Bind numerical input code to mouse button
 		 *
-		 * \details Any input with power less than threshold
-		 * will be dropped. 25.f is recommended.
+		 *  \warn There must not be binding of the same input code to both
+		 *  keyboard key and mouse button. Exception is thrown in such case.
 		 */
-		void setDeadzone(const float threshold);
-
-		/**
-		 * \brief Sets the index of X360 controller to use
-		 */
-		void setIndex(const int index);
+		void bindMouseButton(const int code, sf::Mouse::Button btn);
 
 		Controller();
 		~Controller();

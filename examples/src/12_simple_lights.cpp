@@ -184,10 +184,10 @@ public:
 		sprite.setOrigin(radius, radius);
 		body.setRadius(radius);
 
-		input.setBinding(Actions::Up, sf::Keyboard::W);
-		input.setBinding(Actions::Left, sf::Keyboard::A);
-		input.setBinding(Actions::Down, sf::Keyboard::S);
-		input.setBinding(Actions::Right, sf::Keyboard::D);
+		input.bindKeyboardKey(Actions::Up, sf::Keyboard::W);
+		input.bindKeyboardKey(Actions::Left, sf::Keyboard::A);
+		input.bindKeyboardKey(Actions::Down, sf::Keyboard::S);
+		input.bindKeyboardKey(Actions::Right, sf::Keyboard::D);
 	}
 };
 

@@ -65,10 +65,10 @@ public:
 	Player() {
 		body.setRadius(10.f);
 
-		input.setBinding(Up, sf::Keyboard::Up);
-		input.setBinding(Left, sf::Keyboard::Left);
-		input.setBinding(Right, sf::Keyboard::Right);
-		input.setBinding(Down, sf::Keyboard::Down);
+		input.bindKeyboardKey(Up, sf::Keyboard::Up);
+		input.bindKeyboardKey(Left, sf::Keyboard::Left);
+		input.bindKeyboardKey(Right, sf::Keyboard::Right);
+		input.bindKeyboardKey(Down, sf::Keyboard::Down);
 	}
 };
 
