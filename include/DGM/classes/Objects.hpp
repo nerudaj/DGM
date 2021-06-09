@@ -117,6 +117,8 @@ namespace dgm {
 		 */
 		const sf::Vector2f &getSize() const;
 		
+		const sf::Vector2f& getCenter() const;
+
 		/**
 		 *  \brief Set position of top-left corner
 		 */

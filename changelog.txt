@@ -1,3 +1,12 @@
+DGM v2.7.x
+ * Added math constants to dgm::Math
+	* PI, PIOVER180, _180OVERPI
+ * Added dgm::Math::rotateVector
+ * Added dgm::Rect::getCenter
+ * Changed members of dgm::Camera from private to protected
+
+---
+
 DGM v2.7.0
  * Reworked dgm::Controller
 	* Dropped support for X360 gamepad  (and gamepad in general)

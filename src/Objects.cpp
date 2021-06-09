@@ -1,4 +1,4 @@
-/**
+﻿/**
  *  \file Objects.cpp
  *  \author doomista
  */
@@ -63,6 +63,10 @@ void dgm::Rect::debugRender(dgm::Window& window, sf::Color color) const {
 const sf::Vector2f &dgm::Rect::getPosition() const { return position; }
 
 const sf::Vector2f &dgm::Rect::getSize() const { return size; }
+
+const sf::Vector2f& dgm::Rect::getCenter() const {
+	return getPosition() + getSize() / 2.f;
+}
 
 void dgm::Rect::setPosition(const float x, const float y) {
 	position.x = x;

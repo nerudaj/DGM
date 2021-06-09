@@ -18,7 +18,7 @@ namespace dgm {
 		/// Easing function. It is supposed to accept a number from 0..1 and return a number from 0..1
 		using EasingFunc = std::function<float(float)>;
 
-	private:
+	protected:
 		sf::View& view; /// Reference to view that should be manipulated by the Camera
 		sf::Vector2f defaultZoomLevel; /// Default resolution of the view (so zoom can be reset)
 
