@@ -1,0 +1,131 @@
+DGM v2.7.x
+ * Added math constants to dgm::Math
+	* PI, PIOVER180, _180OVERPI
+ * Added dgm::Math::rotateVector
+ * Added dgm::Rect::getCenter
+ * Changed members of dgm::Camera from private to protected
+
+---
+
+DGM v2.7.0
+ * Reworked dgm::Controller
+	* Dropped support for X360 gamepad  (and gamepad in general)
+	* Added support for mouse bindings
+
+---
+
+DGM v2.6.1 changelog:
+ * Added dgm::Camera - tool for animating sf::View transitions
+	* Added example 13_camera
+ * Updated dshlibs to 1.6.1
+	* Updated constructors for dgm::Mesh and dgm::Tileset
+ * Fixed compiler warning on the usage of freopen (replaced with rdbuf)
+
+---
+
+DGM v2.4.6 changelog:
+ * Added Circle::debugRender and Rect::debugRender
+ * Added dgm::Shell and integrated with template
+ * Added clicking sound when button is clicked in Template
+ * Added dgm::Mesh::at
+ * Enabled template to export/import settings with cfg::Ini
+ * Refactored Template to allow easier layout modifications
+ * Refactored particle systems
+	* Added Particle::setColor
+	* Added ParticleSystem::randomFloat
+	* Removed particle factory (replaced by ParticleSystem::createParticle)
+	* Removed dgm::Clip parameter of ParticleSystem and ParticleSystemRenderer
+ * Fixed memory deallocation in App
+ * Fixed resolution settings in template Options
+ * Disabled resize button in windowed mode
+
+---
+
+DGM v2.0.0 changelog:
+ * Added examples to release
+	* Added example 11_advanced_particle_systems
+	* Added example 12_simple lights
+ * Renamed examples to more descriptive names
+ * Renamed Tileset to TileMap
+ * Updated Quickstart.md guide
+ * Updated project-template with demonstration of usage of ResourceManager, Animation and added Soundbox class
+ * Bumped to dsh v1.3.2 (critical fixes for LevelD file format)
+	* Fixed examples/level.lvd
+ * Fixed documentation of ResourceManager
+ * Fixed interfaces for particles and particle systems
+
+---
+
+DGM v1.7.1 changelog:
+ * Bumped to dsh v1.1.1
+ * Added constructor to dgm::Mesh which accepts LevelD object and uses LevelD::Mesh to initialize itself
+ * Added dgm::Math::approxEqual method for comparing floats
+
+---
+
+DGM v1.6.7 changelog:
+ * Fixed project-template bug with packaging audio and graphics folders
+ * Fixed crash when trying to load nonexistent directory (other half of project-template bug)
+ * Fixed resource manager crash when Windows metadata file Thumbs.db is present
+	 * File is explicitly ignored and skipped
+
+---
+
+DGM v1.6.4 changelog:
+ * Moved to better build system
+ * Added quickstart guide
+ * Updated doxygen documentation
+ * Project template automatically downloads dependencies
+ * Streamlined project template
+
+---
+
+DGM v1.5.1 changelog:
+ * dgm::Clip frameSize and frameOffset were changed to sf::Vector2u
+ * Cout and Cerr now log to stdout.txt and stderr.txt respectively
+
+---
+
+DGM v1.4.6 changelog:
+ * Added html docs generated from doxygen
+ * Changed tileSize and dataSize parameters of dgm::Tileset::build to sf::Vector2u
+ * Bumped dshlibs to version 0.6.2
+ * ParticleSystem(Renderer)::setTexture now accepts reference to sf::Texture instead of pointer
+ * Added ParticleSystemRenderer::unbindTexture
+ * Removed bootstrap.sh from Template
+ * Added sample resources to Template directories
+
+---
+
+DGM v1.3.6 changelog:
+ * Template was rewritten using TGUI library
+ * Template generator was forced to x64
+ * Gitignore was added for template
+ * Added copy-dlls.bat to template
+ * Added dgm::Window::getTitle
+ * Added dgm::Window::changeResolution
+ * Added some doxydocs for dgm::Window
+
+---
+
+DGM v1.2.9 changelog:
+ * Bumped to dshlibs 0.5.3
+ * Switched from x86 to x64
+ * Examples are part of release now
+ * Implement Options for template project
+
+--
+
+DGM v1.1.6 changelog:
+ * Fix rootDir of template project
+ * Embed dshlibs into dgm.lib
+ * Add Gui.hpp to template project CMakeLists.txt
+ * Make LevelD.hpp part of DGM release
+ * Add prepare-release.bat to template project
+ * Update appropriate readmes
+ * Fix broken dgm::Window open on empty ini file
+
+---
+
+DGM v1.0.0 changelog:
+ * initial release

@@ -1,0 +1,156 @@
+/**
+ * \file Math.hpp
+ * \brief Helper mathematical functions and constants
+ */
+
+#pragma once
+
+#include <DGM\dgm.hpp>
+#include <cmath>
+#include <cassert>
+
+namespace dgm {
+	/**
+	 *  \brief Static class with helper mathematical methods
+	 */
+	class Math {
+	public:
+		constexpr static float PI = 3.1415926536f;
+		/// multiply this with degrees to get radians
+		constexpr static float PIOVER180 = PI / 180.f;
+		/// multiply this with radians to get degrees
+		constexpr static float _180OVERPI = 180.f / PI;
+
+		/**
+		 * \brief Test whether a float value is approximately equal to another float value
+		 *
+		 * \param[in]  value          Value to test
+		 * \param[in]  expectedValue  Expected value
+		 * \param[in]  precision      Precision of comparison
+		 *
+		 * \return TRUE if values are equal within a given precision
+		 */
+		static bool approxEqual(const float value, const float expectedValue, const float precision = 0.01f) {
+			return std::abs(expectedValue - value) <= precision;
+		}
+
+		/**
+		 *  \brief Limit value to interval <min, max>
+		 *
+		 *  \param[in]  value  Value to limit
+		 *  \param[in]  min    Start of interval
+		 *  \param[in]  max    End of interval
+		 *
+		 *  \return Value if value belongs to interval. If value < min, then min is returned, if value > max, then max is returned.
+		 */
+		static float clamp(const float value, const float min, const float max) {
+			return std::max(min, std::min(value, max));
+		}
+
+		/**
+		 *  \brief Limit value to interval <min, max>
+		 *
+		 *  \param[in]  value  Value to limit
+		 *  \param[in]  min    Start of interval
+		 *  \param[in]  max    End of interval
+		 *
+		 *  \return Value if value belongs to interval. If value < min, then min is returned, if value > max, then max is returned.
+		 */
+		static int clamp(const int value, const int min, const int max) {
+			return std::max(min, std::min(value, max));
+		}
+
+		/**
+		 *  \brief Computes dot product of two vectors
+		 *
+		 *  \param[in]  vectorA  Vector object
+		 *  \param[in]  vectorB  Vector object
+		 *
+		 *  \return Dot product of vectorA and vectorB
+		 */
+		static float dotProduct(const sf::Vector2f& vectorA, const sf::Vector2f& vectorB) {
+			return vectorA.x * vectorB.y + vectorA.x * vectorB.y;
+		}
+
+		/**
+		 *  \brief Performs linear interpolation between start and end
+		 *
+		 *  \param[in] start  Leftmost value
+		 *  \param[in] end    Rightmost value
+		 *  \param[in] t      Value between 0 and 1
+		 *
+		 *  \return If t = 0 then start, if t = 1 then end, if t is something between, then the value is interpolated
+		 */
+		static float lerp(const float start, const float end, const float t) {
+			assert(0.f <= t && t <= 1.f);
+			return (1.f - t) * start + t * end;
+		}
+
+		/**
+		 *  \brief Map the value from interval X to interval Y (linearly)
+		 *
+		 *  \param[in]  value   Value to map
+		 *  \param[in]  startX  Start of X interval
+		 *  \param[in]  endX    End of X interval
+		 *  \param[in]  startY  Start of Y interval
+		 *  \param[in]  endY    End of Y interval
+		 */
+		static float map(const float value, const float startX, const float endX, const float startY, const float endY) {
+			return  (endY - startY) / (endX - startX) * (value - startX) + startY;
+		}
+
+		/**
+		 *  Rotate vector by given angle
+		 *
+		 *  \param[in]  vec    Vector to rotate
+		 *  \param[in]  angle  Angle in degrees
+		 * 
+		 *  \returns Rotated vector is returned
+		 * 
+		 *  Vector is rotated by given amount of degrees. Positive
+		 *  amount is clockwise rotation and negative amount is counter
+		 * ¨clockwise rotation.
+		 */
+		static sf::Vector2f rotateVector(const sf::Vector2f& vec, const float angle) {
+			const float rad = angle * PIOVER180;
+			return sf::Vector2f(
+				vec.x * std::cos(rad) - vec.y * std::sin(rad),
+				vec.x * std::sin(rad) + vec.y * std::cos(rad)
+			);
+		}
+
+		static sf::Vector2f rotateVector(const float x, const float y, const float angle) {
+			return rotateVector({ x, y }, angle);
+		}
+
+		/**
+		 *  \brief Normalize vector to unit vector
+		 * 
+		 *  \param[in]  vec  Vector to normalize
+		 * 
+		 *  \return Normalized copy of original vector
+		 * 
+		 *  \note This function does nothing if input vector
+		 *  is zero vector.
+		 */
+		static sf::Vector2f toUnit(const sf::Vector2f& vec) {
+			if (vec.x == 0.f && vec.y == 0.f) return vec;
+			return vec / vectorSize(vec);
+		}
+
+		/**
+		 *  \brief Compute size of the vector
+		 *  
+		 *  \param[in]  vect  Vector object
+		 *  
+		 *  \return Size of the vector
+		 */
+		static float vectorSize(const sf::Vector2f &vec) {
+			return sqrt(vec.x * vec.x + vec.y * vec.y);
+		}
+
+		static float vectorSize(const float x, const float y) {
+			return vectorSize({ x, y });
+		}
+	};
+};
