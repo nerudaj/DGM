@@ -1,3 +1,0 @@
-set ( DGM_VERSION  "${PROJECT_VERSION}" )
-set ( SFML_VERSION "${SFML_VERSION}" )
-set ( TGUI_VERSION "0.8.6" )
